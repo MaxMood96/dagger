@@ -110,8 +110,3 @@ kt_jvm_library(
         "@google_bazel_common//third_party/java/compile_testing",
     ],
 )
-
-filegroup(
-    name = "srcs_filegroup",
-    srcs = glob(["*"]),
-)

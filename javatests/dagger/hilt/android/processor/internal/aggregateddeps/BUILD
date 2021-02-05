@@ -33,10 +33,10 @@ compiler_test(
         "@androidsdk//:platforms/android-30/android.jar",
     ],
     deps = [
-        "//javatests/dagger/hilt/android/processor:android_compilers",
         "@google_bazel_common//third_party/java/compile_testing",
         "@google_bazel_common//third_party/java/junit",
         "@google_bazel_common//third_party/java/truth",
+        "//javatests/dagger/hilt/android/processor:android_compilers",
     ],
 )
 
@@ -48,9 +48,4 @@ java_library(
         "//java/dagger/hilt:install_in",
         "//java/dagger/hilt/components",
     ],
-)
-
-filegroup(
-    name = "srcs_filegroup",
-    srcs = glob(["*"]),
 )

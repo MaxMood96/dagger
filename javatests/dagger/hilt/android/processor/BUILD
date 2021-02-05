@@ -36,8 +36,3 @@ java_library(
         "@maven//:com_github_tschuchortdev_kotlin_compile_testing",
     ],
 )
-
-filegroup(
-    name = "srcs_filegroup",
-    srcs = glob(["*"]),
-)

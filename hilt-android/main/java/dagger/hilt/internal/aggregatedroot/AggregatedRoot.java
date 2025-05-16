@@ -60,4 +60,10 @@ public @interface AggregatedRoot {
   String[] originatingRootSimpleNames();
 
   Class<?> rootAnnotation();
+
+  /** Package of the root component this root is for. */
+  String rootComponentPackage();
+
+  /** Root component simple names, in order of outer to inner. */
+  String[] rootComponentSimpleNames();
 }

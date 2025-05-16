@@ -1,11 +1,12 @@
+import dagger.gradle.build.SoftwareType
 import dagger.gradle.build.findBootstrapCompilerJar
 import dagger.gradle.build.findXProcessingJar
 import dagger.gradle.build.findXProcessingTestingJar
 
 plugins {
-  alias(libs.plugins.dagger.kotlinJvm)
-  alias(libs.plugins.dagger.publish)
-  alias(libs.plugins.dagger.shadow)
+  alias(libs.plugins.daggerBuild)
+  id(libs.plugins.kotlinJvm.get().pluginId)
+  id(libs.plugins.shadow.get().pluginId)
 }
 
 dependencies {
@@ -56,7 +57,12 @@ dependencies {
   testAnnotationProcessor(project(":dagger-compiler"))
 }
 
-shading {
-  relocate("com.google.auto.common", "dagger.spi.internal.shaded.auto.common")
-  relocate("androidx.room", "dagger.spi.internal.shaded.androidx.room")
+daggerBuild {
+  type = SoftwareType.PROCESSOR
+  isPublished = true
+
+  shading {
+    relocate("com.google.auto.common", "dagger.spi.internal.shaded.auto.common")
+    relocate("androidx.room", "dagger.spi.internal.shaded.androidx.room")
+  }
 }

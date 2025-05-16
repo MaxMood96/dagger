@@ -48,7 +48,7 @@ gen_maven_artifact(
         "dagger.android.support",
     ],
     javadoc_srcs = ["//dagger-android-support/main/java/dagger/android/support:support-srcs"],
-    manifest = "AndroidManifest.xml",
+    manifest = "main/AndroidManifest.xml",
     packaging = "aar",
 )
 

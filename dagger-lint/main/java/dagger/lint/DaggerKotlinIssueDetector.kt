@@ -47,22 +47,21 @@ import org.jetbrains.uast.toUElement
 
 /**
  * This is a simple lint check to catch common Dagger+Kotlin usage issues.
- *
  * - [ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION] covers using `field:` site targets for member
- * injections, which are redundant as of Dagger 2.25.
+ *   injections, which are redundant as of Dagger 2.25.
  * - [ISSUE_JVM_STATIC_PROVIDES_IN_OBJECT] covers using `@JvmStatic` for object
- * `@Provides`-annotated functions, which are redundant as of Dagger 2.25. @JvmStatic on companion
- * object functions are redundant as of Dagger 2.26.
+ *   `@Provides`-annotated functions, which are redundant as of Dagger 2.25. @JvmStatic on companion
+ *   object functions are redundant as of Dagger 2.26.
  * - [ISSUE_MODULE_COMPANION_OBJECTS] covers annotating companion objects with `@Module`, as they
- * are now part of the enclosing module class's API in Dagger 2.26. This will also error if the
- * enclosing class is _not_ in a `@Module`-annotated class, as this object just should be moved to a
- * top-level object to avoid confusion.
+ *   are now part of the enclosing module class's API in Dagger 2.26. This will also error if the
+ *   enclosing class is _not_ in a `@Module`-annotated class, as this object just should be moved to
+ *   a top-level object to avoid confusion.
  * - [ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT] covers annotating companion objects with
- * `@Module` when the parent class is _not_ also annotated with `@Module`. While technically legal,
- * these should be moved up to top-level objects to avoid confusion.
+ *   `@Module` when the parent class is _not_ also annotated with `@Module`. While technically
+ *   legal, these should be moved up to top-level objects to avoid confusion.
  */
 @Suppress(
-  "UnstableApiUsage" // Lots of Lint APIs are marked with @Beta.
+  "UnstableApiUsage", // Lots of Lint APIs are marked with @Beta.
 )
 class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
 
@@ -74,67 +73,72 @@ class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
     // doesn't require both of them together.
     // From discussion on lint-dev https://groups.google.com/d/msg/lint-dev/ULQMzW1ZlP0/1dG4Vj3-AQAJ
     // This was supposed to be fixed in AS 3.4 but still required as recently as 3.6.
-    private val SCOPES = Implementation(
-      DaggerKotlinIssueDetector::class.java,
-      EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES),
-      EnumSet.of(Scope.JAVA_FILE),
-      EnumSet.of(Scope.TEST_SOURCES)
-    )
+    private val SCOPES =
+      Implementation(
+        DaggerKotlinIssueDetector::class.java,
+        EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES),
+        EnumSet.of(Scope.JAVA_FILE),
+        EnumSet.of(Scope.TEST_SOURCES),
+      )
 
-    private val ISSUE_JVM_STATIC_PROVIDES_IN_OBJECT: Issue = Issue.create(
-      id = "JvmStaticProvidesInObjectDetector",
-      briefDescription = "@JvmStatic used for @Provides function in an object class",
-      explanation =
-        """
+    private val ISSUE_JVM_STATIC_PROVIDES_IN_OBJECT: Issue =
+      Issue.create(
+        id = "JvmStaticProvidesInObjectDetector",
+        briefDescription = "@JvmStatic used for @Provides function in an object class",
+        explanation =
+          """
         It's redundant to annotate @Provides functions in object classes with @JvmStatic.
         """,
-      category = Category.CORRECTNESS,
-      priority = 5,
-      severity = Severity.WARNING,
-      implementation = SCOPES
-    )
+        category = Category.CORRECTNESS,
+        priority = 5,
+        severity = Severity.WARNING,
+        implementation = SCOPES,
+      )
 
-    private val ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION: Issue = Issue.create(
-      id = "FieldSiteTargetOnQualifierAnnotation",
-      briefDescription = "Redundant 'field:' used for Dagger qualifier annotation.",
-      explanation =
-        """
+    private val ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION: Issue =
+      Issue.create(
+        id = "FieldSiteTargetOnQualifierAnnotation",
+        briefDescription = "Redundant 'field:' used for Dagger qualifier annotation.",
+        explanation =
+          """
         It's redundant to use 'field:' site-targets for qualifier annotations.
         """,
-      category = Category.CORRECTNESS,
-      priority = 5,
-      severity = Severity.WARNING,
-      implementation = SCOPES
-    )
+        category = Category.CORRECTNESS,
+        priority = 5,
+        severity = Severity.WARNING,
+        implementation = SCOPES,
+      )
 
-    private val ISSUE_MODULE_COMPANION_OBJECTS: Issue = Issue.create(
-      id = "ModuleCompanionObjects",
-      briefDescription = "Module companion objects should not be annotated with @Module.",
-      explanation =
-        """
+    private val ISSUE_MODULE_COMPANION_OBJECTS: Issue =
+      Issue.create(
+        id = "ModuleCompanionObjects",
+        briefDescription = "Module companion objects should not be annotated with @Module.",
+        explanation =
+          """
         Companion objects in @Module-annotated classes are considered part of the API.
         """,
-      category = Category.CORRECTNESS,
-      priority = 5,
-      severity = Severity.WARNING,
-      implementation = SCOPES
-    )
+        category = Category.CORRECTNESS,
+        priority = 5,
+        severity = Severity.WARNING,
+        implementation = SCOPES,
+      )
 
-    private val ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT: Issue = Issue.create(
-      id = "ModuleCompanionObjectsNotInModuleParent",
-      briefDescription = "Companion objects should not be annotated with @Module.",
-      explanation =
-        """
+    private val ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT: Issue =
+      Issue.create(
+        id = "ModuleCompanionObjectsNotInModuleParent",
+        briefDescription = "Companion objects should not be annotated with @Module.",
+        explanation =
+          """
         Companion objects in @Module-annotated classes are considered part of the API. This
         companion object is not a companion to an @Module-annotated class though, and should be
         moved to a top-level object declaration instead otherwise Dagger will ignore companion
         object.
         """,
-      category = Category.CORRECTNESS,
-      priority = 5,
-      severity = Severity.WARNING,
-      implementation = SCOPES
-    )
+        category = Category.CORRECTNESS,
+        priority = 5,
+        severity = Severity.WARNING,
+        implementation = SCOPES,
+      )
 
     private const val PROVIDES_ANNOTATION = "dagger.Provides"
     private const val JVM_STATIC_ANNOTATION = "kotlin.jvm.JvmStatic"
@@ -142,15 +146,16 @@ class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
     private const val QUALIFIER_ANNOTATION = "javax.inject.Qualifier"
     private const val MODULE_ANNOTATION = "dagger.Module"
 
-    val issues: List<Issue> = listOf(
-      ISSUE_JVM_STATIC_PROVIDES_IN_OBJECT,
-      ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION,
-      ISSUE_MODULE_COMPANION_OBJECTS,
-      ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT
-    )
+    val issues: List<Issue> =
+      listOf(
+        ISSUE_JVM_STATIC_PROVIDES_IN_OBJECT,
+        ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION,
+        ISSUE_MODULE_COMPANION_OBJECTS,
+        ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT,
+      )
   }
 
-  override fun getApplicableUastTypes(): List<Class<out UElement>>? {
+  override fun getApplicableUastTypes(): List<Class<out UElement>> {
     return listOf(UMethod::class.java, UField::class.java, UClass::class.java)
   }
 
@@ -175,23 +180,25 @@ class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
           }
           // Check if it's a FIELD site target
           val sourcePsi = annotation.sourcePsi
-          if (sourcePsi is KtAnnotationEntry &&
-            sourcePsi.useSiteTarget?.getAnnotationUseSiteTarget() == AnnotationUseSiteTarget.FIELD
+          if (
+            sourcePsi is KtAnnotationEntry &&
+              sourcePsi.useSiteTarget?.getAnnotationUseSiteTarget() == AnnotationUseSiteTarget.FIELD
           ) {
             // Check if this annotation is a qualifier annotation
             if (annotation.resolve()?.hasAnnotation(QUALIFIER_ANNOTATION) == true) {
               context.report(
                 ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION,
                 context.getLocation(annotation),
-                ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION
-                  .getBriefDescription(TextFormat.TEXT),
+                ISSUE_FIELD_SITE_TARGET_ON_QUALIFIER_ANNOTATION.getBriefDescription(
+                  TextFormat.TEXT
+                ),
                 LintFix.create()
                   .name("Remove 'field:'")
                   .replace()
                   .text("field:")
                   .with("")
                   .autoFix()
-                  .build()
+                  .build(),
               )
             }
           }
@@ -199,14 +206,16 @@ class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
       }
 
       override fun visitMethod(node: UMethod) {
-        if (!node.isConstructor &&
-          node.hasAnnotation(PROVIDES_ANNOTATION) &&
-          node.hasAnnotation(JVM_STATIC_ANNOTATION)
+        if (
+          !node.isConstructor &&
+            node.hasAnnotation(PROVIDES_ANNOTATION) &&
+            node.hasAnnotation(JVM_STATIC_ANNOTATION)
         ) {
           val containingClass = node.toUElement()?.getContainingUClass() ?: return
           if (containingClass.isObject()) {
-            val annotation = node.findAnnotation(JVM_STATIC_ANNOTATION)
-              ?: node.javaPsi.modifierList.findAnnotation(JVM_STATIC_ANNOTATION)!!
+            val annotation =
+              node.findAnnotation(JVM_STATIC_ANNOTATION)
+                ?: node.javaPsi.modifierList.findAnnotation(JVM_STATIC_ANNOTATION)!!
             context.report(
               ISSUE_JVM_STATIC_PROVIDES_IN_OBJECT,
               context.getLocation(annotation),
@@ -217,7 +226,7 @@ class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
                 .pattern("(@(kotlin\\.jvm\\.)?JvmStatic)")
                 .with("")
                 .autoFix()
-                .build()
+                .build(),
             )
           }
         }
@@ -237,15 +246,15 @@ class DaggerKotlinIssueDetector : Detector(), SourceCodeScanner {
                 .pattern("(@(dagger\\.)?Module)")
                 .with("")
                 .autoFix()
-                .build()
-
+                .build(),
             )
           } else {
             context.report(
               ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT,
               context.getLocation(node as UElement),
-              ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT
-                .getBriefDescription(TextFormat.TEXT)
+              ISSUE_MODULE_COMPANION_OBJECTS_NOT_IN_MODULE_PARENT.getBriefDescription(
+                TextFormat.TEXT
+              ),
             )
           }
         }

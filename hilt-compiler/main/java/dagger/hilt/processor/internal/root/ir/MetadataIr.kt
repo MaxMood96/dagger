@@ -35,16 +35,10 @@ data class AggregatedDepsIr(
 )
 
 /** Represents [dagger.hilt.android.internal.earlyentrypoint.AggregatedEarlyEntryPoint] */
-data class AggregatedEarlyEntryPointIr(
-  val fqName: ClassName,
-  val earlyEntryPoint: String,
-)
+data class AggregatedEarlyEntryPointIr(val fqName: ClassName, val earlyEntryPoint: String)
 
 /** Represents [dagger.hilt.android.internal.legacy.AggregatedElementProxy] */
-data class AggregatedElementProxyIr(
-  val fqName: ClassName,
-  val value: ClassName,
-)
+data class AggregatedElementProxyIr(val fqName: ClassName, val value: ClassName)
 
 /** Represents [dagger.hilt.internal.aggregatedroot.AggregatedRoot] */
 data class AggregatedRootIr(
@@ -52,6 +46,7 @@ data class AggregatedRootIr(
   val root: ClassName,
   val originatingRoot: ClassName,
   val rootAnnotation: ClassName,
+  val rootComponentName: ClassName,
   // External property from the annotation that indicates if root can use a shared component.
   val allowsSharingComponent: Boolean = true,
 ) {
@@ -71,7 +66,7 @@ data class AggregatedRootIr(
 data class AggregatedUninstallModulesIr(
   val fqName: ClassName,
   val test: String,
-  val uninstallModules: List<String>
+  val uninstallModules: List<String>,
 )
 
 /** Represents [dagger.hilt.internal.aliasof.AliasOfPropagatedData] */
@@ -93,10 +88,7 @@ data class ComponentTreeDepsIr(
 )
 
 /** Represents [dagger.hilt.internal.definecomponent.DefineComponentClasses] */
-data class DefineComponentClassesIr(
-  val fqName: ClassName,
-  val component: String,
-)
+data class DefineComponentClassesIr(val fqName: ClassName, val component: String)
 
 /** Represents [dagger.hilt.internal.processedrootsentinel.ProcessedRootSentinel] */
 data class ProcessedRootSentinelIr(val fqName: ClassName, val roots: List<String>)

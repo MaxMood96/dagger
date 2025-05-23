@@ -50,7 +50,7 @@ GenJavaTests(
     ],
     deps = [
         ":test_lib",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/guava",
     ],
 )

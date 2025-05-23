@@ -41,7 +41,7 @@ java_library(
     ],
     deps = [
         ":root_metadata",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/androidentrypoint:android_generators",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/androidentrypoint:metadata",
@@ -64,7 +64,7 @@ java_library(
         "//third_party/java/guava/graph",
         "//third_party/java/incap",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 
@@ -91,7 +91,7 @@ java_library(
     deps = [
         ":root_metadata",
         ":root_type",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/androidentrypoint:android_generators",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/androidentrypoint:metadata",
@@ -113,7 +113,7 @@ java_library(
         "//third_party/java/guava/collect",
         "//third_party/java/incap",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 
@@ -130,7 +130,7 @@ java_library(
     ],
     deps = [
         ":root_type",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:aggregated_elements",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:classnames",
@@ -154,7 +154,7 @@ java_library(
     name = "root_type",
     srcs = ["RootType.java"],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:classnames",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:processors",
         "//third_party/java/javapoet",

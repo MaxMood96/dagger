@@ -17,11 +17,7 @@
 load("@rules_java//java:defs.bzl", "java_library", "java_test")
 load("//:build_defs.bzl", "JAVA_RELEASE_MIN", "TEST_MANIFEST_VALUES")
 load("@rules_android//rules:rules.bzl", "android_library", "android_local_test")
-load(
-    "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
-    "kt_jvm_library",
-    "kt_jvm_test",
-)
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 # Defines a set of build variants and the list of extra javacopts to build with.
 # The key will be appended to the generated test names to ensure uniqueness.
@@ -210,7 +206,6 @@ def _GenTestsWithVariants(
     for (variant_name, variant_javacopts) in build_variants.items():
         merged_javacopts = javacopts + variant_javacopts
         for is_ksp in (True, False):
-            merged_plugins = plugins
             if variant_name:
                 suffix = "_" + variant_name
                 tags = [variant_name]
@@ -235,7 +230,7 @@ def _GenTestsWithVariants(
                     srcs = supporting_files,
                     tags = tags,
                     deps = deps + variant_deps,
-                    plugins = merged_plugins,
+                    plugins = plugins,
                     javacopts = merged_javacopts,
                     functional = functional,
                     require_jdk7_syntax = require_jdk7_syntax,
@@ -252,7 +247,7 @@ def _GenTestsWithVariants(
                     srcs = [test_file],
                     tags = tags,
                     deps = test_deps + variant_deps,
-                    plugins = merged_plugins,
+                    plugins = plugins,
                     javacopts = merged_javacopts,
                     shard_count = shard_count,
                     jvm_flags = jvm_flags,

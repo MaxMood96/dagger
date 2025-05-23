@@ -32,13 +32,13 @@ java_library(
         ":compiler_options",
         ":hilt_processing_env_configs",
         ":processor_errors",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//third_party/java/auto:value",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 
@@ -46,7 +46,7 @@ java_library(
     name = "hilt_processing_env_configs",
     srcs = ["HiltProcessingEnvConfigs.java"],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
     ],
 )
 
@@ -58,7 +58,7 @@ java_library(
         "ProcessorErrors.java",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//third_party/java/error_prone:annotations",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
@@ -74,14 +74,14 @@ java_library(
     deps = [
         ":classnames",
         ":processor_errors",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal/kotlin",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
-        "@maven//:org_jetbrains_kotlin_kotlin_stdlib",
+        "//third_party/kotlin/kotlin:kotlin_stdlib",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 
@@ -91,7 +91,7 @@ java_library(
         "MethodSignature.java",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//third_party/java/auto:value",
         "//third_party/java/guava/collect",
@@ -131,7 +131,7 @@ java_library(
         ":classnames",
         ":processor_errors",
         ":processors",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//third_party/java/auto:common",
         "//third_party/java/guava/collect",
@@ -158,7 +158,7 @@ java_library(
         ":classnames",
         ":processor_errors",
         ":processors",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
@@ -171,7 +171,7 @@ java_library(
     srcs = ["HiltCompilerOptions.java"],
     deps = [
         ":processor_errors",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal/optionvalues",
         "//third_party/java/guava/base",
@@ -188,7 +188,7 @@ kt_jvm_library(
         "//dagger-spi",
         "//third_party/java/auto:common",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 

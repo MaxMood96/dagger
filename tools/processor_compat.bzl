@@ -26,7 +26,7 @@ def compat_processor_plugin(
         visibility = None):
 
     full_path = native.package_name()
-    java_index = max(0, full_path.rindex("/java/"))
+    java_index = max(0, full_path.rfind("/java/"))
     pkgs = full_path[java_index:].split("/")
     pkg = ".".join(pkgs[pkgs.index("java") + 1:])
 

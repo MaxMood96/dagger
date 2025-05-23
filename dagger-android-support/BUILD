@@ -48,7 +48,7 @@ gen_maven_artifact(
         "dagger.android.support",
     ],
     javadoc_srcs = ["//dagger-android-support/main/java/dagger/android/support:support-srcs"],
-    manifest = "AndroidManifest.xml",
+    manifest = "main/AndroidManifest.xml",
     packaging = "aar",
 )
 
@@ -62,8 +62,8 @@ android_library(
     name = "legacy-deps",
     tags = ["maven_coordinates=com.google.dagger:dagger-android-support-legacy:" + POM_VERSION],
     exports = [
-        "//:dagger_with_compiler",
         "//dagger-android:legacy-deps",
+        "//third_party/java/dagger",
         "//third_party/java/error_prone:annotations",
         "@maven//:com_android_support_appcompat_v7",
         "@maven//:com_android_support_support_annotations",

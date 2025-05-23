@@ -15,6 +15,7 @@
 # Description:
 #   Public Dagger API for Android
 
+load("@rules_java//java:defs.bzl", "java_library")
 load("//:build_defs.bzl", "POM_VERSION")
 load("//tools/maven:maven.bzl", "gen_maven_artifact")
 
@@ -28,26 +29,25 @@ package_group(
     ],
 )
 
+ARTIFACT_COORDINATES = "com.google.dagger:dagger-android-processor:" + POM_VERSION
+
 gen_maven_artifact(
     name = "artifact",
-    artifact_coordinates = "com.google.dagger:dagger-android-processor:" + POM_VERSION,
+    artifact_coordinates = ARTIFACT_COORDINATES,
     artifact_name = "Dagger Android Processor",
     artifact_target = "//dagger-android-processor/main/java/dagger/android/processor",
     artifact_target_libs = [
         "//dagger-android-processor/main/java/dagger/android/processor:base_processing_step",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
     ],
     artifact_target_maven_deps = [
         "com.google.dagger:dagger",
+        "com.google.dagger:dagger-compiler",
         "com.google.devtools.ksp:symbol-processing-api",
         "com.google.guava:guava",
         "com.squareup:javapoet",
-        "com.google.code.findbugs:jsr305",
         "com.google.dagger:dagger-spi",
         "com.google.guava:failureaccess",
-        "com.squareup:kotlinpoet",
         "net.ltgt.gradle.incap:incap",
-        "org.jetbrains.kotlin:kotlin-stdlib",
     ],
     javadoc_root_packages = [
         "dagger.android.processor",
@@ -58,18 +58,16 @@ gen_maven_artifact(
 )
 
 # Note: We're exposing this to the proguard processor, which is not actually used by any artifact.
-alias(
+java_library(
     name = "base_processing_step",
-    actual = "//dagger-android-processor/main/java/dagger/android/processor:base_processing_step",
+    tags = ["maven_coordinates=" + ARTIFACT_COORDINATES],
     visibility = [
         "//dagger-android-proguard-processor/main/java/dagger/android/internal/proguard:__pkg__",
     ],
+    exports = ["//dagger-android-processor/main/java/dagger/android/processor:base_processing_step"],
 )
 
 alias(
     name = "plugin",
     actual = "//dagger-android-processor/main/java/dagger/android/processor:plugin",
-    visibility = [
-        "//:__pkg__",
-    ],
 )

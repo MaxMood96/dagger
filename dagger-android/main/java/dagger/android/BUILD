@@ -43,14 +43,13 @@ android_library(
     javacopts = JAVA_RELEASE_MIN + DOCLINT_HTML_AND_SYNTAX,
     tags = ["maven_coordinates=com.google.dagger:dagger-android:" + POM_VERSION],
     exports = [
-        "//dagger-lint:lint-android-artifact-lib",
+        "//dagger-lint-android:lint-android-artifact-lib",
     ],
     deps = [
-        "//:dagger_with_compiler",
         "//dagger-android-proguard-processor:proguard",
+        "//third_party/java/androidx/annotation",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/error_prone:annotations",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
     ],
 )

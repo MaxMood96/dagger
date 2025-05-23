@@ -30,8 +30,8 @@ GenJavaTests(
         "//third_party/java/junit",
     ],
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:factory",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
     ],
 )

@@ -23,8 +23,8 @@ compiler_test(
     name = "AliasOfProcessorTest",
     srcs = ["AliasOfProcessorTest.java"],
     compiler_deps = [
-        "@androidsdk//:platforms/android-34/android.jar",
-        "@maven//:jakarta_inject_jakarta_inject_api",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
+        "//third_party/java/jakarta_inject",
         "//third_party/java/jsr330_inject",
         "//hilt-android/main/java/dagger/hilt/android:hilt_android_app",
         "//hilt-android/main/java/dagger/hilt/android/components",

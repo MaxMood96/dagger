@@ -17,7 +17,7 @@
 
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//:src"])
+package(default_visibility = ["//dagger-compiler:internal"])
 
 java_library(
     name = "componentgenerator",
@@ -34,6 +34,6 @@ java_library(
         "//dagger-runtime/main/java/dagger:core",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
-        "//third_party/java/jsr330_inject",
+        "//third_party/java/jsr330_inject:jsr330_inject_without_dagger",
     ],
 )

@@ -47,8 +47,8 @@ GenJavaTests(
     ],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/junit",
         "//third_party/java/truth",
     ],
@@ -62,7 +62,7 @@ GenJavaTests(
     ],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/guava/collect",
         "//third_party/java/junit",
         "//third_party/java/truth",
@@ -74,7 +74,7 @@ GenJavaTests(
     srcs = ["ClassKeyWithGenericsTest.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/junit",
         "//third_party/java/truth",
     ],
@@ -85,7 +85,7 @@ GenJavaTests(
     srcs = ["LazyClassKeyWithGenericsTest.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/junit",
         "//third_party/java/truth",
     ],
@@ -96,8 +96,8 @@ GenJavaTests(
     srcs = ["ComplexMapKeysInDifferentOrderTest.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/junit",
         "//third_party/java/truth",
     ],
@@ -108,8 +108,8 @@ GenJavaTests(
     srcs = ["MapKeyWithDefaultTest.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/junit",
         "//third_party/java/truth",
     ],
@@ -123,7 +123,7 @@ GenJavaTests(
     ],
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/junit",
         "//third_party/java/truth",
     ],

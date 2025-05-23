@@ -32,6 +32,6 @@ GenJavaTests(
         "//third_party/java/guava/collect",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )

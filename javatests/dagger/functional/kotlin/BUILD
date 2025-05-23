@@ -45,8 +45,8 @@ kt_jvm_library(
     deps = [
         ":FooWithInjectedQualifier",
         ":java_qualifier",
-        "//:dagger_with_compiler",
         "//javatests/dagger/functional/kotlin/processor:annotation",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -55,7 +55,7 @@ kt_jvm_library(
     srcs = ["FooWithInjectedQualifier.kt"],
     deps = [
         ":java_qualifier",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -66,7 +66,7 @@ java_library(
         "JavaTestQualifierWithTarget.java",
     ],
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -94,7 +94,7 @@ kt_jvm_library(
     # TODO(danysantiago): Remove 'plugins' once kt_jvm_library supports 'exported_plugins'.
     plugins = ["//javatests/dagger/functional/kotlin/processor:plugin"],
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -119,8 +119,8 @@ kt_jvm_library(
     # TODO(danysantiago): Remove 'plugins' once kt_jvm_library supports 'exported_plugins'.
     plugins = ["//javatests/dagger/functional/kotlin/processor:plugin"],
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:factory",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -145,6 +145,6 @@ kt_jvm_library(
     # TODO(danysantiago): Remove 'plugins' once kt_jvm_library supports 'exported_plugins'.
     plugins = ["//javatests/dagger/functional/kotlin/processor:plugin"],
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )

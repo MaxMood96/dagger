@@ -22,7 +22,6 @@ load("//tools/maven:maven.bzl", "gen_maven_artifact")
 package(default_visibility = ["//:src"])
 
 _ARTIFACT_EXPORTS = [
-    "//dagger-compiler/main/java/dagger/internal/codegen:processor",
     "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/androidentrypoint:processor_lib",
     "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/bindvalue:bind_value_processor_lib",
     "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/customtestapplication:processor_lib",
@@ -93,7 +92,6 @@ _ARTIFACT_TARGET_MAVEN_DEPS = [
     "com.google.guava:failureaccess",
     "com.google.guava:guava",
     "com.squareup:javapoet",
-    "com.squareup:kotlinpoet",
     "javax.inject:javax.inject",
     "net.ltgt.gradle.incap:incap",
     "org.jetbrains.kotlin:kotlin-stdlib",

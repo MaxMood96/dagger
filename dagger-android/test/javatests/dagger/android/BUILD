@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # Description:
-#   Tests for Dagger's Android and Support library integrations
+#   Tests for Dagger's Android integrations
 
 load("//:build_defs.bzl", "DOCLINT_HTML_AND_SYNTAX")
 load("//:test_defs.bzl", "GenRobolectricTests")
@@ -21,24 +21,15 @@ load("//:test_defs.bzl", "GenRobolectricTests")
 package(default_visibility = ["//:src"])
 
 GenRobolectricTests(
-    name = "android-support-tests",
+    name = "android_tests",
     srcs = glob(["*.java"]),
     functional = False,
     javacopts = DOCLINT_HTML_AND_SYNTAX,
     deps = [
-        "//:dagger_with_compiler",
-        "//dagger-android-support/main/java/dagger/android/support",
         "//dagger-android/main/java/dagger/android",
-        "//third_party/java/guava/base",
+        "//third_party/java/dagger",
         "//third_party/java/guava/collect",
-        "//third_party/java/guava/util/concurrent",
         "//third_party/java/junit",
         "//third_party/java/truth",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_appcompat_appcompat",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
     ],
 )

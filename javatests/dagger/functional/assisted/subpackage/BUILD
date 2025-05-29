@@ -23,7 +23,7 @@ java_library(
     name = "subpackage",
     srcs = glob(["*.java"]),
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/jsr330_inject",
     ],
 )

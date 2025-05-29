@@ -90,10 +90,12 @@ public final class RootProcessingStep extends BaseProcessingStep {
       }
     }
 
-    XTypeElement originatingRootElement =
-        Root.create(rootElement, processingEnv()).originatingRootElement();
+    Root root = Root.create(rootElement, processingEnv());
     new AggregatedRootGenerator(
-            rootElement, originatingRootElement, processingEnv().requireTypeElement(annotation))
+            rootElement,
+            root.originatingRootElement(),
+            processingEnv().requireTypeElement(annotation),
+            root.rootComponentName())
         .generate();
   }
 

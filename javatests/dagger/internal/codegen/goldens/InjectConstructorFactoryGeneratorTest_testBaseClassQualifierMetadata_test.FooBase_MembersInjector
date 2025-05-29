@@ -30,7 +30,7 @@ public final class FooBase_MembersInjector implements MembersInjector<FooBase> {
 
   private final Provider<Float> fProvider;
 
-  public FooBase_MembersInjector(Provider<String> injectFieldProvider, Provider<Float> fProvider) {
+  private FooBase_MembersInjector(Provider<String> injectFieldProvider, Provider<Float> fProvider) {
     this.injectFieldProvider = injectFieldProvider;
     this.fProvider = fProvider;
   }

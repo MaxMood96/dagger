@@ -27,7 +27,7 @@ public final class A_MembersInjector implements MembersInjector<A> {
 
   private final Provider<String> valueAProvider;
 
-  public A_MembersInjector(Provider<String> valueCProvider, Provider<String> valueAProvider) {
+  private A_MembersInjector(Provider<String> valueCProvider, Provider<String> valueAProvider) {
     this.valueCProvider = valueCProvider;
     this.valueAProvider = valueAProvider;
   }

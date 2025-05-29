@@ -32,7 +32,7 @@ public final class Foo_Factory implements Factory<Foo> {
 
   private final Provider<Float> fProvider;
 
-  public Foo_Factory(Provider<Integer> iProvider, Provider<String> injectFieldProvider,
+  private Foo_Factory(Provider<Integer> iProvider, Provider<String> injectFieldProvider,
       Provider<String> injectFieldProvider2, Provider<Float> fProvider) {
     this.iProvider = iProvider;
     this.injectFieldProvider = injectFieldProvider;

@@ -33,6 +33,6 @@ GenKtTests(
         "//third_party/java/junit",
     ],
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )

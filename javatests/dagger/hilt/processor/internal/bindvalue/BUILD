@@ -25,8 +25,8 @@ compiler_test(
     compiler_deps = [
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:hilt_android_test",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:bind_value",
-        "@androidsdk//:platforms/android-34/android.jar",
-        "@maven//:jakarta_inject_jakarta_inject_api",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
+        "//third_party/java/jakarta_inject",
     ],
     deps = [
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",

@@ -181,7 +181,7 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
     return generatedClassNameForBinding(binding).nestedClass("InstanceHolder");
   }
 
-  // public FooModule_ProvidesFooFactory(
+  // private FooModule_ProvidesFooFactory(
   //     FooModule module,
   //     Provider<Bar> barProvider,
   //     Provider<Baz> bazProvider) {
@@ -190,8 +190,7 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
   //   this.bazProvider = bazProvider;
   // }
   private XFunSpec constructorMethod(FactoryFields factoryFields) {
-    // TODO(bcorso): Make the constructor private?
-    XFunSpecs.Builder constructor = constructorBuilder().addModifiers(PUBLIC);
+    XFunSpecs.Builder constructor = constructorBuilder().addModifiers(PRIVATE);
     factoryFields
         .getAll()
         .forEach(

@@ -28,7 +28,7 @@ public final class GenericClass_Factory<A, B> implements Factory<GenericClass<A,
 
   private final Provider<B> bProvider;
 
-  public GenericClass_Factory(Provider<A> aProvider, Provider<B> bProvider) {
+  private GenericClass_Factory(Provider<A> aProvider, Provider<B> bProvider) {
     this.aProvider = aProvider;
     this.bProvider = bProvider;
   }

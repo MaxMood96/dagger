@@ -27,7 +27,7 @@ public final class Child_MembersInjector implements MembersInjector<Child> {
 
   private final Provider<Bar> objectProvider2;
 
-  public Child_MembersInjector(Provider<Foo> objectProvider, Provider<Bar> objectProvider2) {
+  private Child_MembersInjector(Provider<Foo> objectProvider, Provider<Bar> objectProvider2) {
     this.objectProvider = objectProvider;
     this.objectProvider2 = objectProvider2;
   }

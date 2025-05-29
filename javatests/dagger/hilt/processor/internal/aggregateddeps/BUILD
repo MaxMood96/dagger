@@ -25,13 +25,13 @@ compiler_test(
     compiler_deps = [
         "//hilt-android/main/java/dagger/hilt/internal:component_entry_point",
         "//hilt-android/main/java/dagger/hilt/internal:generated_entry_point",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/jsr250_annotations",
         "//hilt-core/main/java/dagger/hilt:entry_point",
         "//hilt-core/main/java/dagger/hilt:install_in",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:hilt_android_test",
         "//hilt-android/main/java/dagger/hilt/android/components",
-        "@androidsdk//:platforms/android-34/android.jar",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
     ],
     shard_count = 3,
     deps = [

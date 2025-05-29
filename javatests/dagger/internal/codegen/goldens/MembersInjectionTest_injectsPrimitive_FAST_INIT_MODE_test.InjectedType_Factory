@@ -28,7 +28,7 @@ public final class InjectedType_Factory implements Factory<InjectedType> {
 
   private final Provider<Integer> boxedIntProvider;
 
-  public InjectedType_Factory(Provider<Integer> primitiveIntProvider,
+  private InjectedType_Factory(Provider<Integer> primitiveIntProvider,
       Provider<Integer> boxedIntProvider) {
     this.primitiveIntProvider = primitiveIntProvider;
     this.boxedIntProvider = boxedIntProvider;

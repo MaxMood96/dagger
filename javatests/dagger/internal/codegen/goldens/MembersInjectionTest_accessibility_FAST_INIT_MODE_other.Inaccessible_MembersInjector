@@ -27,7 +27,7 @@ public final class Inaccessible_MembersInjector implements MembersInjector<Inacc
 
   private final Provider<Foo> fooProvider2;
 
-  public Inaccessible_MembersInjector(Provider<Foo> fooProvider, Provider<Foo> fooProvider2) {
+  private Inaccessible_MembersInjector(Provider<Foo> fooProvider, Provider<Foo> fooProvider2) {
     this.fooProvider = fooProvider;
     this.fooProvider2 = fooProvider2;
   }

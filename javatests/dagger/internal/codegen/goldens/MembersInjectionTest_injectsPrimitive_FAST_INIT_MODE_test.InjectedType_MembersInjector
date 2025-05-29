@@ -27,7 +27,7 @@ public final class InjectedType_MembersInjector implements MembersInjector<Injec
 
   private final Provider<Integer> boxedIntProvider;
 
-  public InjectedType_MembersInjector(Provider<Integer> primitiveIntProvider,
+  private InjectedType_MembersInjector(Provider<Integer> primitiveIntProvider,
       Provider<Integer> boxedIntProvider) {
     this.primitiveIntProvider = primitiveIntProvider;
     this.boxedIntProvider = boxedIntProvider;

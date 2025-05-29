@@ -20,8 +20,8 @@ java_library(
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES + JAVA_RELEASE_MIN,
     exports = ["//dagger-grpc-server-annotations:artifact-lib"],
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/grpc:context",
         "//third_party/java/grpc:core",
         "//third_party/java/grpc:netty",

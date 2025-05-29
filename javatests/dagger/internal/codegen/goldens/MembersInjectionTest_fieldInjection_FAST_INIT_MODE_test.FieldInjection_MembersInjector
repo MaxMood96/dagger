@@ -31,7 +31,7 @@ public final class FieldInjection_MembersInjector implements MembersInjector<Fie
 
   private final Provider<String> stringProvider3;
 
-  public FieldInjection_MembersInjector(Provider<String> stringProvider,
+  private FieldInjection_MembersInjector(Provider<String> stringProvider,
       Provider<String> stringProvider2, Provider<String> stringProvider3) {
     this.stringProvider = stringProvider;
     this.stringProvider2 = stringProvider2;

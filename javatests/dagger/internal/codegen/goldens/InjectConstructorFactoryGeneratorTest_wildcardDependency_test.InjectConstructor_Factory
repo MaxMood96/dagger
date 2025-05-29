@@ -27,7 +27,7 @@ import javax.annotation.processing.Generated;
 public final class InjectConstructor_Factory implements Factory<InjectConstructor> {
   private final Provider<List<?>> objectsProvider;
 
-  public InjectConstructor_Factory(Provider<List<?>> objectsProvider) {
+  private InjectConstructor_Factory(Provider<List<?>> objectsProvider) {
     this.objectsProvider = objectsProvider;
   }
 

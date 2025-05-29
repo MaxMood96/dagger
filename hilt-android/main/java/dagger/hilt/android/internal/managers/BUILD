@@ -42,7 +42,6 @@ android_library(
     deps = [
         ":component_supplier",
         ":saved_state_handle_holder",
-        "//:dagger_with_compiler",
         "//hilt-android/main/java/dagger/hilt/android:activity_retained_lifecycle",
         "//hilt-android/main/java/dagger/hilt/android:entry_point_accessors",
         "//hilt-android/main/java/dagger/hilt/android:unstable_api",
@@ -56,14 +55,10 @@ android_library(
         "//hilt-core/main/java/dagger/hilt:install_in",
         "//hilt-core/main/java/dagger/hilt/internal:component_manager",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_experimental",
-        "@maven//:androidx_annotation_annotation_jvm",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
+        "//third_party/java/androidx/annotation",
+        "//third_party/java/androidx/annotation/experimental",
+        "//third_party/java/androidx/fragment",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -73,13 +68,8 @@ android_library(
     deps = [
         "//hilt-android/main/java/dagger/hilt/android/internal",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
+        "//third_party/java/androidx/annotation",
+        "//third_party/java/androidx/fragment",
     ],
 )
 

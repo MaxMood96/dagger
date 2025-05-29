@@ -15,11 +15,11 @@ java_library(
     srcs = [":srcs"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
     deps = [
-        "//:dagger_with_compiler",
         "//dagger-grpc-server-annotations:artifact-lib",
         "//third_party/java/auto:common",
         "//third_party/java/auto:service",
-        "//third_party/java/google_java_format",
+        "//third_party/java/dagger",
+        "//third_party/java/google_java_format:filer",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
         "//third_party/java/guava/io",

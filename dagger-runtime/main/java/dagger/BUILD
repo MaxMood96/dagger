@@ -30,11 +30,11 @@ java_library(
     srcs = glob(["**/*.java"]),
     javacopts = JAVA_RELEASE_MIN + DOCLINT_HTML_AND_SYNTAX,
     tags = ["maven_coordinates=com.google.dagger:dagger:" + POM_VERSION],
-    exports = ["//third_party/java/jsr330_inject"],
+    exports = ["//third_party/java/jsr330_inject:jsr330_inject_without_dagger"],
     deps = [
+        "//third_party/java/jakarta_inject",
         "//third_party/java/jspecify_annotations",
-        "//third_party/java/jsr330_inject",
-        "@maven//:jakarta_inject_jakarta_inject_api",
+        "//third_party/java/jsr330_inject:jsr330_inject_without_dagger",
     ],
 )
 

@@ -27,7 +27,7 @@ import javax.annotation.processing.Generated;
 public final class ParameterizedModule_ProvideNonGenericTypeWithDepsFactory implements Factory<String> {
   private final Provider<Object> oProvider;
 
-  public ParameterizedModule_ProvideNonGenericTypeWithDepsFactory(Provider<Object> oProvider) {
+  private ParameterizedModule_ProvideNonGenericTypeWithDepsFactory(Provider<Object> oProvider) {
     this.oProvider = oProvider;
   }
 

@@ -29,7 +29,7 @@ public final class ParentModule_ProvideBEntryFactory<A extends CharSequence, B, 
 
   private final Provider<B> bProvider;
 
-  public ParentModule_ProvideBEntryFactory(ParentModule<A, B, C> module, Provider<B> bProvider) {
+  private ParentModule_ProvideBEntryFactory(ParentModule<A, B, C> module, Provider<B> bProvider) {
     this.module = module;
     this.bProvider = bProvider;
   }

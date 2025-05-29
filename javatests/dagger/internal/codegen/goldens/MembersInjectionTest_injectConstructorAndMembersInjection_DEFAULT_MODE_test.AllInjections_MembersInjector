@@ -27,7 +27,7 @@ public final class AllInjections_MembersInjector implements MembersInjector<AllI
 
   private final Provider<String> sProvider2;
 
-  public AllInjections_MembersInjector(Provider<String> sProvider, Provider<String> sProvider2) {
+  private AllInjections_MembersInjector(Provider<String> sProvider, Provider<String> sProvider2) {
     this.sProvider = sProvider;
     this.sProvider2 = sProvider2;
   }

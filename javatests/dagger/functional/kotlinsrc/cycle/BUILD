@@ -34,7 +34,7 @@ GenKtTests(
         "//third_party/java/junit",
     ],
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/guava/collect",
     ],
 )
@@ -50,7 +50,7 @@ GenKtTests(
         "//third_party/java/guava/util/concurrent",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -70,6 +70,6 @@ GenKtTests(
         "//third_party/java/junit",
     ],
     deps = [
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
 )

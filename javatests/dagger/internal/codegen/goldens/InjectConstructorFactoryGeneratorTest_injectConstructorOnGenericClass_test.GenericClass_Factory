@@ -26,7 +26,7 @@ import javax.annotation.processing.Generated;
 public final class GenericClass_Factory<T> implements Factory<GenericClass<T>> {
   private final Provider<T> tProvider;
 
-  public GenericClass_Factory(Provider<T> tProvider) {
+  private GenericClass_Factory(Provider<T> tProvider) {
     this.tProvider = tProvider;
   }
 

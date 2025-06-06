@@ -33,7 +33,7 @@ public final class Child_MembersInjector<T> implements MembersInjector<Child<T>>
 
   private final Provider<T> tProvider;
 
-  public Child_MembersInjector(Provider<T> xProvider, Provider<A> yProvider,
+  private Child_MembersInjector(Provider<T> xProvider, Provider<A> yProvider,
       Provider<A2> a2Provider, Provider<A> aProvider, Provider<T> tProvider) {
     this.xProvider = xProvider;
     this.yProvider = yProvider;

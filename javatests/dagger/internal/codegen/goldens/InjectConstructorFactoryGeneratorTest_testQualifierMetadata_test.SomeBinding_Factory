@@ -30,7 +30,7 @@ public final class SomeBinding_Factory implements Factory<SomeBinding> {
 
   private final Provider<Float> fProvider;
 
-  public SomeBinding_Factory(Provider<Double> dProvider, Provider<String> injectFieldProvider,
+  private SomeBinding_Factory(Provider<Double> dProvider, Provider<String> injectFieldProvider,
       Provider<Float> fProvider) {
     this.dProvider = dProvider;
     this.injectFieldProvider = injectFieldProvider;

@@ -167,7 +167,7 @@ final class MapRequestRepresentation extends RequestRepresentation {
         binding.key().type().xprocessing(),
         toJavaPoet(
             XCodeBlock.builder()
-                .add("%T.", XTypeNames.COLLECTIONS)
+                .add("%T.", XTypeNames.JAVA_UTIL_COLLECTIONS)
                 .add(maybeTypeParameters(requestingClass))
                 .add(methodInvocation)
                 .build()));

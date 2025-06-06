@@ -28,6 +28,7 @@ import androidx.room.compiler.processing.XType;
 import com.google.common.collect.ImmutableSet;
 import dagger.internal.codegen.model.Key;
 import dagger.internal.codegen.model.RequestKind;
+import dagger.internal.codegen.xprocessing.XTypeNames;
 import dagger.internal.codegen.xprocessing.XTypes;
 
 /** Information about a {@link java.util.Map} type. */
@@ -150,7 +151,10 @@ public final class MapType {
   /** Returns {@code true} if {@code type} is a {@link java.util.Map} type. */
   public static boolean isMap(XType type) {
     // In general, Dagger ignores mutability so check for both kotlin.collection.(Map|MutableMap).
-    return XTypes.isTypeOf(type, XTypeName.MAP) || XTypes.isTypeOf(type, XTypeName.MUTABLE_MAP);
+    return XTypes.isTypeOf(type, XTypeName.MAP)
+        || XTypes.isTypeOf(type, XTypeName.MUTABLE_MAP)
+        // This is for cases where java.util.Map is used directly in Kotlin sources.
+        || XTypes.isTypeOf(type, XTypeNames.JAVA_UTIL_MAP);
   }
 
   /** Returns {@code true} if {@code key.type()} is a {@link java.util.Map} type. */

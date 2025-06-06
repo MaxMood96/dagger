@@ -17,7 +17,7 @@
 
 load("@rules_java//java:defs.bzl", "java_library")
 
-package(default_visibility = ["//:src"])
+package(default_visibility = ["//dagger-compiler:internal"])
 
 java_library(
     name = "validation",
@@ -43,7 +43,7 @@ java_library(
         "//third_party/java/guava/graph",
         "//third_party/java/guava/util/concurrent",
         "//third_party/java/javapoet",
-        "//third_party/java/jsr330_inject",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/java/jsr330_inject:jsr330_inject_without_dagger",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )

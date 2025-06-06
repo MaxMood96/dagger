@@ -23,18 +23,13 @@ android_library(
     name = "modules",
     srcs = glob(["*.java"]),
     deps = [
-        "//:dagger_with_compiler",
         "//hilt-android/main/java/dagger/hilt/android/components",
         "//hilt-android/main/java/dagger/hilt/android/internal",
         "//hilt-android/main/java/dagger/hilt/android/qualifiers",
         "//hilt-core/main/java/dagger/hilt:install_in",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
+        "//third_party/java/androidx/annotation",
+        "//third_party/java/androidx/fragment",
+        "//third_party/java/dagger",
     ],
 )
 

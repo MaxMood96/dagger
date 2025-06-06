@@ -17,15 +17,10 @@
 load("@rules_java//java:defs.bzl", "java_library", "java_test")
 load("//:build_defs.bzl", "JAVA_RELEASE_MIN", "TEST_MANIFEST_VALUES")
 load("@rules_android//rules:rules.bzl", "android_library", "android_local_test")
-load(
-    "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
-    "kt_jvm_library",
-    "kt_jvm_test",
-)
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
 
 # Defines a set of build variants and the list of extra javacopts to build with.
 # The key will be appended to the generated test names to ensure uniqueness.
-_NON_FUNCTIONAL_BUILD_VARIANTS = {None: []}
 _FUNCTIONAL_BUILD_VARIANTS = {
     None: [],  # The default build variant (no javacopts).
     "Shards": ["-Adagger.keysPerComponentShard=2"],
@@ -33,15 +28,39 @@ _FUNCTIONAL_BUILD_VARIANTS = {
     "FastInit_Shards": ["-Adagger.fastInit=enabled", "-Adagger.keysPerComponentShard=2"],
 }
 
+def GenCompilerTests(name, srcs, **kwargs):
+    """Generates a java_test or kt_jvm_test for each test source in srcs.
+
+    In addition, this macro will append any golden files associated with the test in the form
+    'goldens/{test_name}_*' to the resources attribute of the generated test rule.
+
+    Args:
+        name: name of the target
+        srcs: list of test sources.
+        **kwargs: additional arguments to pass to each test rule.
+    """
+    non_test_srcs = [src for src in srcs if not _is_test(src)]
+    if non_test_srcs:
+        fail("GenCompilerTests should only contain test sources. Found: {0}".format(non_test_srcs))
+    if not srcs:
+        fail("':{0}' should contain at least 1 test source.".format(name))
+    for src in srcs:
+        test_name = src.rsplit(".", 1)[0]
+        test_rule_type = kt_jvm_test if src.endswith(".kt") else java_test
+        test_rule_type(
+            name = test_name,
+            srcs = [src],
+            resources = native.glob(["goldens/%s_*" % test_name]),
+            **kwargs
+        )
+
 def GenKtLibrary(
         name,
         srcs,
         deps = None,
         gen_library_deps = None,
         plugins = None,
-        javacopts = None,
-        functional = True,
-        require_jdk7_syntax = True):
+        javacopts = None):
     _GenTestsWithVariants(
         library_rule_type = kt_jvm_library,
         test_rule_type = None,
@@ -53,8 +72,6 @@ def GenKtLibrary(
         shard_count = None,
         plugins = plugins,
         javacopts = javacopts,
-        functional = functional,
-        require_jdk7_syntax = require_jdk7_syntax,
     )
 
 def GenKtTests(
@@ -65,9 +82,7 @@ def GenKtTests(
         test_only_deps = None,
         plugins = None,
         javacopts = None,
-        shard_count = None,
-        functional = True,
-        require_jdk7_syntax = True):
+        shard_count = None):
     _GenTestsWithVariants(
         library_rule_type = kt_jvm_library,
         test_rule_type = kt_jvm_test,
@@ -79,8 +94,6 @@ def GenKtTests(
         plugins = plugins,
         javacopts = javacopts,
         shard_count = shard_count,
-        functional = functional,
-        require_jdk7_syntax = require_jdk7_syntax,
     )
 
 def GenJavaLibrary(
@@ -89,9 +102,7 @@ def GenJavaLibrary(
         deps = None,
         gen_library_deps = None,
         plugins = None,
-        javacopts = None,
-        functional = True,
-        require_jdk7_syntax = True):
+        javacopts = None):
     if any([src for src in srcs if src.endswith(".kt")]):
         fail("GenJavaLibrary ':{0}' should not contain kotlin sources.".format(name))
     _GenTestsWithVariants(
@@ -105,8 +116,6 @@ def GenJavaLibrary(
         plugins = plugins,
         javacopts = javacopts,
         shard_count = None,
-        functional = functional,
-        require_jdk7_syntax = require_jdk7_syntax,
     )
 
 def GenJavaTests(
@@ -117,9 +126,7 @@ def GenJavaTests(
         test_only_deps = None,
         plugins = None,
         javacopts = None,
-        shard_count = None,
-        functional = True,
-        require_jdk7_syntax = True):
+        shard_count = None):
     if any([src for src in srcs if src.endswith(".kt")]):
         fail("GenJavaTests ':{0}' should not contain kotlin sources.".format(name))
     _GenTestsWithVariants(
@@ -133,8 +140,6 @@ def GenJavaTests(
         plugins = plugins,
         javacopts = javacopts,
         shard_count = shard_count,
-        functional = functional,
-        require_jdk7_syntax = require_jdk7_syntax,
     )
 
 def GenRobolectricTests(
@@ -145,8 +150,6 @@ def GenRobolectricTests(
         plugins = None,
         javacopts = None,
         shard_count = None,
-        functional = True,
-        require_jdk7_syntax = True,
         manifest_values = TEST_MANIFEST_VALUES):
     deps = (deps or []) + ["//:android_local_test_exports"]
     _GenTestsWithVariants(
@@ -160,8 +163,6 @@ def GenRobolectricTests(
         plugins = plugins,
         javacopts = javacopts,
         shard_count = shard_count,
-        functional = functional,
-        require_jdk7_syntax = require_jdk7_syntax,
         test_kwargs = {"manifest_values": manifest_values},
     )
 
@@ -176,8 +177,6 @@ def _GenTestsWithVariants(
         plugins,
         javacopts,
         shard_count,
-        functional,
-        require_jdk7_syntax,
         test_kwargs = None):
     test_files = [src for src in srcs if _is_test(src)]
     supporting_files = [src for src in srcs if not _is_test(src)]
@@ -206,11 +205,12 @@ def _GenTestsWithVariants(
     if javacopts == None:
         javacopts = []
 
-    build_variants = _FUNCTIONAL_BUILD_VARIANTS if functional else _NON_FUNCTIONAL_BUILD_VARIANTS
-    for (variant_name, variant_javacopts) in build_variants.items():
+    # Ensure that the source code is compatible with the minimum supported Java version.
+    javacopts = javacopts + JAVA_RELEASE_MIN
+
+    for (variant_name, variant_javacopts) in _FUNCTIONAL_BUILD_VARIANTS.items():
         merged_javacopts = javacopts + variant_javacopts
         for is_ksp in (True, False):
-            merged_plugins = plugins
             if variant_name:
                 suffix = "_" + variant_name
                 tags = [variant_name]
@@ -235,10 +235,8 @@ def _GenTestsWithVariants(
                     srcs = supporting_files,
                     tags = tags,
                     deps = deps + variant_deps,
-                    plugins = merged_plugins,
+                    plugins = plugins,
                     javacopts = merged_javacopts,
-                    functional = functional,
-                    require_jdk7_syntax = require_jdk7_syntax,
                 )
                 test_deps.append(supporting_files_name)
 
@@ -252,11 +250,10 @@ def _GenTestsWithVariants(
                     srcs = [test_file],
                     tags = tags,
                     deps = test_deps + variant_deps,
-                    plugins = merged_plugins,
+                    plugins = plugins,
                     javacopts = merged_javacopts,
                     shard_count = shard_count,
                     jvm_flags = jvm_flags,
-                    functional = functional,
                     test_kwargs = test_kwargs,
                 )
 
@@ -267,18 +264,8 @@ def _GenLibraryWithVariant(
         tags,
         deps,
         plugins,
-        javacopts,
-        functional,
-        require_jdk7_syntax):
-    if functional and require_jdk7_syntax:
-        # TODO(b/261894425): Decide if we still want to apply JAVA_RELEASE_MIN by default.
-        # Note: Technically, we should also apply JAVA_RELEASE_MIN to tests too, since we have
-        # Dagger code in there as well, but we keep it only on libraries for legacy reasons, and
-        # fixing tests to be jdk7 compatible would require a bit of work. We should decide on
-        # b/261894425 before committing to that work.
-        library_javacopts_kwargs = {"javacopts": javacopts + JAVA_RELEASE_MIN}
-    else:
-        library_javacopts_kwargs = {"javacopts": javacopts}
+        javacopts):
+    library_javacopts_kwargs = {"javacopts": javacopts}
 
     # TODO(bcorso): Add javacopts explicitly once kt_jvm_test supports them.
     if library_rule_type in [kt_jvm_library]:
@@ -292,7 +279,7 @@ def _GenLibraryWithVariant(
         deps = deps,
         **library_javacopts_kwargs
     )
-    if functional and _is_hjar_test_supported(library_rule_type):
+    if _is_hjar_test_supported(library_rule_type):
         _hjar_test(name, tags)
 
 def _GenTestWithVariant(
@@ -306,20 +293,16 @@ def _GenTestWithVariant(
         javacopts,
         shard_count,
         jvm_flags,
-        functional,
         test_kwargs):
     test_files = [src for src in srcs if _is_test(src)]
     if len(test_files) != 1:
         fail("Expected 1 test source but found multiples: {0}".format(test_files))
 
-    should_add_goldens = not functional and (test_rule_type == java_test)
     test_name = test_files[0].rsplit(".", 1)[0]
     prefix_path = "src/test/java/"
     package_name = native.package_name()
     if package_name.find("javatests/") != -1:
         prefix_path = "javatests/"
-    if should_add_goldens:
-        test_kwargs["resources"] = native.glob(["goldens/%s_*" % test_name])
     test_class = (package_name + "/" + test_name).rpartition(prefix_path)[2].replace("/", ".")
     test_kwargs_with_javacopts = {"javacopts": javacopts}
 

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
-load("@rules_java//java:defs.bzl", "java_library")
 load("//tools/javadoc:javadoc.bzl", "javadoc_library")
 
 package(default_visibility = ["//visibility:public"])
@@ -28,45 +27,6 @@ define_kt_toolchain(
     api_version = "1.6",
     jvm_target = "1.8",
     language_version = "1.6",
-)
-
-java_library(
-    name = "dagger_with_compiler",
-    exported_plugins = ["//dagger-compiler/main/java/dagger/internal/codegen:component-codegen"],
-    exports = ["//dagger-runtime/main/java/dagger:core"],
-)
-
-java_library(
-    name = "producers_with_compiler",
-    exports = [
-        ":dagger_with_compiler",
-        "//dagger-producers/main/java/dagger/producers",
-    ],
-)
-
-java_library(
-    name = "compiler_internals",
-    exports = [
-        "//dagger-compiler/main/java/dagger/internal/codegen:processor",
-        "//dagger-compiler/main/java/dagger/internal/codegen/base",
-        "//dagger-compiler/main/java/dagger/internal/codegen/binding",
-        "//dagger-compiler/main/java/dagger/internal/codegen/validation",
-        "//dagger-compiler/main/java/dagger/internal/codegen/writing",
-    ],
-)
-
-android_library(
-    name = "android",
-    exported_plugins = ["//dagger-android-processor:plugin"],
-    exports = ["//dagger-android/main/java/dagger/android"],
-)
-
-android_library(
-    name = "android-support",
-    exports = [
-        ":android",
-        "//dagger-android-support/main/java/dagger/android/support",
-    ],
 )
 
 android_library(

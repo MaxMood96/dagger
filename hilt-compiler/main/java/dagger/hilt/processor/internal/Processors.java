@@ -40,6 +40,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -51,7 +52,6 @@ import dagger.internal.codegen.xprocessing.XAnnotations;
 import dagger.internal.codegen.xprocessing.XElements;
 import dagger.internal.codegen.xprocessing.XTypes;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
@@ -108,10 +108,15 @@ public final class Processors {
     return annotationMembers.build();
   }
 
+  /** Returns the {@link XTypeElement} for a class attribute on an annotation. */
+  public static XTypeElement getAnnotationClassValue(XAnnotation annotation, String key) {
+    return Iterables.getOnlyElement(getAnnotationClassValues(annotation, key));
+  }
+
   /** Returns a list of {@link XTypeElement}s for a class attribute on an annotation. */
   public static ImmutableList<XTypeElement> getAnnotationClassValues(
       XAnnotation annotation, String key) {
-    ImmutableList<XTypeElement> values = XAnnotations.getAsTypeElementList(annotation, key);
+    ImmutableList<XTypeElement> values = getOptionalAnnotationClassValues(annotation, key);
 
     ProcessorErrors.checkState(
         values.size() >= 1,
@@ -128,17 +133,8 @@ public final class Processors {
       XAnnotation annotation, String key) {
     return getOptionalAnnotationValues(annotation, key).stream()
         .filter(XAnnotationValue::hasTypeValue)
-        .map(
-            annotationValue -> {
-              try {
-                return annotationValue.asType();
-              } catch (TypeNotPresentException e) {
-                // TODO(b/277367118): we may need a way to ignore error types in XProcessing.
-                // TODO(b/278560196): we should throw ErrorTypeException and clean up broken tests.
-                return null;
-              }
-            })
-        .filter(Objects::nonNull)
+        .flatMap(
+            annotationValue -> getTypeFromAnnotationValue(annotation, annotationValue).stream())
         .map(XType::getTypeElement)
         .collect(toImmutableList());
   }
@@ -154,6 +150,34 @@ public final class Processors {
                     ? ImmutableList.copyOf(annotationValue.asAnnotationValueList())
                     : ImmutableList.of(annotationValue)))
         .orElse(ImmutableList.of());
+  }
+
+  private static ImmutableList<XType> getTypeFromAnnotationValue(
+      XAnnotation annotation, XAnnotationValue annotationValue) {
+    validateAnnotationValueType(annotation, annotationValue);
+    return ImmutableList.of(annotationValue.asType());
+  }
+
+  private static void validateAnnotationValueType(
+      XAnnotation annotation, XAnnotationValue annotationValue) {
+    boolean error = false;
+    try {
+      if (annotationValue.asType().isError()) {
+        error = true;
+      }
+    } catch (TypeNotPresentException unused) {
+      // TODO(b/277367118): we may need a way to ignore error types in XProcessing.
+      error = true;
+    }
+    if (error) {
+      throw new ErrorTypeException(
+          String.format(
+              "@%s, '%s' class is invalid or missing: %s",
+              XElements.getSimpleName(annotation.getTypeElement()),
+              annotationValue.getName(),
+              XAnnotations.toStableString(annotation)),
+          annotation.getTypeElement());
+    }
   }
 
   public static XTypeElement getTopLevelType(XElement originalElement) {

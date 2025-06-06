@@ -389,7 +389,7 @@ class HiltGradlePlugin @Inject constructor(private val providers: ProviderFactor
         is ApplicationAndroidComponentsExtension -> GradleProjectType.APP
         is LibraryAndroidComponentsExtension -> GradleProjectType.LIBRARY
         is TestAndroidComponentsExtension -> GradleProjectType.TEST
-        else -> error("Hilt plugin does not know how to configure '$this'")
+        else -> error("Hilt plugin does not know how to configure '$androidExtension'")
       }
 
     androidExtension.onAllVariants { variantComponent ->

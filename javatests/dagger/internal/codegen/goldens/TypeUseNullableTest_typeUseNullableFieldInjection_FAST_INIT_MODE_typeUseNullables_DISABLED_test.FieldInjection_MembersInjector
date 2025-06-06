@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
 public final class FieldInjection_MembersInjector implements MembersInjector<FieldInjection> {
   private final Provider<String> nullableStringProvider;
 
-  public FieldInjection_MembersInjector(Provider<String> nullableStringProvider) {
+  private FieldInjection_MembersInjector(Provider<String> nullableStringProvider) {
     this.nullableStringProvider = nullableStringProvider;
   }
 
@@ -43,3 +43,4 @@ public final class FieldInjection_MembersInjector implements MembersInjector<Fie
     ((FieldInjection) (instance)).nullableString = nullableString;
   }
 }
+

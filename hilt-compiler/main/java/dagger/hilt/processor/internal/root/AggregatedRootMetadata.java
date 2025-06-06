@@ -24,9 +24,11 @@ import androidx.room.compiler.processing.XTypeElement;
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.extension.memoized.Memoized;
 import com.google.common.collect.ImmutableSet;
+import com.squareup.javapoet.ClassName;
 import dagger.hilt.processor.internal.AggregatedElements;
 import dagger.hilt.processor.internal.ClassNames;
 import dagger.hilt.processor.internal.root.ir.AggregatedRootIr;
+import java.util.List;
 
 /**
  * Represents the values stored in an {@link dagger.hilt.internal.aggregatedroot.AggregatedRoot}.
@@ -48,6 +50,9 @@ abstract class AggregatedRootMetadata {
 
   /** Returns the root annotation as an element. */
   abstract XTypeElement rootAnnotation();
+
+  /** Returns the name of the root component for this root. */
+  abstract ClassName rootComponentName();
 
   /** Returns whether this root can use a shared component. */
   abstract boolean allowsSharingComponent();
@@ -78,6 +83,7 @@ abstract class AggregatedRootMetadata {
         metadata.rootElement().getClassName(),
         metadata.originatingRootElement().getClassName(),
         metadata.rootAnnotation().getClassName(),
+        metadata.rootComponentName(),
         metadata.allowsSharingComponent());
   }
 
@@ -91,6 +97,14 @@ abstract class AggregatedRootMetadata {
         rootElement,
         env.requireTypeElement(annotation.getAsString("originatingRoot")),
         annotation.getAsType("rootAnnotation").getTypeElement(),
+        parseClassName(
+            annotation.getAsString("rootComponentPackage"),
+            annotation.getAsStringList("rootComponentSimpleNames")),
         allowSharingComponent);
+  }
+
+  private static ClassName parseClassName(String pkg, List<String> simpleNames) {
+    return ClassName.get(
+        pkg, simpleNames.get(0), simpleNames.subList(1, simpleNames.size()).toArray(new String[0]));
   }
 }

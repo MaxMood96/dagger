@@ -155,7 +155,7 @@ final class SetRequestRepresentation extends RequestRepresentation {
     return XExpression.create(
         binding.key().type().xprocessing(),
         XCodeBlock.builder()
-            .add("%T.", XTypeNames.COLLECTIONS)
+            .add("%T.", XTypeNames.JAVA_UTIL_COLLECTIONS)
             .add(maybeTypeParameter(requestingClass))
             .add(methodInvocation)
             .build());

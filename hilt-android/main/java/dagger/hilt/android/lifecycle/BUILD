@@ -36,11 +36,11 @@ android_library(
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/viewmodel:processor",
     ],
     exports = [
-        "//:dagger_with_compiler",
         "//hilt-android/main/java/dagger/hilt/android/components",
         "//hilt-android/main/java/dagger/hilt/android/internal/lifecycle",
         "//hilt-core/main/java/dagger/hilt:install_in",
         "//hilt-core/main/java/dagger/hilt/codegen:originating_element",
+        "//third_party/java/dagger",
     ],
     deps = [
         ":package_info",
@@ -53,8 +53,7 @@ android_library(
     srcs = ["RetainedLifecycle.java"],
     deps = [
         ":package_info",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
+        "//third_party/java/androidx/annotation",
     ],
 )
 
@@ -73,9 +72,8 @@ compat_kt_android_library(
     deps = [
         ":package_info",
         "//hilt-android/main/java/dagger/hilt/android/internal/lifecycle",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
+        "//third_party/java/androidx/annotation",
+        "//third_party/java/androidx/lifecycle/viewmodel",
     ],
 )
 

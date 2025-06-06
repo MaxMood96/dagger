@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
 public final class B_MembersInjector implements MembersInjector<B> {
   private final Provider<String> sProvider;
 
-  public B_MembersInjector(Provider<String> sProvider) {
+  private B_MembersInjector(Provider<String> sProvider) {
     this.sProvider = sProvider;
   }
 

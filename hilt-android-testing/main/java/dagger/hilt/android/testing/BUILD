@@ -52,7 +52,6 @@ android_library(
         ":hilt_test_application",
         ":on_component_ready_runner",
         ":package_info",
-        "//:dagger_with_compiler",
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:early_test_singleton_component_creator",
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:test_application_component_manager",
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:test_application_component_manager_holder",
@@ -77,10 +76,10 @@ android_library(
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
         "//hilt-core/main/java/dagger/hilt/internal:test_singleton_component",
         "//hilt-core/main/java/dagger/hilt/migration:disable_install_in_check",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
-        "@maven//:androidx_multidex_multidex",
-        "@maven//:androidx_test_core",
+        "//third_party/android/androidx_test/core",
+        "//third_party/java/android/android_sdk_linux/extras/android/compatibility/multidex",
+        "//third_party/java/androidx/annotation",
+        "//third_party/java/dagger",
     ],
     deps = [
         "//hilt-core/main/java/dagger/hilt:generates_root_input",
@@ -95,7 +94,7 @@ android_library(
         ":package_info",
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:mark_that_rules_ran_rule",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:junit_junit",
+        "//third_party/java/junit",
     ],
 )
 
@@ -111,7 +110,7 @@ android_library(
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:test_application_component_manager",
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:test_application_component_manager_holder",
         "//hilt-core/main/java/dagger/hilt/internal:component_manager",
-        "@maven//:androidx_multidex_multidex",
+        "//third_party/java/android/android_sdk_linux/extras/android/compatibility/multidex",
     ],
 )
 
@@ -121,13 +120,13 @@ android_library(
     srcs = ["OnComponentReadyRunner.java"],
     deps = [
         ":package_info",
-        "//:dagger_with_compiler",
         "//hilt-android-testing/main/java/dagger/hilt/android/internal/testing:test_application_component_manager_holder",
         "//hilt-android/main/java/dagger/hilt/android/internal",
         "//hilt-core/main/java/dagger/hilt:entry_point",
         "//hilt-core/main/java/dagger/hilt/internal:component_manager",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
     ],
 )
 

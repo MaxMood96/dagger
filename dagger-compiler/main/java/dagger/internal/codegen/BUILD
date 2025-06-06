@@ -21,7 +21,7 @@ load(
     "POM_VERSION",
 )
 
-package(default_visibility = ["//:src"])
+package(default_visibility = ["//dagger-compiler:internal"])
 
 java_library(
     name = "processor",
@@ -49,10 +49,10 @@ java_library(
         "//dagger-spi",
         "//third_party/java/auto:service",
         "//third_party/java/error_prone:annotations",
-        "//third_party/java/google_java_format",
+        "//third_party/java/google_java_format:filer",
         "//third_party/java/guava/collect",
         "//third_party/java/incap",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 

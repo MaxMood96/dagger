@@ -30,7 +30,7 @@ public final class SomeBinding_MembersInjector implements MembersInjector<SomeBi
 
   private final Provider<Float> fProvider;
 
-  public SomeBinding_MembersInjector(Provider<String> injectFieldProvider,
+  private SomeBinding_MembersInjector(Provider<String> injectFieldProvider,
       Provider<Float> fProvider) {
     this.injectFieldProvider = injectFieldProvider;
     this.fProvider = fProvider;

@@ -30,7 +30,7 @@ GenKtTests(
         "//third_party/java/guava:testlib",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
     deps = [],
 )
@@ -45,7 +45,7 @@ GenKtTests(
         "//third_party/java/guava:testlib",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
     deps = [],
 )
@@ -60,7 +60,7 @@ GenKtTests(
         "//third_party/java/guava:testlib",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
     deps = [],
 )
@@ -75,7 +75,7 @@ GenKtTests(
         "//third_party/java/guava:testlib",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
     deps = [],
 )
@@ -90,7 +90,7 @@ GenKtTests(
         "//third_party/java/guava:testlib",
         "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
     ],
     deps = [],
 )

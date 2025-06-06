@@ -81,6 +81,5 @@ gen_maven_artifact(
         "//third_party/java/auto:common",
         "//third_party/kotlin/kotlin_metadata_jvm",
         "//third_party/kotlin/kotlinpoet/javapoet",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-jar",
     ],
 )

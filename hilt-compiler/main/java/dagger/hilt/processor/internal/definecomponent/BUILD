@@ -23,7 +23,7 @@ package(default_visibility = ["//:src"])
 compat_processor_plugin(
     name = "processor",
     generates_api = 1,
-    processor_base_name = "DefineComponent",
+    javac_processor_name = "DefineComponentProcessor",
     processor_lib_dep = ":processor_lib",
     visibility = [
         "//hilt-core/main/java/dagger/hilt:__pkg__",
@@ -39,7 +39,7 @@ java_library(
     ],
     deps = [
         ":metadatas",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:base_processor",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:classnames",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:processors",
@@ -47,7 +47,7 @@ java_library(
         "//third_party/java/guava/collect",
         "//third_party/java/incap",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 
@@ -58,7 +58,7 @@ java_library(
         "DefineComponentMetadatas.java",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:classnames",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:processor_errors",
@@ -77,7 +77,7 @@ java_library(
     ],
     deps = [
         ":metadatas",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:aggregated_elements",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:classnames",

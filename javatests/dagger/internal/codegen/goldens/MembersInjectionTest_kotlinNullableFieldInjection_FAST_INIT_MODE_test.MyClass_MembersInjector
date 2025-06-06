@@ -28,7 +28,7 @@ public final class MyClass_MembersInjector implements MembersInjector<MyClass> {
 
   private final Provider<Object> nullableObjectProvider;
 
-  public MyClass_MembersInjector(Provider<String> nullableStringProvider,
+  private MyClass_MembersInjector(Provider<String> nullableStringProvider,
       Provider<Object> nullableObjectProvider) {
     this.nullableStringProvider = nullableStringProvider;
     this.nullableObjectProvider = nullableObjectProvider;

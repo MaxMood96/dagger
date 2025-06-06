@@ -27,7 +27,7 @@ import javax.annotation.processing.Generated;
 public final class TestModule_ProvideStringsFactory implements Factory<Set<String>> {
   private final TestModule module;
 
-  public TestModule_ProvideStringsFactory(TestModule module) {
+  private TestModule_ProvideStringsFactory(TestModule module) {
     this.module = module;
   }
 

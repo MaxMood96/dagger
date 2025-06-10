@@ -32,7 +32,7 @@ public final class MethodInjection_MembersInjector implements MembersInjector<Me
 
   private final Provider<String> stringProvider4;
 
-  public MethodInjection_MembersInjector(Provider<String> stringProvider,
+  private MethodInjection_MembersInjector(Provider<String> stringProvider,
       Provider<String> stringProvider2, Provider<String> stringProvider3,
       Provider<String> stringProvider4) {
     this.stringProvider = stringProvider;

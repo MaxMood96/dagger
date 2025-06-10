@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
 public final class Foo_Factory {
   private final Provider<Bar> argProvider;
 
-  public Foo_Factory(Provider<Bar> argProvider) {
+  private Foo_Factory(Provider<Bar> argProvider) {
     this.argProvider = argProvider;
   }
 

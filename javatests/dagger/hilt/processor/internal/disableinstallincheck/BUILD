@@ -25,14 +25,14 @@ compiler_test(
     srcs = ["DisableInstallInCheckProcessorErrorsTest.java"],
     compiler_deps = [
         "//hilt-core/main/java/dagger/hilt/migration:disable_install_in_check",
-        "//:dagger_with_compiler",
+        "//third_party/java/dagger",
         "//third_party/java/jsr250_annotations",
         "//hilt-core/main/java/dagger/hilt:entry_point",
         "//hilt-core/main/java/dagger/hilt:install_in",
         "//hilt-android/main/java/dagger/hilt/android/components",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing/compile",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal/disableinstallincheck:processor_lib",

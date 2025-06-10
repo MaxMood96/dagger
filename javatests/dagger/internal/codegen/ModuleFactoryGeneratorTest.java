@@ -392,7 +392,7 @@ public class ModuleFactoryGeneratorTest {
                           + " Factory<String> {",
                       "  private final TestModule module;",
                       "",
-                      "  public TestModule_ProvideStringFactory(TestModule module) {",
+                      "  private TestModule_ProvideStringFactory(TestModule module) {",
                       "    this.module = module;",
                       "  }",
                       "",

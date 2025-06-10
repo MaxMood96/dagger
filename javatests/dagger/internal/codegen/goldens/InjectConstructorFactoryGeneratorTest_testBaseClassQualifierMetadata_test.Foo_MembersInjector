@@ -32,7 +32,7 @@ public final class Foo_MembersInjector implements MembersInjector<Foo> {
 
   private final Provider<Float> fProvider;
 
-  public Foo_MembersInjector(Provider<String> injectFieldProvider,
+  private Foo_MembersInjector(Provider<String> injectFieldProvider,
       Provider<String> injectFieldProvider2, Provider<Float> fProvider) {
     this.injectFieldProvider = injectFieldProvider;
     this.injectFieldProvider2 = injectFieldProvider2;

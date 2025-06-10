@@ -25,8 +25,8 @@ import static dagger.internal.codegen.binding.SourceFiles.membersInjectorMethodN
 import static dagger.internal.codegen.binding.SourceFiles.membersInjectorNameForType;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableMap;
-import static dagger.internal.codegen.langmodel.Accessibility.isRawTypeAccessible;
-import static dagger.internal.codegen.langmodel.Accessibility.isRawTypePubliclyAccessible;
+import static dagger.internal.codegen.xprocessing.Accessibility.isRawTypeAccessible;
+import static dagger.internal.codegen.xprocessing.Accessibility.isRawTypePubliclyAccessible;
 import static dagger.internal.codegen.xprocessing.NullableTypeNames.asNullableTypeName;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.makeParametersCodeBlock;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.toConcatenatedCodeBlock;

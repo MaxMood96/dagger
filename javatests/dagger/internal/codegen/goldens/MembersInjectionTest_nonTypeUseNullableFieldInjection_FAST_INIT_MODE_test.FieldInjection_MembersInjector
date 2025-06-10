@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
 public final class FieldInjection_MembersInjector implements MembersInjector<FieldInjection> {
   private final Provider<String> stringProvider;
 
-  public FieldInjection_MembersInjector(Provider<String> stringProvider) {
+  private FieldInjection_MembersInjector(Provider<String> stringProvider) {
     this.stringProvider = stringProvider;
   }
 

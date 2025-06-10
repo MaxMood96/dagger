@@ -27,7 +27,7 @@ import other.pkg.Outer;
 public final class InjectConstructor_Factory implements Factory<InjectConstructor> {
   private final Provider<Outer.Factory> factoryProvider;
 
-  public InjectConstructor_Factory(Provider<Outer.Factory> factoryProvider) {
+  private InjectConstructor_Factory(Provider<Outer.Factory> factoryProvider) {
     this.factoryProvider = factoryProvider;
   }
 

@@ -28,7 +28,7 @@ public final class FieldInjectionWithQualifier_MembersInjector implements Member
 
   private final Provider<String> bProvider;
 
-  public FieldInjectionWithQualifier_MembersInjector(Provider<String> aProvider,
+  private FieldInjectionWithQualifier_MembersInjector(Provider<String> aProvider,
       Provider<String> bProvider) {
     this.aProvider = aProvider;
     this.bProvider = bProvider;

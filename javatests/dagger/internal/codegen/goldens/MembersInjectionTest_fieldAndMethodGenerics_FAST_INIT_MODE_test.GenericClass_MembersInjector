@@ -27,7 +27,7 @@ public final class GenericClass_MembersInjector<A, B> implements MembersInjector
 
   private final Provider<B> bProvider;
 
-  public GenericClass_MembersInjector(Provider<A> aProvider, Provider<B> bProvider) {
+  private GenericClass_MembersInjector(Provider<A> aProvider, Provider<B> bProvider) {
     this.aProvider = aProvider;
     this.bProvider = bProvider;
   }

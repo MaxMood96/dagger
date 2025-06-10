@@ -16,10 +16,10 @@ package(default_visibility = ["//:src"])
 
 filegroup(
     name = "proguard",
-    srcs = ["com.android.tools/proguard/proguard.pro"],
+    srcs = ["META-INF/com.android.tools/proguard/proguard.pro"],
 )
 
 filegroup(
     name = "r8",
-    srcs = ["com.android.tools/r8/r8.pro"],
+    srcs = ["META-INF/com.android.tools/r8/r8.pro"],
 )

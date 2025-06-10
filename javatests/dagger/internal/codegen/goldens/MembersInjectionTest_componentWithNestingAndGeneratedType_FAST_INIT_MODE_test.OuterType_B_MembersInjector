@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
 public final class OuterType_B_MembersInjector implements MembersInjector<OuterType.B> {
   private final Provider<OuterType.A> aProvider;
 
-  public OuterType_B_MembersInjector(Provider<OuterType.A> aProvider) {
+  private OuterType_B_MembersInjector(Provider<OuterType.A> aProvider) {
     this.aProvider = aProvider;
   }
 

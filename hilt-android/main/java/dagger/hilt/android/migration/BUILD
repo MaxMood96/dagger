@@ -33,13 +33,8 @@ android_library(
         ":package_info",
         "//hilt-android/main/java/dagger/hilt/android/internal/migration:injected_by_hilt",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
+        "//third_party/java/androidx/annotation",
+        "//third_party/java/androidx/fragment",
     ],
 )
 
@@ -56,8 +51,7 @@ android_library(
         ":package_info",
         "//hilt-android/main/java/dagger/hilt/android/internal/migration:has_custom_inject",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:androidx_annotation_annotation",
-        "@maven//:androidx_annotation_annotation_jvm",
+        "//third_party/java/androidx/annotation",
     ],
 )
 

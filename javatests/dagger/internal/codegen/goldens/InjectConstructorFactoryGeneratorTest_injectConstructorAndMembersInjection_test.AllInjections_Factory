@@ -30,7 +30,7 @@ public final class AllInjections_Factory implements Factory<AllInjections> {
 
   private final Provider<String> sProvider3;
 
-  public AllInjections_Factory(Provider<String> sProvider, Provider<String> sProvider2,
+  private AllInjections_Factory(Provider<String> sProvider, Provider<String> sProvider2,
       Provider<String> sProvider3) {
     this.sProvider = sProvider;
     this.sProvider2 = sProvider2;

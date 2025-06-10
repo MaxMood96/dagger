@@ -26,7 +26,7 @@ import javax.annotation.processing.Generated;
 public final class ChildIntegerModule_ProvideIntegerFactory implements Factory<Integer> {
   private final ChildIntegerModule module;
 
-  public ChildIntegerModule_ProvideIntegerFactory(ChildIntegerModule module) {
+  private ChildIntegerModule_ProvideIntegerFactory(ChildIntegerModule module) {
     this.module = module;
   }
 

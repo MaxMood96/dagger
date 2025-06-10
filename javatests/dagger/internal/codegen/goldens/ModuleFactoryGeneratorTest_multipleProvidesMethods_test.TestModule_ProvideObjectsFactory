@@ -38,7 +38,7 @@ public final class TestModule_ProvideObjectsFactory implements Factory<List<Obje
 
   private final Provider<MembersInjector<X>> xInjectorProvider;
 
-  public TestModule_ProvideObjectsFactory(TestModule module, Provider<Object> aProvider,
+  private TestModule_ProvideObjectsFactory(TestModule module, Provider<Object> aProvider,
       Provider<Object> bProvider, Provider<MembersInjector<X>> xInjectorProvider) {
     this.module = module;
     this.aProvider = aProvider;

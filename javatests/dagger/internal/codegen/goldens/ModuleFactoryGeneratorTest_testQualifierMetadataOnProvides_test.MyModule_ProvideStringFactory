@@ -30,7 +30,7 @@ import javax.annotation.processing.Generated;
 public final class MyModule_ProvideStringFactory implements Factory<String> {
   private final Provider<Integer> iProvider;
 
-  public MyModule_ProvideStringFactory(Provider<Integer> iProvider) {
+  private MyModule_ProvideStringFactory(Provider<Integer> iProvider) {
     this.iProvider = iProvider;
   }
 

@@ -23,7 +23,6 @@ package(default_visibility = ["//:src"])
 GenJavaTests(
     name = "core_tests",
     srcs = glob(["**/*.java"]),
-    functional = 0,
     javacopts = DOCLINT_HTML_AND_SYNTAX + DOCLINT_REFERENCES,
     deps = [
         "//dagger-runtime/main/java/dagger:core",

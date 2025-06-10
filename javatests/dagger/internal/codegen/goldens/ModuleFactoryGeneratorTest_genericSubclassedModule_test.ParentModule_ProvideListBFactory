@@ -30,7 +30,7 @@ public final class ParentModule_ProvideListBFactory<A extends CharSequence, B, C
 
   private final Provider<B> bProvider;
 
-  public ParentModule_ProvideListBFactory(ParentModule<A, B, C> module, Provider<B> bProvider) {
+  private ParentModule_ProvideListBFactory(ParentModule<A, B, C> module, Provider<B> bProvider) {
     this.module = module;
     this.bProvider = bProvider;
   }

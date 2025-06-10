@@ -56,7 +56,7 @@ android_library(
         "//hilt-android/main/java/dagger/hilt/internal:test_singleton_component_manager",
         "//hilt-core/main/java/dagger/hilt/internal:component_manager",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:junit_junit",
+        "//third_party/java/junit",
     ],
 )
 
@@ -92,8 +92,8 @@ android_library(
         "//hilt-android/main/java/dagger/hilt/android/internal",
         "//hilt-core/main/java/dagger/hilt/internal:component_manager",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
-        "@maven//:androidx_test_core",
-        "@maven//:junit_junit",
+        "//third_party/android/androidx_test/core",
+        "//third_party/java/junit",
     ],
 )
 

@@ -26,11 +26,11 @@ import static dagger.internal.codegen.binding.SourceFiles.membersInjectorNameFor
 import static dagger.internal.codegen.binding.SourceFiles.parameterizedGeneratedTypeNameForBinding;
 import static dagger.internal.codegen.extension.DaggerStreams.presentValues;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
-import static dagger.internal.codegen.langmodel.Accessibility.isRawTypePubliclyAccessible;
-import static dagger.internal.codegen.langmodel.Accessibility.isTypeAccessibleFrom;
 import static dagger.internal.codegen.writing.GwtCompatibility.gwtIncompatibleAnnotation;
 import static dagger.internal.codegen.writing.InjectionMethods.copyParameter;
 import static dagger.internal.codegen.writing.InjectionMethods.copyParameters;
+import static dagger.internal.codegen.xprocessing.Accessibility.isRawTypePubliclyAccessible;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFrom;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression.RAWTYPES;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.suppressWarnings;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.parameterNames;
@@ -44,6 +44,7 @@ import static dagger.internal.codegen.xprocessing.XFunSpecs.methodBuilder;
 import static dagger.internal.codegen.xprocessing.XTypeElements.typeVariableNames;
 import static dagger.internal.codegen.xprocessing.XTypeNames.membersInjectorOf;
 import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
@@ -227,7 +228,7 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
     return useObject ? XCodeBlock.of("(%L)", instance) : instance;
   }
 
-  // MyClass(
+  // private MyClass_MembersInjector(
   //     Provider<Dep1> dep1Provider,
   //     Provider<Dep2> dep2Provider,
   //     // Note: The raw type can happen if Dep3 is injected in a super type and not accessible to
@@ -241,7 +242,7 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
   private XFunSpec constructor(ImmutableMap<DependencyRequest, XPropertySpec> frameworkFields) {
     ImmutableList<XParameterSpec> parameters = constructorParameters(frameworkFields);
     return constructorBuilder()
-        .addModifiers(PUBLIC)
+        .addModifiers(PRIVATE)
         .addParameters(parameters)
         .addCode(
             parameters.stream()

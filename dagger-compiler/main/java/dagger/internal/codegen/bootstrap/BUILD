@@ -17,7 +17,7 @@
 
 load("@rules_java//java:defs.bzl", "java_import", "java_plugin")
 
-package(default_visibility = ["//:src"])
+package(default_visibility = ["//dagger-compiler:internal"])
 
 java_plugin(
     name = "bootstrap",

@@ -17,7 +17,7 @@
 package dagger.internal.codegen.writing;
 
 import static dagger.internal.codegen.binding.SourceFiles.classFileName;
-import static dagger.internal.codegen.langmodel.Accessibility.isElementAccessibleFrom;
+import static dagger.internal.codegen.xprocessing.Accessibility.isElementAccessibleFrom;
 import static dagger.internal.codegen.xprocessing.XFunSpecs.constructorBuilder;
 import static dagger.internal.codegen.xprocessing.XFunSpecs.methodBuilder;
 import static dagger.internal.codegen.xprocessing.XTypeElements.isNested;
@@ -37,7 +37,7 @@ import androidx.room.compiler.processing.XTypeElement;
 import com.google.common.collect.ImmutableList;
 import dagger.internal.codegen.base.ModuleKind;
 import dagger.internal.codegen.base.SourceFileGenerator;
-import dagger.internal.codegen.langmodel.Accessibility;
+import dagger.internal.codegen.xprocessing.Accessibility;
 import dagger.internal.codegen.xprocessing.XTypeSpecs;
 import java.util.Optional;
 import javax.inject.Inject;

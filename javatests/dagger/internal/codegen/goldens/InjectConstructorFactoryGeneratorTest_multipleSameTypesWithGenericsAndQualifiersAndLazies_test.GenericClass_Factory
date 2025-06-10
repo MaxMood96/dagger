@@ -56,11 +56,12 @@ public final class GenericClass_Factory<A, B> implements Factory<GenericClass<A,
 
   private final Provider<B> lbProvider;
 
-  public GenericClass_Factory(Provider<A> aProvider, Provider<A> a2Provider, Provider<A> paProvider,
-      Provider<A> qaProvider, Provider<A> laProvider, Provider<String> sProvider,
-      Provider<String> s2Provider, Provider<String> psProvider, Provider<String> qsProvider,
-      Provider<String> lsProvider, Provider<B> bProvider, Provider<B> b2Provider,
-      Provider<B> pbProvider, Provider<B> qbProvider, Provider<B> lbProvider) {
+  private GenericClass_Factory(Provider<A> aProvider, Provider<A> a2Provider,
+      Provider<A> paProvider, Provider<A> qaProvider, Provider<A> laProvider,
+      Provider<String> sProvider, Provider<String> s2Provider, Provider<String> psProvider,
+      Provider<String> qsProvider, Provider<String> lsProvider, Provider<B> bProvider,
+      Provider<B> b2Provider, Provider<B> pbProvider, Provider<B> qbProvider,
+      Provider<B> lbProvider) {
     this.aProvider = aProvider;
     this.a2Provider = a2Provider;
     this.paProvider = paProvider;

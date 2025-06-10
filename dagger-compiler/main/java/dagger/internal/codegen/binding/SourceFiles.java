@@ -206,20 +206,16 @@ public final class SourceFiles {
     return field.getEnclosingElement().getClassName().canonicalName() + "." + getSimpleName(field);
   }
 
-  /*
+  /**
    * TODO(ronshapiro): this isn't perfect, as collisions could still exist. Some examples:
    *
-   *  - @Inject void members() {} will generate a method that conflicts with the instance
-   *    method `injectMembers(T)`
-   *  - Adding the index could conflict with another member:
-   *      @Inject void a(Object o) {}
-   *      @Inject void a(String s) {}
-   *      @Inject void a1(String s) {}
+   * <p>- @Inject void members() {} will generate a method that conflicts with the instance method
+   * `injectMembers(T)` - Adding the index could conflict with another member: @Inject void a(Object
+   * o) {} @Inject void a(String s) {} @Inject void a1(String s) {}
    *
-   *    Here, Method a(String) will add the suffix "1", which will conflict with the method
-   *    generated for a1(String)
-   *  - Members named "members" or "methods" could also conflict with the {@code static} injection
-   *    method.
+   * <p>Here, Method a(String) will add the suffix "1", which will conflict with the method
+   * generated for a1(String) - Members named "members" or "methods" could also conflict with the
+   * {@code static} injection method.
    */
   public static String membersInjectorMethodName(InjectionSite injectionSite) {
     int index = injectionSite.indexAmongAtInjectMembersWithSameSimpleName();

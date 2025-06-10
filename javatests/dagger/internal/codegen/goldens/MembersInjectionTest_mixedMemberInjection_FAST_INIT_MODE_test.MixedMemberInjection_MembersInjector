@@ -31,7 +31,7 @@ public final class MixedMemberInjection_MembersInjector implements MembersInject
 
   private final Provider<Object> oProvider;
 
-  public MixedMemberInjection_MembersInjector(Provider<String> stringProvider,
+  private MixedMemberInjection_MembersInjector(Provider<String> stringProvider,
       Provider<Object> objectProvider, Provider<String> sProvider, Provider<Object> oProvider) {
     this.stringProvider = stringProvider;
     this.objectProvider = objectProvider;

@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.getOnlyElement;
 import static dagger.internal.codegen.base.RequestKinds.requestType;
 import static dagger.internal.codegen.binding.BindingRequest.bindingRequest;
-import static dagger.internal.codegen.langmodel.Accessibility.isTypeAccessibleFrom;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFrom;
 import static dagger.internal.codegen.xprocessing.XTypeNames.providerTypeNames;
 import static dagger.internal.codegen.xprocessing.XTypes.isTypeOf;
 import static dagger.internal.codegen.xprocessing.XTypes.rewrapType;

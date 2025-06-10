@@ -28,7 +28,7 @@ public final class InjectConstructor_Factory implements Factory<InjectConstructo
 
   private final Provider<CommonName> samePackageProvider;
 
-  public InjectConstructor_Factory(Provider<other.pkg.CommonName> otherPackageProvider,
+  private InjectConstructor_Factory(Provider<other.pkg.CommonName> otherPackageProvider,
       Provider<CommonName> samePackageProvider) {
     this.otherPackageProvider = otherPackageProvider;
     this.samePackageProvider = samePackageProvider;

@@ -24,73 +24,68 @@ GenKtTests(
     name = "BuilderBindsInstanceParameterTest",
     srcs = ["BuilderBindsInstanceParameterTest.kt"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    test_only_deps = [
+    deps = [
+        "//third_party/java/dagger",
+        "//third_party/java/guava:testlib",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
-        "//third_party/java/guava:testlib",
-        "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/truth",
     ],
-    deps = [],
 )
 
 GenKtTests(
     name = "BuilderTest",
     srcs = ["BuilderTest.kt"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    test_only_deps = [
+    deps = [
+        "//third_party/java/dagger",
+        "//third_party/java/guava:testlib",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
-        "//third_party/java/guava:testlib",
-        "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/truth",
     ],
-    deps = [],
 )
 
 GenKtTests(
     name = "PrivateConstructorsTest",
     srcs = ["PrivateConstructorsTest.kt"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    test_only_deps = [
+    deps = [
+        "//third_party/java/dagger",
+        "//third_party/java/guava:testlib",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
-        "//third_party/java/guava:testlib",
-        "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/truth",
     ],
-    deps = [],
 )
 
 GenKtTests(
     name = "BuildMethodCovariantReturnTest",
     srcs = ["BuildMethodCovariantReturnTest.kt"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    test_only_deps = [
+    deps = [
+        "//third_party/java/dagger",
+        "//third_party/java/guava:testlib",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
-        "//third_party/java/guava:testlib",
-        "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/truth",
     ],
-    deps = [],
 )
 
 GenKtTests(
     name = "BuildMethodCovariantReturnInheritedTest",
     srcs = ["BuildMethodCovariantReturnInheritedTest.kt"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    test_only_deps = [
+    deps = [
+        "//third_party/java/dagger",
+        "//third_party/java/guava:testlib",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
-        "//third_party/java/guava:testlib",
-        "//third_party/java/truth",
         "//third_party/java/junit",
-        "//:dagger_with_compiler",
+        "//third_party/java/truth",
     ],
-    deps = [],
 )

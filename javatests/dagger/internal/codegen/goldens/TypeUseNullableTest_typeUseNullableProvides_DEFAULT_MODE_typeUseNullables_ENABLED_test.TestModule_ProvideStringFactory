@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
 public final class TestModule_ProvideStringFactory implements Factory<@Nullable String> {
   private final TestModule module;
 
-  public TestModule_ProvideStringFactory(TestModule module) {
+  private TestModule_ProvideStringFactory(TestModule module) {
     this.module = module;
   }
 
@@ -42,3 +42,4 @@ public final class TestModule_ProvideStringFactory implements Factory<@Nullable 
     return instance.provideString();
   }
 }
+

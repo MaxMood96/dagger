@@ -2,21 +2,15 @@ package test;
 
 import com.google.common.collect.ImmutableMap;
 import dagger.internal.DaggerGenerated;
-import dagger.internal.MapFactory;
 import dagger.internal.Provider;
 import java.util.Map;
 import javax.annotation.processing.Generated;
 import mapkeys.MapKeys;
 import mapkeys.MapModule;
-import mapkeys.MapModule_ClassKeyFactory;
 import mapkeys.MapModule_ClassKeyMapKey;
-import mapkeys.MapModule_ComplexKeyWithInaccessibleAnnotationValueFactory;
 import mapkeys.MapModule_ComplexKeyWithInaccessibleAnnotationValueMapKey;
-import mapkeys.MapModule_ComplexKeyWithInaccessibleArrayValueFactory;
 import mapkeys.MapModule_ComplexKeyWithInaccessibleArrayValueMapKey;
-import mapkeys.MapModule_ComplexKeyWithInaccessibleValueFactory;
 import mapkeys.MapModule_ComplexKeyWithInaccessibleValueMapKey;
-import mapkeys.MapModule_EnumKeyFactory;
 import mapkeys.MapModule_EnumKeyMapKey;
 
 @DaggerGenerated
@@ -70,20 +64,16 @@ final class DaggerTestComponent {
 
     }
 
-    Map mapOfPackagePrivateEnumAndInteger() {
-      return ImmutableMap.of(MapModule_EnumKeyMapKey.create(), MapModule.enumKey());
-    }
-
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.mapOfClassOfAndIntegerProvider = MapFactory.<Class<?>, Integer>builder(1).put(MapModule_ClassKeyMapKey.create(), MapModule_ClassKeyFactory.create()).build();
-      this.mapOfPackagePrivateEnumAndIntegerProvider = MapFactory.builder(1).put(MapModule_EnumKeyMapKey.create(), (Provider) (MapModule_EnumKeyFactory.create())).build();
-      this.mapOfComplexKeyAndIntegerProvider = MapFactory.<MapKeys.ComplexKey, Integer>builder(3).put(MapModule_ComplexKeyWithInaccessibleValueMapKey.create(), MapModule_ComplexKeyWithInaccessibleValueFactory.create()).put(MapModule_ComplexKeyWithInaccessibleArrayValueMapKey.create(), MapModule_ComplexKeyWithInaccessibleArrayValueFactory.create()).put(MapModule_ComplexKeyWithInaccessibleAnnotationValueMapKey.create(), MapModule_ComplexKeyWithInaccessibleAnnotationValueFactory.create()).build();
+      this.mapOfClassOfAndIntegerProvider = new SwitchingProvider<>(testComponentImpl, 0);
+      this.mapOfPackagePrivateEnumAndIntegerProvider = new SwitchingProvider<>(testComponentImpl, 1);
+      this.mapOfComplexKeyAndIntegerProvider = new SwitchingProvider<>(testComponentImpl, 2);
     }
 
     @Override
     public Map<Class<?>, Integer> classKey() {
-      return ImmutableMap.<Class<?>, Integer>of(MapModule_ClassKeyMapKey.create(), MapModule.classKey());
+      return mapOfClassOfAndIntegerProvider.get();
     }
 
     @Override
@@ -93,7 +83,7 @@ final class DaggerTestComponent {
 
     @Override
     public Object inaccessibleEnum() {
-      return mapOfPackagePrivateEnumAndInteger();
+      return mapOfPackagePrivateEnumAndIntegerProvider.get();
     }
 
     @Override
@@ -103,13 +93,40 @@ final class DaggerTestComponent {
 
     @Override
     public Map<MapKeys.ComplexKey, Integer> complexKey() {
-      return ImmutableMap.<MapKeys.ComplexKey, Integer>of(MapModule_ComplexKeyWithInaccessibleValueMapKey.create(), MapModule.complexKeyWithInaccessibleValue(), MapModule_ComplexKeyWithInaccessibleArrayValueMapKey.create(), MapModule.complexKeyWithInaccessibleArrayValue(), MapModule_ComplexKeyWithInaccessibleAnnotationValueMapKey.create(), MapModule.complexKeyWithInaccessibleAnnotationValue());
+      return mapOfComplexKeyAndIntegerProvider.get();
     }
 
     @Override
     public javax.inject.Provider<Map<MapKeys.ComplexKey, Integer>> complexKeyProvider() {
       return mapOfComplexKeyAndIntegerProvider;
     }
+
+    private static final class SwitchingProvider<T> implements Provider<T> {
+      private final TestComponentImpl testComponentImpl;
+
+      private final int id;
+
+      SwitchingProvider(TestComponentImpl testComponentImpl, int id) {
+        this.testComponentImpl = testComponentImpl;
+        this.id = id;
+      }
+
+      @Override
+      @SuppressWarnings("unchecked")
+      public T get() {
+        switch (id) {
+          case 0: // java.util.Map<java.lang.Class<?>,java.lang.Integer>
+          return (T) ImmutableMap.<Class<?>, Integer>of(MapModule_ClassKeyMapKey.create(), MapModule.classKey());
+
+          case 1: // java.util.Map<mapkeys.MapKeys.PackagePrivateEnum,java.lang.Integer>
+          return (T) ImmutableMap.of(MapModule_EnumKeyMapKey.create(), MapModule.enumKey());
+
+          case 2: // java.util.Map<mapkeys.MapKeys.ComplexKey,java.lang.Integer>
+          return (T) ImmutableMap.<MapKeys.ComplexKey, Integer>of(MapModule_ComplexKeyWithInaccessibleValueMapKey.create(), MapModule.complexKeyWithInaccessibleValue(), MapModule_ComplexKeyWithInaccessibleArrayValueMapKey.create(), MapModule.complexKeyWithInaccessibleArrayValue(), MapModule_ComplexKeyWithInaccessibleAnnotationValueMapKey.create(), MapModule.complexKeyWithInaccessibleAnnotationValue());
+
+          default: throw new AssertionError(id);
+        }
+      }
+    }
   }
 }
-

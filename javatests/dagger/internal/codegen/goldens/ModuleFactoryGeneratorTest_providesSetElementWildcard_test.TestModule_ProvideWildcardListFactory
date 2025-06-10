@@ -27,7 +27,7 @@ import javax.annotation.processing.Generated;
 public final class TestModule_ProvideWildcardListFactory implements Factory<List<List<?>>> {
   private final TestModule module;
 
-  public TestModule_ProvideWildcardListFactory(TestModule module) {
+  private TestModule_ProvideWildcardListFactory(TestModule module) {
     this.module = module;
   }
 

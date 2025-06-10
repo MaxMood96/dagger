@@ -239,10 +239,9 @@ public abstract class AndroidEntryPointMetadata {
         annotationClassName.simpleName());
 
     XTypeElement androidEntryPointClassValue =
-        androidEntryPointElement
-            .getAnnotation(annotationClassName)
-            .getAsType("value")
-            .getTypeElement();
+        Processors.getAnnotationClassValue(
+            androidEntryPointElement.getAnnotation(annotationClassName), "value");
+
     XTypeElement baseElement;
     ClassName generatedClassName = generatedClassName(androidEntryPointElement);
     boolean requiresBytecodeInjection =

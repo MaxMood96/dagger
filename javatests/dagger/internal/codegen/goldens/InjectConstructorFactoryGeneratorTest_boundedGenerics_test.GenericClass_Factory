@@ -31,7 +31,8 @@ public final class GenericClass_Factory<A extends Number & Comparable<A>, B exte
 
   private final Provider<C> cProvider;
 
-  public GenericClass_Factory(Provider<A> aProvider, Provider<B> bProvider, Provider<C> cProvider) {
+  private GenericClass_Factory(Provider<A> aProvider, Provider<B> bProvider,
+      Provider<C> cProvider) {
     this.aProvider = aProvider;
     this.bProvider = bProvider;
     this.cProvider = cProvider;

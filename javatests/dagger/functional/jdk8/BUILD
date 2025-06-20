@@ -26,8 +26,8 @@ java_library(
     srcs = ["OptionalBindingComponents.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
     deps = [
-        "//:dagger_with_compiler",
         "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/jsr305_annotations",
     ],
 )
@@ -37,18 +37,15 @@ GenJavaTests(
     name = "OptionalBindingComponentsEmptyTest",
     srcs = ["OptionalBindingComponentsEmptyTest.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    require_jdk7_syntax = False,
-    test_only_deps = [
+    deps = [
         ":optional_binding_components",
+        "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
+        "//third_party/java/jsr305_annotations",
         "//third_party/java/junit",
         "//third_party/java/truth",
-    ],
-    deps = [
-        "//:dagger_with_compiler",
-        "//third_party/java/auto:value",
-        "//third_party/java/jsr305_annotations",
     ],
 )
 
@@ -57,17 +54,14 @@ GenJavaTests(
     name = "OptionalBindingComponentsPresentTest",
     srcs = ["OptionalBindingComponentsPresentTest.java"],
     javacopts = DOCLINT_HTML_AND_SYNTAX,
-    require_jdk7_syntax = False,
-    test_only_deps = [
+    deps = [
         ":optional_binding_components",
+        "//third_party/java/auto:value",
+        "//third_party/java/dagger",
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
+        "//third_party/java/jsr305_annotations",
         "//third_party/java/junit",
         "//third_party/java/truth",
-    ],
-    deps = [
-        "//:dagger_with_compiler",
-        "//third_party/java/auto:value",
-        "//third_party/java/jsr305_annotations",
     ],
 )

@@ -27,19 +27,13 @@ android_local_test(
     deps = [
         ":TestInstallInModules",
         "//:android_local_test_exports",
-        "//:dagger_with_compiler",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:hilt_android_test",
         "//hilt-android/main/java/dagger/hilt/android:android_entry_point",
+        "//third_party/java/androidx/fragment",
+        "//third_party/java/dagger",
+        "//third_party/java/junit",
+        "//third_party/java/robolectric",
         "//third_party/java/truth",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
-        "@maven//:androidx_test_core",
-        "@maven//:androidx_test_ext_junit",
-        "@maven//:junit_junit",
-        "@maven//:org_robolectric_robolectric",
     ],
 )
 
@@ -50,15 +44,13 @@ android_local_test(
     deps = [
         ":TestInstallInModules",
         "//:android_local_test_exports",
-        "//:dagger_with_compiler",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:hilt_android_test",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:uninstall_modules",
         "//hilt-android-testing/main/java/dagger/hilt/testing:test_install_in",
+        "//third_party/java/dagger",
+        "//third_party/java/junit",
+        "//third_party/java/robolectric",
         "//third_party/java/truth",
-        "@maven//:androidx_test_core",
-        "@maven//:androidx_test_ext_junit",
-        "@maven//:junit_junit",
-        "@maven//:org_robolectric_robolectric",
     ],
 )
 
@@ -70,11 +62,9 @@ android_local_test(
         ":TestInstallInApp",
         ":TestInstallInModules",
         "//:android_local_test_exports",
+        "//third_party/java/junit",
+        "//third_party/java/robolectric",
         "//third_party/java/truth",
-        "@maven//:androidx_test_core",
-        "@maven//:androidx_test_ext_junit",
-        "@maven//:junit_junit",
-        "@maven//:org_robolectric_robolectric",
     ],
 )
 
@@ -85,8 +75,8 @@ android_library(
     deps = [
         ":TestInstallInModules",
         "//:android_local_test_exports",
-        "//:dagger_with_compiler",
         "//hilt-android/main/java/dagger/hilt/android:hilt_android_app",
+        "//third_party/java/dagger",
     ],
 )
 
@@ -95,14 +85,10 @@ android_library(
     testonly = True,
     srcs = ["TestInstallInModules.java"],
     deps = [
-        "//:dagger_with_compiler",
         "//hilt-android-testing/main/java/dagger/hilt/testing:test_install_in",
         "//hilt-android/main/java/dagger/hilt/android/components",
         "//hilt-core/main/java/dagger/hilt:install_in",
-        "@maven//:androidx_activity_activity",
-        "@maven//:androidx_fragment_fragment",
-        "@maven//:androidx_lifecycle_lifecycle_common",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel",
-        "@maven//:androidx_lifecycle_lifecycle_viewmodel_savedstate",
+        "//third_party/java/androidx/fragment",
+        "//third_party/java/dagger",
     ],
 )

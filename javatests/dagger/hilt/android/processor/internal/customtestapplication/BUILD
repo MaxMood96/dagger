@@ -25,7 +25,7 @@ compiler_test(
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:custom_test_application",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing:hilt_android_test",
         "//hilt-android/main/java/dagger/hilt/android:hilt_android_app",
-        "@androidsdk//:platforms/android-34/android.jar",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
     ],
     deps = [
         "//hilt-android-testing/main/java/dagger/hilt/android/testing/compile",

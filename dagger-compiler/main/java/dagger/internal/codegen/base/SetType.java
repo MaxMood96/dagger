@@ -24,6 +24,7 @@ import androidx.room.compiler.codegen.XClassName;
 import androidx.room.compiler.codegen.XTypeName;
 import androidx.room.compiler.processing.XType;
 import dagger.internal.codegen.model.Key;
+import dagger.internal.codegen.xprocessing.XTypeNames;
 import dagger.internal.codegen.xprocessing.XTypes;
 
 /** Information about a {@link java.util.Set} type. */
@@ -91,7 +92,10 @@ public final class SetType {
   /** {@code true} if {@code type} is a {@link java.util.Set} type. */
   public static boolean isSet(XType type) {
     // In general, Dagger ignores mutability so check for both kotlin.collection.(Set|MutableSet).
-    return XTypes.isTypeOf(type, XTypeName.SET) || XTypes.isTypeOf(type, XTypeName.MUTABLE_SET);
+    return XTypes.isTypeOf(type, XTypeName.SET)
+        || XTypes.isTypeOf(type, XTypeName.MUTABLE_SET)
+        // This is for cases where java.util.Set is used directly in Kotlin sources.
+        || XTypes.isTypeOf(type, XTypeNames.JAVA_UTIL_SET);
   }
 
   /** {@code true} if {@code key.type()} is a {@link java.util.Set} type. */

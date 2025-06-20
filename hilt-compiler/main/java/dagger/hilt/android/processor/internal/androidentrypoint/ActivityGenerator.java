@@ -17,6 +17,7 @@
 package dagger.hilt.android.processor.internal.androidentrypoint;
 
 import static com.google.common.base.Preconditions.checkState;
+import static dagger.internal.codegen.extension.DaggerCollectors.toOptional;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
 import static kotlin.streams.jdk8.StreamsKt.asStream;
 
@@ -44,6 +45,7 @@ import dagger.hilt.processor.internal.MethodSignature;
 import dagger.hilt.processor.internal.Processors;
 import dagger.internal.codegen.xprocessing.XElements;
 import java.io.IOException;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 import javax.tools.Diagnostic;
 
@@ -185,31 +187,33 @@ public final class ActivityGenerator {
   // }
   //
   private MethodSpec onCreateComponentActivity() {
-    XMethodElement nearestOverrideMethod =
-        requireNearestOverrideMethod(ActivityMethod.ON_CREATE, metadata);
-    if (nearestOverrideMethod.isFinal()) {
+    XMethodElement nearestSuperClassMethod =
+        nearestSuperClassMethod(ActivityMethod.ON_CREATE, metadata);
+    if (nearestSuperClassMethod.isFinal()) {
       env.getMessager()
           .printMessage(
               Diagnostic.Kind.ERROR,
               "Do not mark onCreate as final in base Activity class, as Hilt needs to override it"
                   + " to inject SavedStateHandle.",
-              nearestOverrideMethod);
+              nearestSuperClassMethod);
     }
     ParameterSpec.Builder parameterBuilder =
         ParameterSpec.builder(AndroidClassNames.BUNDLE, "savedInstanceState");
     MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("onCreate");
-    // If the sub class is overriding onCreate with @Nullable parameter, then this generated
-    // method will also prefix the parameter with @Nullable.
-    if (isNullable(nearestOverrideMethod.getParameters().get(0))) {
+    if (isNullable(nearestSuperClassMethod.getParameters().get(0))) {
       parameterBuilder.addAnnotation(AndroidClassNames.NULLABLE);
     }
-    if (nearestOverrideMethod.hasAnnotation(AndroidClassNames.UI_THREAD)) {
-      methodBuilder.addAnnotation(AndroidClassNames.UI_THREAD);
-    }
+    androidEntryPointMethod(ActivityMethod.ON_CREATE, metadata)
+        .ifPresent(
+            method -> {
+              if (method.hasAnnotation(AndroidClassNames.UI_THREAD)) {
+                methodBuilder.addAnnotation(AndroidClassNames.UI_THREAD);
+              }
+            });
     return methodBuilder
         .addAnnotation(AndroidClassNames.CALL_SUPER)
         .addAnnotation(Override.class)
-        .addModifiers(XElements.getModifiers(nearestOverrideMethod))
+        .addModifiers(XElements.getModifiers(nearestSuperClassMethod))
         .addParameter(parameterBuilder.build())
         .addStatement("super.onCreate(savedInstanceState)")
         .addStatement("initSavedStateHandleHolder()")
@@ -254,19 +258,19 @@ public final class ActivityGenerator {
   //   }
   // }
   private MethodSpec onDestroyComponentActivity() {
-    XMethodElement nearestOverrideMethod =
-        requireNearestOverrideMethod(ActivityMethod.ON_DESTROY, metadata);
-    if (nearestOverrideMethod.isFinal()) {
+    XMethodElement nearestSuperClassMethod =
+        nearestSuperClassMethod(ActivityMethod.ON_DESTROY, metadata);
+    if (nearestSuperClassMethod.isFinal()) {
       env.getMessager()
           .printMessage(
               Diagnostic.Kind.ERROR,
               "Do not mark onDestroy as final in base Activity class, as Hilt needs to override it"
                   + " to clean up SavedStateHandle.",
-              nearestOverrideMethod);
+              nearestSuperClassMethod);
     }
     return MethodSpec.methodBuilder("onDestroy")
         .addAnnotation(Override.class)
-        .addModifiers(XElements.getModifiers(nearestOverrideMethod))
+        .addModifiers(XElements.getModifiers(nearestSuperClassMethod))
         .addStatement("super.onDestroy()")
         .beginControlFlow("if ($N != null)", SAVED_STATE_HANDLE_HOLDER_FIELD)
         .addStatement("$N.clear()", SAVED_STATE_HANDLE_HOLDER_FIELD)
@@ -274,17 +278,15 @@ public final class ActivityGenerator {
         .build();
   }
 
-  private static XMethodElement requireNearestOverrideMethod(
+  private static Optional<XMethodElement> androidEntryPointMethod(
       ActivityMethod activityMethod, AndroidEntryPointMetadata metadata) {
-    XMethodElement methodOnAndroidEntryPointElement =
-        metadata.element().getDeclaredMethods().stream()
-            .filter(method -> MethodSignature.of(method).equals(activityMethod.signature))
-            .findFirst()
-            .orElse(null);
-    if (methodOnAndroidEntryPointElement != null) {
-      return methodOnAndroidEntryPointElement;
-    }
+    return metadata.element().getDeclaredMethods().stream()
+        .filter(method -> MethodSignature.of(method).equals(activityMethod.signature))
+        .collect(toOptional());
+  }
 
+  private static XMethodElement nearestSuperClassMethod(
+      ActivityMethod activityMethod, AndroidEntryPointMetadata metadata) {
     ImmutableList<XMethodElement> methodOnBaseElement =
         asStream(metadata.baseElement().getAllMethods())
             .filter(method -> MethodSignature.of(method).equals(activityMethod.signature))

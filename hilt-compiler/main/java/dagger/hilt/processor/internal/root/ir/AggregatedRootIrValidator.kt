@@ -16,6 +16,7 @@
 
 package dagger.hilt.processor.internal.root.ir
 
+import com.squareup.javapoet.ClassName
 import kotlin.jvm.Throws
 
 // Validates roots being processed.
@@ -24,10 +25,12 @@ object AggregatedRootIrValidator {
   @Throws(InvalidRootsException::class)
   fun rootsToProcess(
     isCrossCompilationRootValidationDisabled: Boolean,
-    processedRoots: Set<ProcessedRootSentinelIr>,
+    processedRootSentinels: Set<ProcessedRootSentinelIr>,
     aggregatedRoots: Set<AggregatedRootIr>,
   ): Set<AggregatedRootIr> {
-    val processedRootNames = processedRoots.flatMap { it.roots }.toSet()
+    val processedRootNames = processedRootSentinels.flatMap { it.roots }.toSet()
+    val processedRoots = aggregatedRoots
+        .filter { processedRootNames.contains(it.root.canonicalName()) }
     val rootsToProcess =
       aggregatedRoots
         .filterNot { processedRootNames.contains(it.root.canonicalName()) }
@@ -53,10 +56,7 @@ object AggregatedRootIrValidator {
     }
     // Perform validation across roots previous compilation units.
     if (!isCrossCompilationRootValidationDisabled) {
-      val alreadyProcessedTestRoots =
-        aggregatedRoots.filter {
-          it.isTestRoot && processedRootNames.contains(it.root.canonicalName())
-        }
+      val alreadyProcessedTestRoots = processedRoots.filter { it.isTestRoot }
       // TODO(b/185742783): Add an explanation or link to docs to explain why we're forbidding this.
       if (alreadyProcessedTestRoots.isNotEmpty() && rootsToProcess.isNotEmpty()) {
         throw InvalidRootsException(
@@ -70,9 +70,8 @@ object AggregatedRootIrValidator {
       }
 
       val alreadyProcessedAppRoots =
-        aggregatedRoots.filter {
-            !it.isTestRoot &&
-            processedRootNames.contains(it.root.canonicalName())
+        processedRoots.filter {
+            !it.isTestRoot
         }
       if (alreadyProcessedAppRoots.isNotEmpty() && appRootsToProcess.isNotEmpty()) {
         throw InvalidRootsException(

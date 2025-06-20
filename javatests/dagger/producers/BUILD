@@ -15,20 +15,19 @@
 # Description:
 #   Tests for dagger.producers
 
+load("@rules_java//java:defs.bzl", "java_test")
 load(
     "//:build_defs.bzl",
     "DOCLINT_HTML_AND_SYNTAX",
     "DOCLINT_REFERENCES",
     "JAVA_RELEASE_MIN",
 )
-load("//:test_defs.bzl", "GenJavaTests")
 
 package(default_visibility = ["//:src"])
 
-GenJavaTests(
-    name = "producers_tests",
-    srcs = glob(["**/*.java"]),
-    functional = 0,
+java_test(
+    name = "ProducedTest",
+    srcs = ["ProducedTest.java"],
     javacopts = JAVA_RELEASE_MIN + DOCLINT_REFERENCES + DOCLINT_HTML_AND_SYNTAX,
     deps = [
         "//dagger-producers/main/java/dagger/producers",

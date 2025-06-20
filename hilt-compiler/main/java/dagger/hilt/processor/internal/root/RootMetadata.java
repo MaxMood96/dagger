@@ -34,7 +34,6 @@ import dagger.hilt.processor.internal.Processors;
 import dagger.hilt.processor.internal.aggregateddeps.ComponentDependencies;
 import dagger.hilt.processor.internal.aliasof.AliasOfs;
 import java.util.List;
-import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 
 /** Contains metadata about the given hilt root. */

@@ -27,12 +27,12 @@ android_library(
         "FragmentGetContextFix.java",
     ],
     deps = [
-        "//:dagger_with_compiler",
         "//hilt-android/main/java/dagger/hilt/android:entry_point_accessors",
         "//hilt-android/main/java/dagger/hilt/android/components",
         "//hilt-core/main/java/dagger/hilt:entry_point",
         "//hilt-core/main/java/dagger/hilt:install_in",
         "//hilt-core/main/java/dagger/hilt/internal:preconditions",
+        "//third_party/java/dagger",
     ],
 )
 

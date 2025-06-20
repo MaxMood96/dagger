@@ -208,7 +208,7 @@ public final class InjectionAnnotations {
     }
   }
 
-  /*
+  /**
    * Returns the qualifiers on the given element, or an empty set if none exist.
    *
    * <p>The {@code QualifierMetadata} is used to avoid superficial validation on unnecessary

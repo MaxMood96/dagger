@@ -23,10 +23,10 @@ compiler_test(
     srcs = ["ActivityGeneratorTest.java"],
     compiler_deps = [
         "//hilt-android/main/java/dagger/hilt/android:android_entry_point",
-        "@androidsdk//:platforms/android-34/android.jar",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
     ],
     resources = glob([
-        "goldens/ActivityGeneratorTest_*",
+        "goldens/ActivityGeneratorTest/**",
     ]),
     deps = [
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
@@ -42,13 +42,15 @@ compiler_test(
     compiler_deps = [
         "//hilt-android/main/java/dagger/hilt/android:hilt_android_app",
         "//hilt-android/main/java/dagger/hilt/android:android_entry_point",
-        "@androidsdk//:platforms/android-34/android.jar",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
         "//hilt-android-testing/main/java/dagger/hilt/android/testing/compile",
+        "//hilt-compiler/main/java/dagger/hilt/processor/internal:base_processor",
         "//third_party/java/guava/collect",
+        "//third_party/java/javapoet",
         "//third_party/java/junit",
     ],
 )
@@ -59,7 +61,7 @@ kt_compiler_test(
     compiler_deps = [
         "//hilt-android/main/java/dagger/hilt/android:hilt_android_app",
         "//hilt-android/main/java/dagger/hilt/android:android_entry_point",
-        "@androidsdk//:platforms/android-34/android.jar",
+        "//third_party/java/android/android_sdk_linux:android_runtime",
     ],
     deps = [
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",

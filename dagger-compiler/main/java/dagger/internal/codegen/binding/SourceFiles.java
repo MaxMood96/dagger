@@ -37,6 +37,7 @@ import androidx.room.compiler.codegen.XTypeName;
 import androidx.room.compiler.processing.XExecutableElement;
 import androidx.room.compiler.processing.XFieldElement;
 import androidx.room.compiler.processing.XMethodElement;
+import androidx.room.compiler.processing.XType;
 import androidx.room.compiler.processing.XTypeElement;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
@@ -50,7 +51,9 @@ import dagger.internal.codegen.binding.MembersInjectionBinding.InjectionSite;
 import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.model.RequestKind;
+import dagger.internal.codegen.xprocessing.Accessibility;
 import dagger.internal.codegen.xprocessing.XTypeNames;
+import java.util.Optional;
 import javax.inject.Inject;
 import javax.lang.model.SourceVersion;
 
@@ -80,15 +83,19 @@ public final class SourceFiles {
     FrameworkTypeMapper frameworkTypeMapper =
         FrameworkTypeMapper.forBindingType(binding.bindingType());
 
+    XClassName requestingClass = binding.bindingTypeElement().get().asClassName();
     return Maps.toMap(
         binding.dependencies(),
         dependency -> {
           XClassName frameworkClassName =
               frameworkTypeMapper.getFrameworkType(dependency.kind()).frameworkClassName();
+          XType type = dependency.key().type().xprocessing();
           return FrameworkField.create(
               DependencyVariableNamer.name(dependency),
               frameworkClassName,
-              dependency.key().type().xprocessing(),
+              Accessibility.isTypeAccessibleFrom(type, requestingClass.getPackageName())
+                  ? Optional.of(type)
+                  : Optional.empty(),
               compilerOptions);
         });
   }
@@ -206,20 +213,16 @@ public final class SourceFiles {
     return field.getEnclosingElement().getClassName().canonicalName() + "." + getSimpleName(field);
   }
 
-  /*
+  /**
    * TODO(ronshapiro): this isn't perfect, as collisions could still exist. Some examples:
    *
-   *  - @Inject void members() {} will generate a method that conflicts with the instance
-   *    method `injectMembers(T)`
-   *  - Adding the index could conflict with another member:
-   *      @Inject void a(Object o) {}
-   *      @Inject void a(String s) {}
-   *      @Inject void a1(String s) {}
+   * <p>- @Inject void members() {} will generate a method that conflicts with the instance method
+   * `injectMembers(T)` - Adding the index could conflict with another member: @Inject void a(Object
+   * o) {} @Inject void a(String s) {} @Inject void a1(String s) {}
    *
-   *    Here, Method a(String) will add the suffix "1", which will conflict with the method
-   *    generated for a1(String)
-   *  - Members named "members" or "methods" could also conflict with the {@code static} injection
-   *    method.
+   * <p>Here, Method a(String) will add the suffix "1", which will conflict with the method
+   * generated for a1(String) - Members named "members" or "methods" could also conflict with the
+   * {@code static} injection method.
    */
   public static String membersInjectorMethodName(InjectionSite injectionSite) {
     int index = injectionSite.indexAmongAtInjectMembersWithSameSimpleName();

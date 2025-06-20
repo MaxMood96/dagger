@@ -61,12 +61,27 @@ public final class FrameworkField {
       XClassName frameworkClassName,
       XType type,
       CompilerOptions compilerOptions) {
-    return createInternal(
+    return create(
         fieldName,
         frameworkClassName,
         Optional.of(type),
-        Nullability.NOT_NULLABLE,
         compilerOptions);
+  }
+
+  /**
+   * Returns a {@link FrameworkField} with the given {@code fieldName}, {@code frameworkClassName},
+   * {@code type}.
+   *
+   * <p>If the {@code type} isn't present, the field type will be the raw {@code frameworkClassName}
+   * type.
+   */
+  public static FrameworkField create(
+      String fieldName,
+      XClassName frameworkClassName,
+      Optional<XType> type,
+      CompilerOptions compilerOptions) {
+    return createInternal(
+        fieldName, frameworkClassName, type, Nullability.NOT_NULLABLE, compilerOptions);
   }
 
   /**

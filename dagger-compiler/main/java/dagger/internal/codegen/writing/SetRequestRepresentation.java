@@ -18,7 +18,7 @@ package dagger.internal.codegen.writing;
 
 import static com.google.common.collect.Iterables.getOnlyElement;
 import static dagger.internal.codegen.binding.BindingRequest.bindingRequest;
-import static dagger.internal.codegen.langmodel.Accessibility.isTypeAccessibleFrom;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFrom;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.toParametersCodeBlock;
 import static dagger.internal.codegen.xprocessing.XElements.getSimpleName;
 
@@ -155,7 +155,7 @@ final class SetRequestRepresentation extends RequestRepresentation {
     return XExpression.create(
         binding.key().type().xprocessing(),
         XCodeBlock.builder()
-            .add("%T.", XTypeNames.COLLECTIONS)
+            .add("%T.", XTypeNames.JAVA_UTIL_COLLECTIONS)
             .add(maybeTypeParameter(requestingClass))
             .add(methodInvocation)
             .build());

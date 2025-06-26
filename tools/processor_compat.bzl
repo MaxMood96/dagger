@@ -19,21 +19,21 @@ load("@rules_java//java:defs.bzl", "java_plugin")
 
 def compat_processor_plugin(
         name,
-        processor_base_name,
+        javac_processor_name,
         processor_lib_dep,
         generates_api = False,
         tags = [],
         visibility = None):
 
     full_path = native.package_name()
-    java_index = max(0, full_path.rindex("/java/"))
+    java_index = max(0, full_path.rfind("/java/"))
     pkgs = full_path[java_index:].split("/")
     pkg = ".".join(pkgs[pkgs.index("java") + 1:])
 
     java_plugin(
         name = name,
         generates_api = generates_api,
-        processor_class = pkg + "." + processor_base_name + "Processor",
+        processor_class = pkg + "." + javac_processor_name,
         deps = [processor_lib_dep],
         tags = tags,
         visibility = visibility,

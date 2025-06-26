@@ -25,9 +25,8 @@ import static dagger.internal.codegen.binding.SourceFiles.membersInjectorMethodN
 import static dagger.internal.codegen.binding.SourceFiles.membersInjectorNameForType;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableMap;
-import static dagger.internal.codegen.langmodel.Accessibility.isRawTypeAccessible;
-import static dagger.internal.codegen.langmodel.Accessibility.isRawTypePubliclyAccessible;
-import static dagger.internal.codegen.xprocessing.NullableTypeNames.asNullableTypeName;
+import static dagger.internal.codegen.xprocessing.Accessibility.isRawTypeAccessible;
+import static dagger.internal.codegen.xprocessing.Accessibility.isRawTypePubliclyAccessible;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.makeParametersCodeBlock;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.toConcatenatedCodeBlock;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.toParametersCodeBlock;
@@ -63,6 +62,7 @@ import java.util.function.Function;
 
 /** Convenience methods for creating and invoking {@link InjectionMethod}s. */
 final class InjectionMethods {
+  private InjectionMethods() {}
 
   /**
    * A method that returns an object from a {@code @Provides} method or an {@code @Inject}ed
@@ -255,13 +255,13 @@ final class InjectionMethods {
                       isMethodParameter(parameter)
                           ? asMethodParameter(parameter).getJvmName()
                           : getSimpleName(parameter));
-              boolean useObject = !isRawTypePubliclyAccessible(parameter.getType());
+              boolean isTypeNameAccessible = isRawTypePubliclyAccessible(parameter.getType());
               return copyParameter(
                   methodBuilder,
-                  parameter.getType(),
                   name,
-                  useObject,
+                  parameter.getType().asTypeName(),
                   Nullability.of(parameter),
+                  isTypeNameAccessible,
                   compilerOptions);
             })
         .collect(toParametersCodeBlock());
@@ -269,17 +269,21 @@ final class InjectionMethods {
 
   static XCodeBlock copyParameter(
       XFunSpecs.Builder methodBuilder,
-      XType type,
       String name,
-      boolean useObject,
+      XTypeName typeName,
       Nullability nullability,
+      boolean isTypeNameAccessible,
       CompilerOptions compilerOptions) {
-    XTypeName typeName =
-        asNullableTypeName(
-            useObject ? XTypeName.ANY_OBJECT : type.asTypeName(), nullability, compilerOptions);
-    methodBuilder.addParameter(XParameterSpecs.of(name, typeName, nullability, compilerOptions));
-    return useObject
-        ? XCodeBlock.ofCast(type.asTypeName(), XCodeBlock.of("%L", name))
-        : XCodeBlock.of("%L", name);
+    XTypeName accessibleTypeName =
+        isTypeNameAccessible ? typeName : accessibleTypeName(typeName, compilerOptions);
+    methodBuilder.addParameter(
+        XParameterSpecs.of(name, accessibleTypeName, nullability, compilerOptions));
+    return isTypeNameAccessible
+        ? XCodeBlock.of("%L", name)
+        : XCodeBlock.ofCast(typeName, XCodeBlock.of("%L", name));
+  }
+
+  private static XTypeName accessibleTypeName(XTypeName typeName, CompilerOptions compilerOptions) {
+    return XTypeName.ANY_OBJECT;
   }
 }

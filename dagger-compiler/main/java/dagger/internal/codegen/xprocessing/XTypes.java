@@ -593,6 +593,19 @@ public final class XTypes {
     }
   }
 
+  /** Returns {@code true} if the given type or any of its type arguments are type parameters. */
+  public static boolean containsTypeParameter(XType type) {
+    if (isTypeVariable(type)) {
+      return true;
+    } else if (isArray(type)) {
+      return containsTypeParameter(asArray(type).getComponentType());
+    } else if (type.extendsBound() != null) {
+      return containsTypeParameter(type.extendsBound());
+    } else {
+      return type.getTypeArguments().stream().anyMatch(XTypes::containsTypeParameter);
+    }
+  }
+
   private static final class TypeResolutionVisitor extends SimpleTypeVisitor8<Void, Set<Element>> {
     static final TypeResolutionVisitor INSTANCE = new TypeResolutionVisitor();
 

@@ -26,14 +26,15 @@ import static dagger.internal.codegen.binding.SourceFiles.membersInjectorNameFor
 import static dagger.internal.codegen.binding.SourceFiles.parameterizedGeneratedTypeNameForBinding;
 import static dagger.internal.codegen.extension.DaggerStreams.presentValues;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
-import static dagger.internal.codegen.langmodel.Accessibility.isRawTypePubliclyAccessible;
-import static dagger.internal.codegen.langmodel.Accessibility.isTypeAccessibleFrom;
 import static dagger.internal.codegen.writing.GwtCompatibility.gwtIncompatibleAnnotation;
 import static dagger.internal.codegen.writing.InjectionMethods.copyParameter;
 import static dagger.internal.codegen.writing.InjectionMethods.copyParameters;
+import static dagger.internal.codegen.xprocessing.Accessibility.isRawTypePubliclyAccessible;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFrom;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFromPublicApi;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression.RAWTYPES;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.suppressWarnings;
-import static dagger.internal.codegen.xprocessing.XCodeBlocks.parameterNames;
+import static dagger.internal.codegen.xprocessing.XCodeBlocks.makeParametersCodeBlock;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.toConcatenatedCodeBlock;
 import static dagger.internal.codegen.xprocessing.XElements.asField;
 import static dagger.internal.codegen.xprocessing.XElements.asMethod;
@@ -44,10 +45,10 @@ import static dagger.internal.codegen.xprocessing.XFunSpecs.methodBuilder;
 import static dagger.internal.codegen.xprocessing.XTypeElements.typeVariableNames;
 import static dagger.internal.codegen.xprocessing.XTypeNames.membersInjectorOf;
 import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
-import androidx.room.compiler.codegen.VisibilityModifier;
 import androidx.room.compiler.codegen.XAnnotationSpec;
 import androidx.room.compiler.codegen.XClassName;
 import androidx.room.compiler.codegen.XCodeBlock;
@@ -79,6 +80,7 @@ import dagger.internal.codegen.writing.InjectionMethods.InjectionSiteMethod;
 import dagger.internal.codegen.xprocessing.Nullability;
 import dagger.internal.codegen.xprocessing.XFunSpecs;
 import dagger.internal.codegen.xprocessing.XParameterSpecs;
+import dagger.internal.codegen.xprocessing.XPropertySpecs;
 import dagger.internal.codegen.xprocessing.XTypeNames;
 import dagger.internal.codegen.xprocessing.XTypeSpecs;
 import java.util.Optional;
@@ -174,8 +176,7 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
             .addExceptions(method.getThrownTypes());
 
     UniqueNameSet parameterNameSet = new UniqueNameSet();
-    XCodeBlock instance =
-        copyInstance(builder, parameterNameSet, enclosingType.getType(), compilerOptions);
+    XCodeBlock instance = copyInstance(builder, parameterNameSet, enclosingType.getType());
     XCodeBlock arguments =
         copyParameters(builder, parameterNameSet, method.getParameters(), compilerOptions);
     return builder.addStatement("%L.%N(%L)", instance, method.getJvmName(), arguments).build();
@@ -202,32 +203,28 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
     qualifier.ifPresent(builder::addAnnotation);
 
     UniqueNameSet parameterNameSet = new UniqueNameSet();
-    XCodeBlock instance =
-        copyInstance(builder, parameterNameSet, enclosingType.getType(), compilerOptions);
+    XCodeBlock instance = copyInstance(builder, parameterNameSet, enclosingType.getType());
     XCodeBlock argument =
         copyParameters(builder, parameterNameSet, ImmutableList.of(field), compilerOptions);
     return builder.addStatement("%L.%N = %L", instance, getSimpleName(field), argument).build();
   }
 
-  private static XCodeBlock copyInstance(
-      XFunSpecs.Builder methodBuilder,
-      UniqueNameSet parameterNameSet,
-      XType type,
-      CompilerOptions compilerOptions) {
-    boolean useObject = !isRawTypePubliclyAccessible(type);
+  private XCodeBlock copyInstance(
+      XFunSpecs.Builder methodBuilder, UniqueNameSet parameterNameSet, XType type) {
+    boolean isTypeNameAccessible = isRawTypePubliclyAccessible(type);
     XCodeBlock instance =
         copyParameter(
             methodBuilder,
-            type,
             parameterNameSet.getUniqueName("instance"),
-            useObject,
+            type.asTypeName(),
             Nullability.NOT_NULLABLE,
+            isTypeNameAccessible,
             compilerOptions);
     // If we had to cast the instance add an extra parenthesis incase we're calling a method on it.
-    return useObject ? XCodeBlock.of("(%L)", instance) : instance;
+    return isTypeNameAccessible ? instance : XCodeBlock.of("(%L)", instance);
   }
 
-  // MyClass(
+  // private MyClass_MembersInjector(
   //     Provider<Dep1> dep1Provider,
   //     Provider<Dep2> dep2Provider,
   //     // Note: The raw type can happen if Dep3 is injected in a super type and not accessible to
@@ -241,7 +238,7 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
   private XFunSpec constructor(ImmutableMap<DependencyRequest, XPropertySpec> frameworkFields) {
     ImmutableList<XParameterSpec> parameters = constructorParameters(frameworkFields);
     return constructorBuilder()
-        .addModifiers(PUBLIC)
+        .addModifiers(PRIVATE)
         .addParameters(parameters)
         .addCode(
             parameters.stream()
@@ -270,19 +267,38 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
   private XFunSpec createMethod(
       MembersInjectionBinding binding,
       ImmutableMap<DependencyRequest, XPropertySpec> frameworkFields) {
-    ImmutableList<XParameterSpec> params = constructorParameters(frameworkFields);
-    // We use a static create method so that generated components can avoid having
-    // to refer to the generic types of the factory.
-    // (Otherwise they may have visibility problems referring to the types.)
-    return methodBuilder("create")
-        .addModifiers(PUBLIC, STATIC)
-        .addTypeVariableNames(bindingTypeElementTypeVariableNames(binding))
-        .returns(membersInjectorOf(binding.key().type().xprocessing().asTypeName()))
-        .addParameters(params)
+    // We use a static create method so that generated components can avoid having to refer to the
+    // generic types of the factory. (Otherwise they may have visibility problems referring to the
+    // types.)
+    XFunSpecs.Builder createMethodBuilder =
+        methodBuilder("create")
+            .addModifiers(PUBLIC, STATIC)
+            .addTypeVariableNames(bindingTypeElementTypeVariableNames(binding))
+            .returns(membersInjectorOf(binding.key().type().xprocessing().asTypeName()));
+
+    ImmutableList.Builder<XCodeBlock> arguments = ImmutableList.builder();
+    frameworkFields
+        .forEach(
+            (dependencyRequest, field) -> {
+              String parameterName = field.getName(); // SUPPRESS_GET_NAME_CHECK
+              XType dependencyType = dependencyRequest.key().type().xprocessing();
+              arguments.add(
+                  copyParameter(
+                      createMethodBuilder,
+                      parameterName,
+                      field.getType(),
+                      Nullability.NOT_NULLABLE,
+                      /* isTypeNameAccessible= */
+                      isTypeAccessibleFromPublicApi(dependencyType, compilerOptions),
+                      compilerOptions));
+            });
+    return createMethodBuilder
         .addStatement(
             "return %L",
             XCodeBlock.ofNewInstance(
-                parameterizedGeneratedTypeNameForBinding(binding), "%L", parameterNames(params)))
+                parameterizedGeneratedTypeNameForBinding(binding),
+                "%L",
+                makeParametersCodeBlock(arguments.build())))
         .build();
   }
 
@@ -349,13 +365,8 @@ public final class MembersInjectorGenerator extends SourceFileGenerator<MembersI
               XTypeName fieldType =
                   useRawFrameworkType ? bindingField.type().getRawTypeName() : bindingField.type();
               String fieldName = fieldNames.getUniqueName(bindingField.name());
-              XPropertySpec.Builder fieldBuilder =
-                  XPropertySpec.builder(
-                      /* name= */ fieldName,
-                      /* typeName= */ fieldType,
-                      /* visibility= */ VisibilityModifier.PRIVATE,
-                      /* isMutable= */ false,
-                      /* addJavaNullabilityAnnotation= */ false);
+              XPropertySpecs.Builder fieldBuilder =
+                  XPropertySpecs.builder(fieldName, fieldType, PRIVATE, FINAL);
               if (useRawFrameworkType) {
                 fieldBuilder.addAnnotation(suppressWarnings(RAWTYPES));
               }

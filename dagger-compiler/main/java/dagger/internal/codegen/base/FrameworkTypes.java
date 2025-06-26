@@ -16,10 +16,12 @@
 
 package dagger.internal.codegen.base;
 
+import static dagger.internal.codegen.xprocessing.XTypeNames.isTypeOf;
 import static dagger.internal.codegen.xprocessing.XTypeNames.providerTypeNames;
 import static dagger.internal.codegen.xprocessing.XTypes.isTypeOf;
 
 import androidx.room.compiler.codegen.XClassName;
+import androidx.room.compiler.codegen.XTypeName;
 import androidx.room.compiler.processing.XType;
 import com.google.common.collect.ImmutableSet;
 import dagger.internal.codegen.xprocessing.XTypeNames;
@@ -64,6 +66,11 @@ public final class FrameworkTypes {
   /** Returns true if the type represents a producer-related framework type. */
   public static boolean isProducerType(XType type) {
     return isTypeOf(type, PRODUCTION_TYPES);
+  }
+
+  /** Returns {@code true} if the given {@code typeName} is a framework type. */
+  public static boolean isFrameworkTypeName(XTypeName typeName) {
+    return isTypeOf(typeName, ALL_FRAMEWORK_TYPES);
   }
 
   /** Returns true if the type represents a framework type. */

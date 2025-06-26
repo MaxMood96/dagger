@@ -101,13 +101,7 @@ public final class GoldenFileRule implements TestRule {
    * the correct golden file in the proper location.
    */
   public String goldenFileContent(String qualifiedName) throws IOException {
-    String fileName =
-        String.format(
-            "%s_%s_%s",
-            description.getTestClass().getSimpleName(),
-            getFormattedMethodName(description),
-            qualifiedName);
-
+    String fileName = relativeGoldenFileName(description, qualifiedName);
     String resourceName = "goldens/" + fileName;
     URL url = description.getTestClass().getResource(resourceName);
     if (url == null) {
@@ -124,17 +118,18 @@ public final class GoldenFileRule implements TestRule {
             .replace(GOLDEN_GENERATED_IMPORT, JDK_GENERATED_IMPORT);
   }
 
-  /**
-   * Returns the formatted method name for the given description.
-   *
-   * <p>If this is not a parameterized test, we return the method name as is. If it is a
-   * parameterized test, we format it from {@code someTestMethod[PARAMETER]} to
-   * {@code someTestMethod_PARAMETER} to avoid brackets in the name.
-   */
-  private static String getFormattedMethodName(Description description) {
+  /** Returns the relative name for the golden file. */
+  private static String relativeGoldenFileName(Description description, String qualifiedName) {
+    // If this is a parameterized test, the parameters will be appended to the end of the method
+    // name. We use a matcher to separate them out for the golden file name.
     Matcher matcher = JUNIT_PARAMETERIZED_METHOD.matcher(description.getMethodName());
-
-    // If this is a parameterized method, separate the parameters with an underscore
-    return matcher.find() ? matcher.group(1) + "_" + matcher.group(2) : description.getMethodName();
+    boolean isParameterized = matcher.find();
+    String methodName = isParameterized ? matcher.group(1) : description.getMethodName();
+    String fileName = isParameterized ? qualifiedName + "_" + matcher.group(2) : qualifiedName;
+    return String.format(
+        "%s/%s/%s",
+        description.getTestClass().getSimpleName(),
+        methodName,
+        fileName);
   }
 }

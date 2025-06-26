@@ -78,7 +78,9 @@ object XTypeNames {
 
   // TODO(b/404613325): Figure out what to do for calls like java.util.Collections.<T>emptyList()
   // where in Kotlin it becomes a top-level function like kotlin.collections.emptyList<T>().
-  @JvmField val COLLECTIONS = XClassName.get("java.util", "Collections")
+  @JvmField val JAVA_UTIL_COLLECTIONS = XClassName.get("java.util", "Collections")
+  @JvmField val JAVA_UTIL_SET = XClassName.get("java.util", "Set")
+  @JvmField val JAVA_UTIL_MAP = XClassName.get("java.util", "Map")
   @JvmField val FACTORY = XClassName.get("dagger.internal", "Factory")
   @JvmField
   val INJECTED_FIELD_SIGNATURE = XClassName.get("dagger.internal", "InjectedFieldSignature")
@@ -283,6 +285,14 @@ object XTypeNames {
   fun isFutureType(typeName: XTypeName): Boolean {
     return FUTURE_TYPES.contains(typeName.rawTypeName)
   }
+
+  /** Returns `true` if the raw type is equal to the given `className`. */
+  @JvmStatic
+  fun XTypeName.isTypeOf(className: XClassName) = this.rawTypeName == className
+
+  /** Returns `true` if the raw type is equal to any of the given `classNames`. */
+  @JvmStatic
+  fun XTypeName.isTypeOf(classNames: Collection<XClassName>) = classNames.any { isTypeOf(it) }
 
   /**
    * Returns the {@link TypeName} for the raw type of the given {@link TypeName}. If the argument

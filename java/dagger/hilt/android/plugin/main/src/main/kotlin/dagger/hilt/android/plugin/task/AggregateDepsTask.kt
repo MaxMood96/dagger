@@ -99,7 +99,7 @@ abstract class AggregateDepsTask @Inject constructor(
       val rootsToProcess = AggregatedRootIrValidator.rootsToProcess(
         isCrossCompilationRootValidationDisabled =
           parameters.crossCompilationRootValidationDisabled.get(),
-        processedRoots = aggregator.processedRoots,
+        processedRootSentinels = aggregator.processedRoots,
         aggregatedRoots = aggregator.aggregatedRoots
       )
       if (rootsToProcess.isEmpty()) {

@@ -26,9 +26,9 @@ java_library(
         "HiltCompilerTests.java",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen:processor",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
+        "//dagger-compiler:processor",
+        "//dagger-compiler:xprocessing",
+        "//dagger-compiler:xprocessing-testing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/androidentrypoint:processor_lib",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal/customtestapplication:processor_lib",
@@ -49,6 +49,6 @@ java_library(
         "//third_party/java/guava/base",
         "//third_party/java/guava/collect",
         "//third_party/java/junit",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )

@@ -18,6 +18,7 @@ package dagger.hilt.processor.internal.root;
 
 import androidx.room.compiler.processing.XTypeElement;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import dagger.hilt.processor.internal.ClassNames;
 import dagger.hilt.processor.internal.Processors;
 
@@ -26,12 +27,17 @@ final class AggregatedRootGenerator {
   private final XTypeElement rootElement;
   private final XTypeElement originatingRootElement;
   private final XTypeElement rootAnnotation;
+  private final ClassName rootComponentName;
 
   AggregatedRootGenerator(
-      XTypeElement rootElement, XTypeElement originatingRootElement, XTypeElement rootAnnotation) {
+      XTypeElement rootElement,
+      XTypeElement originatingRootElement,
+      XTypeElement rootAnnotation,
+      ClassName rootComponentName) {
     this.rootElement = rootElement;
     this.originatingRootElement = originatingRootElement;
     this.rootAnnotation = rootAnnotation;
+    this.rootComponentName = rootComponentName;
   }
 
   void generate() {
@@ -42,7 +48,8 @@ final class AggregatedRootGenerator {
             .addMember("originatingRoot", "$S", originatingRootElement.getQualifiedName())
             .addMember(
                 "originatingRootPackage", "$S", originatingRootElement.getClassName().packageName())
-            .addMember("rootAnnotation", "$T.class", rootAnnotation.getClassName());
+            .addMember("rootAnnotation", "$T.class", rootAnnotation.getClassName())
+            .addMember("rootComponentPackage", "$S", rootComponentName.packageName());
     rootElement
         .getClassName()
         .simpleNames()
@@ -52,6 +59,10 @@ final class AggregatedRootGenerator {
         .simpleNames()
         .forEach(
             name -> aggregatedRootAnnotation.addMember("originatingRootSimpleNames", "$S", name));
+    rootComponentName
+        .simpleNames()
+        .forEach(
+            name -> aggregatedRootAnnotation.addMember("rootComponentSimpleNames", "$S", name));
     Processors.generateAggregatingClass(
         ClassNames.AGGREGATED_ROOT_PACKAGE,
         aggregatedRootAnnotation.build(),

@@ -17,7 +17,7 @@
 package dagger.internal.codegen.writing;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static dagger.internal.codegen.langmodel.Accessibility.accessibleTypeName;
+import static dagger.internal.codegen.xprocessing.Accessibility.accessibleTypeName;
 import static dagger.internal.codegen.xprocessing.XProcessingEnvs.isPreJava8SourceVersion;
 import static dagger.internal.codegen.xprocessing.XProcessingEnvs.wrapType;
 

@@ -24,18 +24,18 @@ import static dagger.internal.codegen.binding.SourceFiles.generatedClassNameForB
 import static dagger.internal.codegen.binding.SourceFiles.generatedProxyMethodName;
 import static dagger.internal.codegen.binding.SourceFiles.parameterizedGeneratedTypeNameForBinding;
 import static dagger.internal.codegen.extension.DaggerStreams.presentValues;
-import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableMap;
 import static dagger.internal.codegen.model.BindingKind.INJECTION;
 import static dagger.internal.codegen.model.BindingKind.PROVISION;
 import static dagger.internal.codegen.writing.GwtCompatibility.gwtIncompatibleAnnotation;
 import static dagger.internal.codegen.writing.InjectionMethods.copyParameter;
 import static dagger.internal.codegen.writing.InjectionMethods.copyParameters;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFromPublicApi;
 import static dagger.internal.codegen.xprocessing.NullableTypeNames.asNullableTypeName;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression.RAWTYPES;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression.UNCHECKED;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.suppressWarnings;
-import static dagger.internal.codegen.xprocessing.XCodeBlocks.parameterNames;
+import static dagger.internal.codegen.xprocessing.XCodeBlocks.makeParametersCodeBlock;
 import static dagger.internal.codegen.xprocessing.XElements.asConstructor;
 import static dagger.internal.codegen.xprocessing.XElements.asMethod;
 import static dagger.internal.codegen.xprocessing.XElements.asTypeElement;
@@ -48,7 +48,6 @@ import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
-import androidx.room.compiler.codegen.VisibilityModifier;
 import androidx.room.compiler.codegen.XAnnotationSpec;
 import androidx.room.compiler.codegen.XClassName;
 import androidx.room.compiler.codegen.XCodeBlock;
@@ -181,7 +180,7 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
     return generatedClassNameForBinding(binding).nestedClass("InstanceHolder");
   }
 
-  // public FooModule_ProvidesFooFactory(
+  // private FooModule_ProvidesFooFactory(
   //     FooModule module,
   //     Provider<Bar> barProvider,
   //     Provider<Baz> bazProvider) {
@@ -190,8 +189,7 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
   //   this.bazProvider = bazProvider;
   // }
   private XFunSpec constructorMethod(FactoryFields factoryFields) {
-    // TODO(bcorso): Make the constructor private?
-    XFunSpecs.Builder constructor = constructorBuilder().addModifiers(PUBLIC);
+    XFunSpecs.Builder constructor = constructorBuilder().addModifiers(PRIVATE);
     factoryFields
         .getAll()
         .forEach(
@@ -230,22 +228,43 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
       }
       createMethodBuilder.addStatement("return %T.INSTANCE", instanceHolderClassName(binding));
     } else {
-      ImmutableList<XParameterSpec> parameters =
-          factoryFields.getAll().stream()
-              .map(
-                  field ->
-                      XParameterSpecs.of(
-                          field.getName(), // SUPPRESS_GET_NAME_CHECK
-                          field.getType()))
-              .collect(toImmutableList());
+      ImmutableList.Builder<XCodeBlock> arguments = ImmutableList.builder();
+      factoryFields.moduleField.ifPresent(
+          module -> {
+            String moduleName = module.getName(); // SUPPRESS_GET_NAME_CHECK
+            XType moduleType = binding.bindingTypeElement().get().getType();
+            arguments.add(
+                copyParameter(
+                    createMethodBuilder,
+                    moduleName,
+                    moduleType.asTypeName(),
+                    Nullability.NOT_NULLABLE,
+                    /* isTypeNameAccessible= */
+                    isTypeAccessibleFromPublicApi(moduleType, compilerOptions),
+                    compilerOptions));
+          });
+      factoryFields.frameworkFields
+          .forEach(
+              (dependencyRequest, field) -> {
+                String parameterName = field.getName(); // SUPPRESS_GET_NAME_CHECK
+                XType dependencyType = dependencyRequest.key().type().xprocessing();
+                arguments.add(
+                    copyParameter(
+                        createMethodBuilder,
+                        parameterName,
+                        field.getType(),
+                        Nullability.NOT_NULLABLE,
+                        /* isTypeNameAccessible= */
+                        isTypeAccessibleFromPublicApi(dependencyType, compilerOptions),
+                        compilerOptions));
+              });
       createMethodBuilder
-          .addParameters(parameters)
           .addStatement(
               "return %L",
               XCodeBlock.ofNewInstance(
                   parameterizedGeneratedTypeNameForBinding(binding),
                   "%L",
-                  parameterNames(parameters)));
+                  makeParametersCodeBlock(arguments.build())));
     }
     return createMethodBuilder.build();
   }
@@ -407,13 +426,17 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
 
   private XCodeBlock copyInstance(
       XFunSpecs.Builder methodBuilder, UniqueNameSet parameterNameSet, XType type) {
-    return copyParameter(
-        methodBuilder,
-        type,
-        parameterNameSet.getUniqueName("instance"),
-        /* useObject= */ false,
-        Nullability.NOT_NULLABLE,
-        compilerOptions);
+    boolean isTypeNameAccessible = isTypeAccessibleFromPublicApi(type, compilerOptions);
+    XCodeBlock instance =
+        copyParameter(
+            methodBuilder,
+            parameterNameSet.getUniqueName("instance"),
+            type.asTypeName(),
+            Nullability.NOT_NULLABLE,
+            isTypeNameAccessible,
+            compilerOptions);
+    // If we had to cast the module add an extra parenthesis since we're calling a method on it.
+    return isTypeNameAccessible ? instance : XCodeBlock.of("(%L)", instance);
   }
 
   private XAnnotationSpec scopeMetadataAnnotation(ContributionBinding binding) {
@@ -505,13 +528,7 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
     }
 
     private static XPropertySpec createField(XTypeName typeName, String name) {
-      return XPropertySpec.builder(
-              /* name= */ name,
-              /* typeName= */ typeName,
-              /* visibility= */ VisibilityModifier.PRIVATE,
-              /* isMutable= */ false,
-              /* addJavaNullabilityAnnotation= */ false)
-          .build();
+      return XPropertySpecs.of(name, typeName, PRIVATE, FINAL);
     }
 
     private final Optional<XPropertySpec> moduleField;

@@ -23,7 +23,7 @@ package(default_visibility = ["//:src"])
 compat_processor_plugin(
     name = "processor",
     generates_api = 1,
-    processor_base_name = "ViewModel",
+    javac_processor_name = "ViewModelProcessor",
     processor_lib_dep = ":processor_lib",
 )
 
@@ -37,7 +37,7 @@ kt_jvm_library(
         "ViewModelProcessor.kt",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal:android_classnames",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:base_processor",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:classnames",
@@ -48,7 +48,7 @@ kt_jvm_library(
         "//third_party/java/guava/collect",
         "//third_party/java/incap",
         "//third_party/java/javapoet",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )
 
@@ -63,7 +63,7 @@ kt_jvm_library(
         "ViewModelValidationPlugin.kt",
     ],
     deps = [
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
+        "//dagger-compiler:xprocessing",
         "//dagger-spi",
         "//hilt-compiler/main/java/dagger/hilt/android/processor/internal:android_classnames",
         "//hilt-compiler/main/java/dagger/hilt/processor/internal:dagger_models",

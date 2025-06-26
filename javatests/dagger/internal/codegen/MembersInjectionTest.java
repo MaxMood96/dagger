@@ -1633,6 +1633,104 @@ public class MembersInjectionTest {
             });
   }
 
+  @Test
+  public void membersInjectorSuperTypeWithInaccessibleTypeArgument() throws Exception {
+    Source superType =
+        CompilerTests.javaSource(
+            "other.SuperType",
+            "package other;",
+            "",
+            "import javax.inject.Inject;",
+            "import java.util.List;",
+            "",
+            "public class SuperType<T> {",
+            "  @Inject T t;",
+            "  @Inject List<T> listT;",
+            "  @Inject List<? extends T> listExtendsT;",
+            "  @Inject List<? extends T>[] arrayListExtendsT;",
+            "",
+            "  @Inject",
+            "  void method(",
+            "      T t,",
+            "      List<T> listT,",
+            "      List<? extends T> listExtendsT,",
+            "      List<? extends T>[] arrayListExtendsT) {}",
+            "}");
+    CompilerTests.daggerCompiler(superType)
+        .withProcessingOptions(compilerMode.processorOptions())
+        .compile(
+            subject -> {
+              subject.hasErrorCount(0);
+              subject.generatedSource(
+                  goldenFileRule.goldenSource("other/SuperType_MembersInjector"));
+            });
+    Source inaccessibleType =
+        CompilerTests.javaSource(
+            "other.InaccessibleType",
+            "package other;",
+            "interface InaccessibleType {}");
+    Source intermediateType =
+        CompilerTests.javaSource(
+            "other.IntermediateType",
+            "package other;",
+            "public class IntermediateType extends SuperType<InaccessibleType> {}");
+    Source subType =
+        CompilerTests.javaSource(
+            "test.SubType",
+            "package test;",
+            "",
+            "import javax.inject.Inject;",
+            "import other.IntermediateType;",
+            "",
+            "public class SubType extends IntermediateType {",
+            "  @Inject Integer i;",
+            "}");
+    CompilerTests.daggerCompiler(superType, inaccessibleType, intermediateType, subType)
+        .withProcessingOptions(compilerMode.processorOptions())
+        .compile(
+            subject -> {
+              // TODO(b/424791197): Once this bug is fixed, there should be no errors.
+              subject.hasErrorCount(5);
+              subject.generatedSource(goldenFileRule.goldenSource("test/SubType_MembersInjector"));
+              subject.hasErrorContaining(
+                      "method injectT in class other.SuperType_MembersInjector<T> cannot be"
+                          + " applied to given types")
+                  .onSource(goldenFileRule.goldenSource("test/SubType_MembersInjector"))
+                  .onLineContaining("SuperType_MembersInjector.injectT(instance, tProvider.get())");
+              subject.hasErrorContaining(
+                      "method injectListT in class other.SuperType_MembersInjector<T> cannot be"
+                          + " applied to given types")
+                  .onSource(goldenFileRule.goldenSource("test/SubType_MembersInjector"))
+                  .onLineContaining(
+                      "SuperType_MembersInjector.injectListT(instance, listTProvider.get())");
+              subject.hasErrorContaining(
+                      "method injectListExtendsT in class other.SuperType_MembersInjector<T> cannot"
+                          + " be applied to given types")
+                  .onSource(goldenFileRule.goldenSource("test/SubType_MembersInjector"))
+                  .onLineContaining(
+                      "SuperType_MembersInjector.injectListExtendsT("
+                          + "instance, listExtendsTProvider.get())");
+              subject.hasErrorContaining(
+                      "method injectArrayListExtendsT in class other.SuperType_MembersInjector<T>"
+                          + " cannot be applied to given types")
+                  .onSource(goldenFileRule.goldenSource("test/SubType_MembersInjector"))
+                  .onLineContaining(
+                      "SuperType_MembersInjector.injectArrayListExtendsT("
+                          + "instance, arrayListExtendsTProvider.get())");
+              subject.hasErrorContaining(
+                      "method injectMethod in class other.SuperType_MembersInjector<T> cannot"
+                          + " be applied to given types")
+                  .onSource(goldenFileRule.goldenSource("test/SubType_MembersInjector"))
+                  .onLineContaining(
+                      "SuperType_MembersInjector.injectMethod("
+                          + "instance, "
+                          + "tProvider2.get(), "
+                          + "listTProvider2.get(), "
+                          + "listExtendsTProvider2.get(), "
+                          + "arrayListExtendsTProvider2.get())");
+            });
+  }
+
   private Source stripJetbrainsNullable(Source source) {
     return CompilerTests.javaSource(
         ((Source.JavaSource) source).getQName(),

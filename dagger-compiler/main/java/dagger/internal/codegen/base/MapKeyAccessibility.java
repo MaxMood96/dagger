@@ -16,12 +16,12 @@
 
 package dagger.internal.codegen.base;
 
-import static dagger.internal.codegen.langmodel.Accessibility.isTypeAccessibleFrom;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFrom;
 
 import androidx.room.compiler.processing.XAnnotation;
 import androidx.room.compiler.processing.XAnnotationValue;
 import androidx.room.compiler.processing.XType;
-import dagger.internal.codegen.langmodel.Accessibility;
+import dagger.internal.codegen.xprocessing.Accessibility;
 import java.util.List;
 import java.util.function.Predicate;
 

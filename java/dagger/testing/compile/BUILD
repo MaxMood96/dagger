@@ -30,8 +30,8 @@ java_library(
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
     ],
     deps = [
+        "//dagger-compiler:xprocessing",
         "//dagger-compiler/main/java/dagger/internal/codegen:processor",
-        "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing",
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
         "//dagger-spi",
         "//third_party/java/auto:value",
@@ -40,6 +40,6 @@ java_library(
         "//third_party/java/guava/collect",
         "//third_party/java/guava/io",
         "//third_party/java/junit",
-        "@maven//:com_google_devtools_ksp_symbol_processing_api",
+        "//third_party/kotlin/kotlin_symbol_processing:symbol-processing-api",
     ],
 )

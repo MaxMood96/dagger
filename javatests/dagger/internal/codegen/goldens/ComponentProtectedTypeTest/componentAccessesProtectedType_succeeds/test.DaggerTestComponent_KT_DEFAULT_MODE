@@ -45,8 +45,10 @@ public final class DaggerTestComponent {
   private static final class TestComponentImpl extends TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider protectedTypeProvider;
+    /**
+     * {@code Provider<test.sub.TestComponentBase.ProtectedType>}
+     */
+    Provider<?> protectedTypeProvider;
 
     TestComponentImpl() {
 
@@ -61,7 +63,7 @@ public final class DaggerTestComponent {
 
     @Override
     test.sub.TestComponentBase.ProtectedType provideProtectedType() {
-      return (test.sub.TestComponentBase.ProtectedType) (protectedTypeProvider.get());
+      return (test.sub.TestComponentBase.ProtectedType) ((Object) (protectedTypeProvider.get()));
     }
   }
 }

@@ -53,7 +53,7 @@ final class DaggerParent {
 
     @Override
     public Set<Object> objectSet() {
-      return ImmutableSet.<Object>of(ParentModule_ParentObjectFactory.parentObject());
+      return (Set<Object>) ((Object) (ImmutableSet.of(ParentModule_ParentObjectFactory.parentObject())));
     }
   }
 

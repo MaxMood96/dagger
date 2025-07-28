@@ -39,9 +39,9 @@ public final class Foo_MembersInjector implements MembersInjector<Foo> {
     this.fProvider = fProvider;
   }
 
-  public static MembersInjector<Foo> create(Provider<String> injectFieldProvider,
-      Provider<String> injectFieldProvider2, Provider<Float> fProvider) {
-    return new Foo_MembersInjector(injectFieldProvider, injectFieldProvider2, fProvider);
+  public static MembersInjector<Foo> create(Provider<?> injectFieldProvider,
+      Provider<?> injectFieldProvider2, Provider<?> fProvider) {
+    return new Foo_MembersInjector((Provider<String>) (injectFieldProvider), (Provider<String>) (injectFieldProvider2), (Provider<Float>) (fProvider));
   }
 
   @Override
@@ -53,11 +53,11 @@ public final class Foo_MembersInjector implements MembersInjector<Foo> {
 
   @InjectedFieldSignature("test.Foo.injectField")
   @FooFieldQualifier
-  public static void injectInjectField(Object instance, String injectField) {
-    ((Foo) (instance)).injectField = injectField;
+  public static void injectInjectField(Object instance, Object injectField) {
+    ((Foo) (instance)).injectField = (String) (injectField);
   }
 
-  public static void injectInjectMethod(Object instance, float f) {
-    ((Foo) (instance)).injectMethod(f);
+  public static void injectInjectMethod(Object instance, Object f) {
+    ((Foo) (instance)).injectMethod((float) (f));
   }
 }

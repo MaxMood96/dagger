@@ -42,6 +42,7 @@ import dagger.internal.codegen.binding.BindingGraph;
 import dagger.internal.codegen.binding.ContributionBinding;
 import dagger.internal.codegen.binding.MapKeys;
 import dagger.internal.codegen.binding.MultiboundMapBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.BindingKind;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.xprocessing.XExpression;
@@ -56,6 +57,7 @@ final class MapRequestRepresentation extends RequestRepresentation {
   private final MultiboundMapBinding binding;
   private final ImmutableMap<DependencyRequest, ContributionBinding> dependencies;
   private final ComponentRequestRepresentations componentRequestRepresentations;
+  private final CompilerOptions compilerOptions;
   private final boolean useLazyClassKey;
 
   @AssistedInject
@@ -64,12 +66,14 @@ final class MapRequestRepresentation extends RequestRepresentation {
       XProcessingEnv processingEnv,
       BindingGraph graph,
       ComponentImplementation componentImplementation,
-      ComponentRequestRepresentations componentRequestRepresentations) {
+      ComponentRequestRepresentations componentRequestRepresentations,
+      CompilerOptions compilerOptions) {
     this.binding = binding;
     this.processingEnv = processingEnv;
     BindingKind bindingKind = this.binding.kind();
     checkArgument(bindingKind.equals(MULTIBOUND_MAP), bindingKind);
     this.componentRequestRepresentations = componentRequestRepresentations;
+    this.compilerOptions = compilerOptions;
     this.dependencies =
         Maps.toMap(binding.dependencies(), dep -> graph.contributionBinding(dep.key()));
     this.useLazyClassKey = MapKeys.useLazyClassKey(binding, graph);
@@ -77,7 +81,6 @@ final class MapRequestRepresentation extends RequestRepresentation {
 
   @Override
   XExpression getDependencyExpression(XClassName requestingClass) {
-    MapType mapType = MapType.from(binding.key());
     XExpression dependencyExpression = getUnderlyingMapExpression(requestingClass);
     // LazyClassKey is backed with a string map, therefore needs to be wrapped.
     if (useLazyClassKey) {
@@ -86,7 +89,7 @@ final class MapRequestRepresentation extends RequestRepresentation {
           XCodeBlock.of(
               "%T.<%T>of(%L)",
               XTypeNames.LAZY_CLASS_KEY_MAP,
-              mapType.valueType().asTypeName(),
+              valueTypeName(),
               dependencyExpression.codeBlock()));
     }
     return dependencyExpression;
@@ -179,13 +182,20 @@ final class MapRequestRepresentation extends RequestRepresentation {
 
   private XCodeBlock maybeTypeParameters(XClassName requestingClass) {
     XType bindingKeyType = binding.key().type().xprocessing();
-    MapType mapType = MapType.from(binding.key());
     return isTypeAccessibleFrom(bindingKeyType, requestingClass.getPackageName())
-        ? XCodeBlock.of(
-            "<%T, %T>",
-            useLazyClassKey ? XTypeName.STRING : mapType.keyType().asTypeName(),
-            mapType.valueType().asTypeName())
+        ? XCodeBlock.of("<%T, %T>", keyTypeName(), valueTypeName())
         : XCodeBlock.of("");
+  }
+
+  private XTypeName keyTypeName() {
+    if (useLazyClassKey) {
+      return XTypeName.STRING;
+    }
+    return MapType.from(binding.key()).keyType().asTypeName();
+  }
+
+  private XTypeName valueTypeName() {
+    return MapType.from(binding.key()).valueType().asTypeName();
   }
 
   private boolean isImmutableMapBuilderWithExpectedSizeAvailable() {

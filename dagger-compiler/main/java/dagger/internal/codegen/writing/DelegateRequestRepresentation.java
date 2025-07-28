@@ -36,6 +36,7 @@ import dagger.internal.codegen.binding.Binding;
 import dagger.internal.codegen.binding.BindingGraph;
 import dagger.internal.codegen.binding.BindsTypeChecker;
 import dagger.internal.codegen.binding.DelegateBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.RequestKind;
 import dagger.internal.codegen.xprocessing.XExpression;
 import dagger.internal.codegen.xprocessing.XTypeNames;
@@ -45,6 +46,7 @@ final class DelegateRequestRepresentation extends RequestRepresentation {
   private final DelegateBinding binding;
   private final RequestKind requestKind;
   private final ComponentRequestRepresentations componentRequestRepresentations;
+  private final CompilerOptions compilerOptions;
   private final XProcessingEnv processingEnv;
   private final BindsTypeChecker bindsTypeChecker;
 
@@ -54,10 +56,12 @@ final class DelegateRequestRepresentation extends RequestRepresentation {
       @Assisted RequestKind requestKind,
       ComponentRequestRepresentations componentRequestRepresentations,
       BindsTypeChecker bindsTypeChecker,
+      CompilerOptions compilerOptions,
       XProcessingEnv processingEnv) {
     this.binding = checkNotNull(binding);
     this.requestKind = checkNotNull(requestKind);
     this.componentRequestRepresentations = componentRequestRepresentations;
+    this.compilerOptions = compilerOptions;
     this.processingEnv = processingEnv;
     this.bindsTypeChecker = bindsTypeChecker;
   }

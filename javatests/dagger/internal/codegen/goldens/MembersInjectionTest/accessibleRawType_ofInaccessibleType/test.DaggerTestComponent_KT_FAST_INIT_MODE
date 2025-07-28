@@ -4,7 +4,6 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.Provider;
-import java.util.List;
 import javax.annotation.processing.Generated;
 import other.InaccessiblesModule_InaccessiblesFactory;
 import other.UsesInaccessibles;
@@ -49,8 +48,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider inaccessiblesProvider;
+    /**
+     * {@code Provider<java.util.List<other.Inaccessible>>}
+     */
+    Provider<?> inaccessiblesProvider;
 
     TestComponentImpl() {
 
@@ -60,12 +61,12 @@ final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.inaccessiblesProvider = DoubleCheck.provider(new SwitchingProvider<List>(testComponentImpl, 0));
+      this.inaccessiblesProvider = DoubleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
     }
 
     @Override
     public UsesInaccessibles usesInaccessibles() {
-      return injectUsesInaccessibles(UsesInaccessibles_Factory.newInstance());
+      return (UsesInaccessibles) ((Object) (injectUsesInaccessibles(UsesInaccessibles_Factory.newInstance())));
     }
 
     @CanIgnoreReturnValue

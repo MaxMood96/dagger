@@ -59,9 +59,15 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Optional<Present>> optionalOfPresentProvider;
+    /**
+     * {@code Provider<Optional<Present>>}
+     */
+    Provider<?> optionalOfPresentProvider;
 
-    Provider<Optional<Absent>> optionalOfAbsentProvider;
+    /**
+     * {@code Provider<Optional<Absent>>}
+     */
+    Provider<?> optionalOfAbsentProvider;
 
     TestComponentImpl() {
 
@@ -77,12 +83,12 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Optional<Present>> providerOfOptionalOfPresent() {
-      return optionalOfPresentProvider;
+      return (javax.inject.Provider<Optional<Present>>) ((Object) (optionalOfPresentProvider));
     }
 
     @Override
     public javax.inject.Provider<Optional<Absent>> providerOfOptionalOfAbsent() {
-      return optionalOfAbsentProvider;
+      return (javax.inject.Provider<Optional<Absent>>) ((Object) (optionalOfAbsentProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

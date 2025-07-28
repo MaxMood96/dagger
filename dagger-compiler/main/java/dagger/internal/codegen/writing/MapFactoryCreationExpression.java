@@ -42,6 +42,7 @@ import dagger.internal.codegen.binding.ContributionBinding;
 import dagger.internal.codegen.binding.KeyVariableNamer;
 import dagger.internal.codegen.binding.MapKeys;
 import dagger.internal.codegen.binding.MultiboundMapBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.writing.ComponentImplementation.ShardImplementation;
 import dagger.internal.codegen.xprocessing.XTypeNames;
@@ -52,11 +53,10 @@ final class MapFactoryCreationExpression extends MultibindingFactoryCreationExpr
   private final XProcessingEnv processingEnv;
   private final ComponentImplementation componentImplementation;
   private final ShardImplementation shardImplementation;
+  private final CompilerOptions compilerOptions;
   private final BindingGraph graph;
   private final MultiboundMapBinding binding;
   private final boolean useLazyClassKey;
-  private final XTypeName keyTypeName;
-  private final XTypeName valueTypeName;
   private String methodName;
 
   @AssistedInject
@@ -65,17 +65,16 @@ final class MapFactoryCreationExpression extends MultibindingFactoryCreationExpr
       XProcessingEnv processingEnv,
       ComponentImplementation componentImplementation,
       ComponentRequestRepresentations componentRequestRepresentations,
+      CompilerOptions compilerOptions,
       BindingGraph graph) {
-    super(binding, componentImplementation, componentRequestRepresentations);
+    super(binding, componentImplementation, componentRequestRepresentations, compilerOptions);
     this.processingEnv = processingEnv;
     this.binding = checkNotNull(binding);
     this.componentImplementation = componentImplementation;
     this.shardImplementation = componentImplementation.shardImplementation(binding);
+    this.compilerOptions = compilerOptions;
     this.graph = graph;
     this.useLazyClassKey = MapKeys.useLazyClassKey(binding, graph);
-    MapType mapType = MapType.from(binding.key());
-    this.keyTypeName = useLazyClassKey ? XTypeName.STRING : mapType.keyType().asTypeName();
-    this.valueTypeName = mapType.unwrappedFrameworkValueType().asTypeName();
   }
 
   @Override
@@ -99,15 +98,11 @@ final class MapFactoryCreationExpression extends MultibindingFactoryCreationExpr
 
       XCodeBlock.Builder builderMethodCalls = XCodeBlock.builder();
       for (DependencyRequest dependency : binding.dependencies()) {
-        ContributionBinding contributionBinding = graph.contributionBinding(dependency.key());
         builderMethodCalls.addStatement(
             "%N.put(%L, %L)",
             builderName,
-            useLazyClassKey
-                ? getLazyClassMapKeyExpression(graph.contributionBinding(dependency.key()))
-                : getMapKeyExpression(
-                    contributionBinding, componentImplementation.name(), processingEnv),
-            multibindingDependencyExpression(dependency));
+            keyExpression(dependency),
+            valueExpression(dependency));
       }
 
       XFunSpec methodSpec =
@@ -147,13 +142,13 @@ final class MapFactoryCreationExpression extends MultibindingFactoryCreationExpr
   private XTypeName lazyMapFactoryType() {
     return useRawType()
         ? lazyMapFactoryClassName(binding)
-        : lazyMapFactoryClassName(binding).parametrizedBy(valueTypeName);
+        : lazyMapFactoryClassName(binding).parametrizedBy(valueTypeName());
   }
 
   private XTypeName mapFactoryType() {
     return useRawType()
         ? mapFactoryClassName(binding)
-        : mapFactoryClassName(binding).parametrizedBy(keyTypeName, valueTypeName);
+        : mapFactoryClassName(binding).parametrizedBy(keyTypeName(), valueTypeName());
   }
 
   private XTypeName mapFactoryBuilderType() {
@@ -161,7 +156,30 @@ final class MapFactoryCreationExpression extends MultibindingFactoryCreationExpr
         ? mapFactoryClassName(binding).nestedClass("Builder")
         : mapFactoryClassName(binding)
             .nestedClass("Builder")
-            .parametrizedBy(keyTypeName, valueTypeName);
+            .parametrizedBy(keyTypeName(), valueTypeName());
+  }
+
+  private XTypeName keyTypeName() {
+    if (useLazyClassKey) {
+      return XTypeName.STRING;
+    }
+    return MapType.from(binding.key()).keyType().asTypeName();
+  }
+
+  private XTypeName valueTypeName() {
+    return MapType.from(binding.key()).unwrappedFrameworkValueType().asTypeName();
+  }
+
+  private XCodeBlock keyExpression(DependencyRequest dependency) {
+    ContributionBinding contributionBinding = graph.contributionBinding(dependency.key());
+    return useLazyClassKey
+        ? getLazyClassMapKeyExpression(graph.contributionBinding(dependency.key()))
+        : getMapKeyExpression(contributionBinding, componentImplementation.name(), processingEnv);
+  }
+
+  private XCodeBlock valueExpression(DependencyRequest dependency) {
+    XCodeBlock valueExpression = multibindingDependencyExpression(dependency);
+    return valueExpression;
   }
 
   private static XClassName lazyMapFactoryClassName(MultiboundMapBinding binding) {

@@ -2,6 +2,7 @@ package test;
 
 import com.google.common.collect.ImmutableSet;
 import dagger.internal.DaggerGenerated;
+import java.util.Collection;
 import java.util.Set;
 import javax.annotation.processing.Generated;
 
@@ -50,17 +51,17 @@ final class DaggerTestComponent {
 
     @Override
     public Set<String> strings() {
-      return ImmutableSet.<String>builderWithExpectedSize(2).addAll(EmptySetModule_EmptySetFactory.emptySet()).add(SetModule_StringFactory.string()).build();
+      return (Set<String>) ((Object) (ImmutableSet.builderWithExpectedSize(2).addAll((Collection<?>) (EmptySetModule_EmptySetFactory.emptySet())).add(SetModule_StringFactory.string()).build()));
     }
 
     @Override
     public Set<Object> objects() {
-      return ImmutableSet.<Object>of();
+      return (Set<Object>) ((Object) (ImmutableSet.of()));
     }
 
     @Override
     public Set<Integer> onlyContributionIsElementsIntoSet() {
-      return ImmutableSet.<Integer>copyOf(EmptySetModule_OnlyContributionIsElementsIntoSetFactory.onlyContributionIsElementsIntoSet());
+      return (Set<Integer>) ((Object) (ImmutableSet.copyOf((Collection<?>) (EmptySetModule_OnlyContributionIsElementsIntoSetFactory.onlyContributionIsElementsIntoSet()))));
     }
   }
 }

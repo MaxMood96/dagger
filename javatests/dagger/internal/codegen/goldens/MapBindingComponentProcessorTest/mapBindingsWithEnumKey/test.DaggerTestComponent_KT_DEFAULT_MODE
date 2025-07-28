@@ -65,11 +65,20 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Handler> provideAdminHandlerProvider;
+    /**
+     * {@code Provider<Handler>}
+     */
+    Provider<?> provideAdminHandlerProvider;
 
-    Provider<Handler> provideLoginHandlerProvider;
+    /**
+     * {@code Provider<Handler>}
+     */
+    Provider<?> provideLoginHandlerProvider;
 
-    Provider mapOfPathEnumAndProviderOfHandlerProvider;
+    /**
+     * {@code Provider}
+     */
+    Provider<?> mapOfPathEnumAndProviderOfHandlerProvider;
 
     TestComponentImpl(MapModuleOne mapModuleOneParam, MapModuleTwo mapModuleTwoParam) {
 
@@ -85,17 +94,17 @@ final class DaggerTestComponent {
       this.mapOfPathEnumAndProviderOfHandlerProvider = mapOfPathEnumAndProviderOfHandlerBuilder(mapModuleOneParam, mapModuleTwoParam);
     }
 
-    MapProviderFactory<PathEnum, Handler> mapOfPathEnumAndProviderOfHandlerBuilder(
+    MapProviderFactory<Object, Object> mapOfPathEnumAndProviderOfHandlerBuilder(
         MapModuleOne mapModuleOneParam, MapModuleTwo mapModuleTwoParam) {
-      MapProviderFactory.Builder<PathEnum, Handler> builder = MapProviderFactory.builder(2);
-      builder.put(PathEnum.ADMIN, provideAdminHandlerProvider);
-      builder.put(PathEnum.LOGIN, provideLoginHandlerProvider);
+      MapProviderFactory.Builder<Object, Object> builder = MapProviderFactory.builder(2);
+      builder.put(PathEnum.ADMIN, (Provider<Object>) (provideAdminHandlerProvider));
+      builder.put(PathEnum.LOGIN, (Provider<Object>) (provideLoginHandlerProvider));
       return builder.build();
     }
 
     @Override
     public javax.inject.Provider<Map<PathEnum, javax.inject.Provider<Handler>>> dispatcher() {
-      return mapOfPathEnumAndProviderOfHandlerProvider;
+      return (javax.inject.Provider<Map<PathEnum, javax.inject.Provider<Handler>>>) ((Object) (mapOfPathEnumAndProviderOfHandlerProvider));
     }
   }
 }

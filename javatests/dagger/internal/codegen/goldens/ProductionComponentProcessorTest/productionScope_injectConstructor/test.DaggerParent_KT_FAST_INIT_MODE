@@ -54,7 +54,7 @@ final class DaggerParent {
 
     @Override
     public ProductionScoped productionScoped() {
-      return parentImpl.productionScopedProvider.get();
+      return (ProductionScoped) ((Object) (parentImpl.productionScopedProvider.get()));
     }
 
     @Override
@@ -67,7 +67,10 @@ final class DaggerParent {
   private static final class ParentImpl implements Parent, CancellationListener {
     private final ParentImpl parentImpl = this;
 
-    Provider<ProductionScoped> productionScopedProvider;
+    /**
+     * {@code Provider<ProductionScoped>}
+     */
+    Provider<?> productionScopedProvider;
 
     ParentImpl() {
 
@@ -77,7 +80,7 @@ final class DaggerParent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.productionScopedProvider = DoubleCheck.provider(new SwitchingProvider<ProductionScoped>(parentImpl, 0));
+      this.productionScopedProvider = DoubleCheck.provider(new SwitchingProvider<>(parentImpl, 0));
     }
 
     @Override
@@ -106,7 +109,7 @@ final class DaggerParent {
       public T get() {
         switch (id) {
           case 0: // test.ProductionScoped
-          return (T) new ProductionScoped();
+          return (T) ProductionScoped_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }

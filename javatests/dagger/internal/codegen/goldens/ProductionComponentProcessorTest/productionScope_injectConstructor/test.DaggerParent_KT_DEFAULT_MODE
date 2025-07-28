@@ -54,7 +54,7 @@ final class DaggerParent {
 
     @Override
     public ProductionScoped productionScoped() {
-      return parentImpl.productionScopedProvider.get();
+      return (ProductionScoped) ((Object) (parentImpl.productionScopedProvider.get()));
     }
 
     @Override
@@ -67,7 +67,10 @@ final class DaggerParent {
   private static final class ParentImpl implements Parent, CancellationListener {
     private final ParentImpl parentImpl = this;
 
-    Provider<ProductionScoped> productionScopedProvider;
+    /**
+     * {@code Provider<ProductionScoped>}
+     */
+    Provider<?> productionScopedProvider;
 
     ParentImpl() {
 

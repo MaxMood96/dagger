@@ -24,7 +24,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class GenericClass_Factory<A extends Number & Comparable<A>, B extends List<? extends String>, C extends List<? super String>> implements Factory<GenericClass<A, B, C>> {
+public final class GenericClass_Factory<A extends Number & Comparable<A>, B extends List<? extends String>, C extends List<? super String>> implements Factory<Object> {
   private final Provider<A> aProvider;
 
   private final Provider<B> bProvider;
@@ -39,7 +39,7 @@ public final class GenericClass_Factory<A extends Number & Comparable<A>, B exte
   }
 
   @Override
-  public GenericClass<A, B, C> get() {
+  public Object get() {
     return newInstance(aProvider.get(), bProvider.get(), cProvider.get());
   }
 

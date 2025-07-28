@@ -46,23 +46,23 @@ final class DaggerTestComponent {
 
     }
 
-    B b() {
-      return new B(new C());
+    Object b() {
+      return B_Factory.newInstance(C_Factory.newInstance());
     }
 
     @Override
     public A a() {
-      return new A(b());
+      return (A) ((Object) (A_Factory.newInstance(b())));
     }
 
     @Override
     public C c() {
-      return new C();
+      return (C) ((Object) (C_Factory.newInstance()));
     }
 
     @Override
     public X x() {
-      return new X(new C());
+      return (X) ((Object) (X_Factory.newInstance(C_Factory.newInstance())));
     }
   }
 }

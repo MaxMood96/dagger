@@ -42,7 +42,10 @@ public final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Foo> fooProvider;
+    /**
+     * {@code Provider<Foo>}
+     */
+    Provider<?> fooProvider;
 
     TestComponentImpl() {
 
@@ -50,8 +53,8 @@ public final class DaggerTestComponent {
 
     }
 
-    Foo foo() {
-      return new Foo(new Bar());
+    Object foo() {
+      return Foo_Factory.newInstance(Bar_Factory.newInstance());
     }
 
     @SuppressWarnings("unchecked")
@@ -61,7 +64,7 @@ public final class DaggerTestComponent {
 
     @Override
     public SomeEntryPoint someEntryPoint() {
-      return new SomeEntryPoint(foo(), fooProvider);
+      return (SomeEntryPoint) ((Object) (SomeEntryPoint_Factory.newInstance(foo(), fooProvider)));
     }
   }
 }

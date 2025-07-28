@@ -48,7 +48,7 @@ final class DaggerSimpleComponent {
 
     @Override
     public DependsOnInjected dependsOnInjected() {
-      return new DependsOnInjected(new InjectedType());
+      return (DependsOnInjected) ((Object) (DependsOnInjected_Factory.newInstance(InjectedType_Factory.newInstance())));
     }
   }
 }

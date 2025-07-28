@@ -52,9 +52,15 @@ final class DaggerTestComponent {
 
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Binding1> binding1Provider;
+    /**
+     * {@code Provider<Binding1>}
+     */
+    Provider<?> binding1Provider;
 
-    Provider<Binding2> binding2Provider;
+    /**
+     * {@code Provider<Binding2>}
+     */
+    Provider<?> binding2Provider;
 
     TestComponentImpl(Dependency dependencyParam) {
       this.dependency = dependencyParam;
@@ -64,38 +70,38 @@ final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize(final Dependency dependencyParam) {
-      this.binding1Provider = DoubleCheck.provider(new SwitchingProvider<Binding1>(testComponentImpl, 0));
-      this.binding2Provider = DoubleCheck.provider(new SwitchingProvider<Binding2>(testComponentImpl, 1));
+      this.binding1Provider = DoubleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
+      this.binding2Provider = DoubleCheck.provider(new SwitchingProvider<>(testComponentImpl, 1));
     }
 
     @Override
     public Binding1 binding1() {
-      return binding1Provider.get();
+      return (Binding1) ((Object) (binding1Provider.get()));
     }
 
     @Override
     public Binding2 binding2() {
-      return binding2Provider.get();
+      return (Binding2) ((Object) (binding2Provider.get()));
     }
 
     @Override
     public Binding3 binding3() {
-      return testComponentImpl.testComponentImplShard.binding3Provider.get();
+      return (Binding3) ((Object) (testComponentImpl.testComponentImplShard.binding3Provider.get()));
     }
 
     @Override
     public javax.inject.Provider<Binding1> providerBinding1() {
-      return binding1Provider;
+      return (javax.inject.Provider<Binding1>) ((Object) (binding1Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding2> providerBinding2() {
-      return binding2Provider;
+      return (javax.inject.Provider<Binding2>) ((Object) (binding2Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding3> providerBinding3() {
-      return testComponentImpl.testComponentImplShard.binding3Provider;
+      return (javax.inject.Provider<Binding3>) ((Object) (testComponentImpl.testComponentImplShard.binding3Provider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -113,10 +119,10 @@ final class DaggerTestComponent {
       public T get() {
         switch (id) {
           case 0: // dagger.internal.codegen.Binding1
-          return (T) new Binding1();
+          return (T) Binding1_Factory.newInstance();
 
           case 1: // dagger.internal.codegen.Binding2
-          return (T) new Binding2();
+          return (T) Binding2_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }
@@ -127,7 +133,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImplShard {
     private final TestComponentImpl testComponentImpl;
 
-    Provider<Binding3> binding3Provider;
+    /**
+     * {@code Provider<Binding3>}
+     */
+    Provider<?> binding3Provider;
 
     TestComponentImplShard(TestComponentImpl testComponentImpl, Dependency dependencyParam) {
       this.testComponentImpl = testComponentImpl;

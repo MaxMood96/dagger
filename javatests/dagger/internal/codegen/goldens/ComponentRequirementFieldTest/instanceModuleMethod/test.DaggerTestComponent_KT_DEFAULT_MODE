@@ -76,12 +76,12 @@ final class DaggerTestComponent {
 
     @Override
     public int i() {
-      return parentModule.i();
+      return (int) ((Object) (ParentModule_IFactory.i(parentModule)));
     }
 
     @Override
     public long l() {
-      return OtherPackageModule_LFactory.l(otherPackageModule);
+      return (long) ((Object) (OtherPackageModule_LFactory.l(otherPackageModule)));
     }
   }
 }

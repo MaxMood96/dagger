@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class InjectedType_Factory implements Factory<InjectedType> {
+public final class InjectedType_Factory implements Factory<Object> {
   private final Provider<Integer> primitiveIntProvider;
 
   private final Provider<Integer> boxedIntProvider;
@@ -35,16 +35,16 @@ public final class InjectedType_Factory implements Factory<InjectedType> {
   }
 
   @Override
-  public InjectedType get() {
-    InjectedType instance = newInstance();
+  public Object get() {
+    Object instance = newInstance();
     InjectedType_MembersInjector.injectPrimitiveInt(instance, primitiveIntProvider.get());
     InjectedType_MembersInjector.injectBoxedInt(instance, boxedIntProvider.get());
     return instance;
   }
 
-  public static InjectedType_Factory create(Provider<Integer> primitiveIntProvider,
-      Provider<Integer> boxedIntProvider) {
-    return new InjectedType_Factory(primitiveIntProvider, boxedIntProvider);
+  public static InjectedType_Factory create(Provider<?> primitiveIntProvider,
+      Provider<?> boxedIntProvider) {
+    return new InjectedType_Factory((Provider<Integer>) (primitiveIntProvider), (Provider<Integer>) (boxedIntProvider));
   }
 
   public static InjectedType newInstance() {

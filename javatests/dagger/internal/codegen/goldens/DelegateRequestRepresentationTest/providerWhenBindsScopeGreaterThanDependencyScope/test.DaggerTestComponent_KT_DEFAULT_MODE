@@ -44,9 +44,15 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<String> provideStringProvider;
+    /**
+     * {@code Provider<java.lang.String>}
+     */
+    Provider<?> provideStringProvider;
 
-    Provider<Object> bindStringProvider;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> bindStringProvider;
 
     TestComponentImpl() {
 
@@ -62,7 +68,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Object> object() {
-      return bindStringProvider;
+      return (javax.inject.Provider<Object>) ((Object) (bindStringProvider));
     }
   }
 }

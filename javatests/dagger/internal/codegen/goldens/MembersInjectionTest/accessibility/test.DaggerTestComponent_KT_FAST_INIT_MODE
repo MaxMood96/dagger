@@ -58,7 +58,7 @@ final class DaggerTestComponent {
 
     @Override
     public UsesInaccessible usesInaccessible() {
-      return UsesInaccessible_Factory.newInstance(inaccessible());
+      return (UsesInaccessible) ((Object) (UsesInaccessible_Factory.newInstance(inaccessible())));
     }
 
     @CanIgnoreReturnValue

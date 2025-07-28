@@ -44,9 +44,15 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<String> provideStringProvider;
+    /**
+     * {@code Provider<java.lang.String>}
+     */
+    Provider<?> provideStringProvider;
 
-    Provider<Object> bindStringProvider;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> bindStringProvider;
 
     TestComponentImpl() {
 
@@ -56,13 +62,13 @@ final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.provideStringProvider = SingleCheck.provider(new SwitchingProvider<String>(testComponentImpl, 0));
+      this.provideStringProvider = SingleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
       this.bindStringProvider = DoubleCheck.provider((Provider) (provideStringProvider));
     }
 
     @Override
     public javax.inject.Provider<Object> object() {
-      return bindStringProvider;
+      return (javax.inject.Provider<Object>) ((Object) (bindStringProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

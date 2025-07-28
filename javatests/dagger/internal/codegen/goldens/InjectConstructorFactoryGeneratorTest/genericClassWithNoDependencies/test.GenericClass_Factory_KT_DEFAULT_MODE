@@ -22,9 +22,9 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class GenericClass_Factory<T> implements Factory<GenericClass<T>> {
+public final class GenericClass_Factory<T> implements Factory<Object> {
   @Override
-  public GenericClass<T> get() {
+  public Object get() {
     return newInstance();
   }
 

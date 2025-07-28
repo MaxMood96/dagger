@@ -55,22 +55,22 @@ final class DaggerTestComponent {
 
     @Override
     public Optional<Maybe> maybe() {
-      return Optional.of(Maybe_MaybeModule_ProvideMaybeFactory.provideMaybe());
+      return (Optional<Maybe>) ((Object) (Optional.of(Maybe_MaybeModule_ProvideMaybeFactory.provideMaybe())));
     }
 
     @Override
     public Optional<Provider<Lazy<Maybe>>> providerOfLazyOfMaybe() {
-      return Optional.of(ProviderOfLazy.create(Maybe_MaybeModule_ProvideMaybeFactory.create()));
+      return (Optional<Provider<Lazy<Maybe>>>) ((Object) (Optional.of(ProviderOfLazy.create(Maybe_MaybeModule_ProvideMaybeFactory.create()))));
     }
 
     @Override
     public Optional<DefinitelyNot> definitelyNot() {
-      return Optional.absent();
+      return (Optional<DefinitelyNot>) ((Object) (Optional.absent()));
     }
 
     @Override
     public Optional<Provider<Lazy<DefinitelyNot>>> providerOfLazyOfDefinitelyNot() {
-      return Optional.absent();
+      return (Optional<Provider<Lazy<DefinitelyNot>>>) ((Object) (Optional.absent()));
     }
   }
 }

@@ -2,7 +2,7 @@ package test;
 
 import com.google.common.collect.ImmutableSet;
 import dagger.internal.DaggerGenerated;
-import java.util.Set;
+import java.util.Collection;
 import javax.annotation.processing.Generated;
 import other.TestModule_EmptySetFactory;
 import other.UsesInaccessible;
@@ -51,13 +51,13 @@ final class DaggerTestComponent {
 
     }
 
-    Set setOfInaccessible2() {
-      return ImmutableSet.copyOf(TestModule_EmptySetFactory.emptySet());
+    Object setOfInaccessible2() {
+      return ImmutableSet.copyOf((Collection<?>) (TestModule_EmptySetFactory.emptySet()));
     }
 
     @Override
     public UsesInaccessible usesInaccessible() {
-      return UsesInaccessible_Factory.newInstance(ImmutableSet.of(), setOfInaccessible2());
+      return (UsesInaccessible) ((Object) (UsesInaccessible_Factory.newInstance(ImmutableSet.of(), setOfInaccessible2())));
     }
   }
 }

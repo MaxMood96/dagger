@@ -113,8 +113,9 @@ class FrameworkFieldInitializer implements FrameworkInstanceSupplier {
             XCodeBlock.of("this.%N = %L;", getOrCreateField(), fieldInitialization);
 
         if (fieldInitializationState == InitializationState.DELEGATED) {
-          codeBuilder.add(
-              "%T.setDelegate(%N, %L);", delegateType(), propertySpec, fieldInitialization);
+          XCodeBlock delegateFactory = XCodeBlock.of("%N", propertySpec);
+          XCodeBlock delegate = fieldInitialization;
+          codeBuilder.add("%T.setDelegate(%L, %L);", delegateType(), delegateFactory, delegate);
         } else {
           codeBuilder.add(initCode);
         }
@@ -153,17 +154,13 @@ class FrameworkFieldInitializer implements FrameworkInstanceSupplier {
     if (propertySpec != null) {
       return propertySpec;
     }
-    boolean useRawType = !shardImplementation.isTypeAccessible(binding.key().type().xprocessing());
     FrameworkField contributionBindingField =
         FrameworkField.forBinding(
             binding,
             frameworkInstanceCreationExpression.alternativeFrameworkClass(),
             compilerOptions);
 
-    XTypeName fieldType =
-        useRawType
-            ? contributionBindingField.type().getRawTypeName()
-            : contributionBindingField.type();
+    XTypeName fieldType = frameworkFieldType(contributionBindingField);
 
     if (binding.kind() == BindingKind.ASSISTED_INJECTION) {
       // An assisted injection factory doesn't extend Provider, so we reference the generated
@@ -189,7 +186,7 @@ class FrameworkFieldInitializer implements FrameworkInstanceSupplier {
     if (!shardImplementation.isShardClassPrivate()) {
       contributionField.addModifiers(PRIVATE);
     }
-    if (useRawType) {
+    if (useRawFrameworkFieldType()) {
       contributionField.addAnnotation(suppressWarnings(RAWTYPES));
     }
 
@@ -197,6 +194,16 @@ class FrameworkFieldInitializer implements FrameworkInstanceSupplier {
     shardImplementation.addField(FRAMEWORK_FIELD, propertySpec);
 
     return propertySpec;
+  }
+
+  private XTypeName frameworkFieldType(FrameworkField frameworkField) {
+    return useRawFrameworkFieldType()
+        ? frameworkField.type().getRawTypeName()
+        : frameworkField.type();
+  }
+
+  private boolean useRawFrameworkFieldType() {
+    return !shardImplementation.isTypeAccessible(binding.key().type().xprocessing());
   }
 
   private XClassName delegateType() {

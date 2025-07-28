@@ -48,7 +48,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Maybe> provideMaybeProvider;
+    /**
+     * {@code Provider<Maybe>}
+     */
+    Provider<?> provideMaybeProvider;
 
     TestComponentImpl() {
 
@@ -63,22 +66,22 @@ final class DaggerTestComponent {
 
     @Override
     public Optional<Maybe> maybe() {
-      return Optional.of(provideMaybeProvider.get());
+      return (Optional<Maybe>) ((Object) (Optional.of(provideMaybeProvider.get())));
     }
 
     @Override
     public Optional<javax.inject.Provider<Lazy<Maybe>>> providerOfLazyOfMaybe() {
-      return Optional.of(ProviderOfLazy.create(provideMaybeProvider));
+      return (Optional<javax.inject.Provider<Lazy<Maybe>>>) ((Object) (Optional.of(ProviderOfLazy.create(provideMaybeProvider))));
     }
 
     @Override
     public Optional<DefinitelyNot> definitelyNot() {
-      return Optional.absent();
+      return (Optional<DefinitelyNot>) ((Object) (Optional.absent()));
     }
 
     @Override
     public Optional<javax.inject.Provider<Lazy<DefinitelyNot>>> providerOfLazyOfDefinitelyNot() {
-      return Optional.absent();
+      return (Optional<javax.inject.Provider<Lazy<DefinitelyNot>>>) ((Object) (Optional.absent()));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

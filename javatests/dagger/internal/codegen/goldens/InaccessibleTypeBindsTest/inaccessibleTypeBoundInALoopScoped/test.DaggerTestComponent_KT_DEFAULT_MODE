@@ -47,10 +47,15 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Foo> bindProvider;
+    /**
+     * {@code Provider<Foo>}
+     */
+    Provider<?> bindProvider;
 
-    @SuppressWarnings("rawtypes")
-    Provider fooImplProvider;
+    /**
+     * {@code Provider<other.FooImpl>}
+     */
+    Provider<?> fooImplProvider;
 
     TestComponentImpl() {
 
@@ -66,12 +71,12 @@ final class DaggerTestComponent {
     private void initialize() {
       this.bindProvider = new DelegateFactory<>();
       this.fooImplProvider = FooImpl_Factory.create(bindProvider);
-      DelegateFactory.setDelegate(bindProvider, DoubleCheck.provider((Provider) (fooImplProvider)));
+      DelegateFactory.setDelegate((Provider<Object>) (bindProvider), (Provider<Object>) (DoubleCheck.provider((Provider) (fooImplProvider))));
     }
 
     @Override
     public OtherEntryPoint getOtherEntryPoint() {
-      return OtherEntryPoint_Factory.newInstance(fooImpl());
+      return (OtherEntryPoint) ((Object) (OtherEntryPoint_Factory.newInstance(fooImpl())));
     }
   }
 }

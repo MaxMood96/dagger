@@ -45,8 +45,10 @@ public final class DaggerTestComponent {
   private static final class TestComponentImpl extends TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider protectedTypeProvider;
+    /**
+     * {@code Provider<test.sub.TestComponentBase.ProtectedType>}
+     */
+    Provider<?> protectedTypeProvider;
 
     TestComponentImpl() {
 
@@ -56,12 +58,12 @@ public final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.protectedTypeProvider = DoubleCheck.provider(new SwitchingProvider<Object>(testComponentImpl, 0));
+      this.protectedTypeProvider = DoubleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
     }
 
     @Override
     test.sub.TestComponentBase.ProtectedType provideProtectedType() {
-      return (test.sub.TestComponentBase.ProtectedType) (protectedTypeProvider.get());
+      return (test.sub.TestComponentBase.ProtectedType) ((Object) (protectedTypeProvider.get()));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

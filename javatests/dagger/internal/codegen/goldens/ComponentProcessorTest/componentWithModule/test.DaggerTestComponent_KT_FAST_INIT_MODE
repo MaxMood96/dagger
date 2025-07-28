@@ -59,13 +59,13 @@ final class DaggerTestComponent {
 
     }
 
-    B b() {
-      return TestModule_BFactory.b(testModule, new C());
+    Object b() {
+      return TestModule_BFactory.b(testModule, C_Factory.newInstance());
     }
 
     @Override
     public A a() {
-      return new A(b());
+      return (A) ((Object) (A_Factory.newInstance(b())));
     }
   }
 }

@@ -42,7 +42,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 import androidx.room.compiler.codegen.XClassName;
 import androidx.room.compiler.codegen.XCodeBlock;
-import androidx.room.compiler.codegen.XParameterSpec;
+import androidx.room.compiler.codegen.XFunSpec;
 import androidx.room.compiler.codegen.XTypeName;
 import androidx.room.compiler.codegen.XTypeSpec;
 import androidx.room.compiler.processing.XElement;
@@ -64,7 +64,6 @@ import dagger.internal.codegen.binding.AssistedInjectionBinding;
 import dagger.internal.codegen.binding.BindingFactory;
 import dagger.internal.codegen.binding.MethodSignatureFormatter;
 import dagger.internal.codegen.validation.ValidationReport;
-import dagger.internal.codegen.xprocessing.XParameterSpecs;
 import dagger.internal.codegen.xprocessing.XPropertySpecs;
 import dagger.internal.codegen.xprocessing.XTypeNames;
 import dagger.internal.codegen.xprocessing.XTypeSpecs;
@@ -287,36 +286,16 @@ final class AssistedFactoryProcessingStep extends TypeCheckingProcessingStep<XTy
       }
 
       AssistedFactoryMetadata metadata = AssistedFactoryMetadata.create(factory.getType());
-      XParameterSpec delegateFactoryParam =
-          XParameterSpecs.of(
-              "delegateFactory",
-              delegateFactoryTypeName(metadata.assistedInjectType()));
+      String delegateName = "delegateFactory";
+      XTypeName delegateType = delegateFactoryTypeName(metadata.assistedInjectType());
       builder
-          .addProperty(
-              XPropertySpecs.builder(
-                      delegateFactoryParam.getName(), // SUPPRESS_GET_NAME_CHECK
-                      delegateFactoryParam.getType())
-                  .addModifiers(PRIVATE, FINAL)
-                  .build())
+          .addProperty(XPropertySpecs.of(delegateName, delegateType, PRIVATE, FINAL))
           .addFunction(
               constructorBuilder()
-                  .addParameter(delegateFactoryParam)
-                  .addStatement(
-                      "this.%1N = %1N",
-                      delegateFactoryParam.getName()) // SUPPRESS_GET_NAME_CHECK
+                  .addParameter(delegateName, delegateType)
+                  .addStatement("this.%1N = %1N", delegateName)
                   .build())
-          .addFunction(
-              overriding(metadata.factoryMethod(), metadata.factoryType(), compilerOptions)
-                  .addStatement(
-                      "return %N.get(%L)",
-                      delegateFactoryParam.getName(), // SUPPRESS_GET_NAME_CHECK
-                      // Use the order of the parameters from the @AssistedInject constructor but
-                      // use the parameter names of the @AssistedFactory method.
-                      metadata.assistedInjectAssistedParameters().stream()
-                          .map(metadata.assistedFactoryAssistedParametersMap()::get)
-                          .map(param -> XCodeBlock.of("%N", param.getJvmName()))
-                          .collect(toParametersCodeBlock()))
-                  .build())
+          .addFunction(createMethod(metadata, delegateName))
           // In a future release, we should delete this javax method. This will still be a breaking
           // change, but keeping compatibility for a while should reduce the likelihood of breakages
           // as it would require components built at much older versions using factories built at
@@ -324,9 +303,9 @@ final class AssistedFactoryProcessingStep extends TypeCheckingProcessingStep<XTy
           .addFunction(
               methodBuilder("create")
                   .addModifiers(PUBLIC, STATIC)
-                  .addParameter(delegateFactoryParam)
+                  .addParameter(delegateName, delegateType)
                   .addTypeVariableNames(typeVariableNames(metadata.assistedInjectElement()))
-                  .returns(javaxProviderOf(factory.getType().asTypeName()))
+                  .returns(javaxProviderOf(accessibleFactoryTypeName(factory)))
                   .addStatement(
                       "return %T.%Lcreate(%L)",
                       XTypeNames.INSTANCE_FACTORY,
@@ -336,8 +315,7 @@ final class AssistedFactoryProcessingStep extends TypeCheckingProcessingStep<XTy
                               "<%T>",
                               accessibleTypeName(metadata.factoryType(), name, processingEnv))
                           : XCodeBlock.of(""),
-                      XCodeBlock.ofNewInstance(
-                          name, "%N", delegateFactoryParam.getName())) // SUPPRESS_GET_NAME_CHECK
+                      XCodeBlock.ofNewInstance(name, "%N", delegateName))
                   .build())
           // Normally we would have called this just "create", but because of backwards
           // compatibility we can't have two methods with the same name/arguments returning
@@ -345,9 +323,9 @@ final class AssistedFactoryProcessingStep extends TypeCheckingProcessingStep<XTy
           .addFunction(
               methodBuilder("createFactoryProvider")
                   .addModifiers(PUBLIC, STATIC)
-                  .addParameter(delegateFactoryParam)
+                  .addParameter(delegateName, delegateType)
                   .addTypeVariableNames(typeVariableNames(metadata.assistedInjectElement()))
-                  .returns(daggerProviderOf(factory.getType().asTypeName()))
+                  .returns(daggerProviderOf(accessibleFactoryTypeName(factory)))
                   .addStatement(
                       "return %T.%Lcreate(%L)",
                       XTypeNames.INSTANCE_FACTORY,
@@ -357,10 +335,33 @@ final class AssistedFactoryProcessingStep extends TypeCheckingProcessingStep<XTy
                               "<%T>",
                               accessibleTypeName(metadata.factoryType(), name, processingEnv))
                           : XCodeBlock.of(""),
-                      XCodeBlock.ofNewInstance(
-                          name, "%N", delegateFactoryParam.getName())) // SUPPRESS_GET_NAME_CHECK
+                      XCodeBlock.ofNewInstance(name, "%N", delegateName))
                   .build());
       return ImmutableList.of(builder.build());
+    }
+
+    private XTypeName accessibleFactoryTypeName(XTypeElement factory) {
+      return factory.getType().asTypeName();
+    }
+
+    // @Override
+    // public Foo createFoo(AssistedDep assistedDep) {
+    //   return delegateFactory.get(assistedDep);
+    // }
+    private XFunSpec createMethod(AssistedFactoryMetadata metadata, String delegateName) {
+      XCodeBlock instance =
+          XCodeBlock.of(
+              "%N.get(%L)",
+              delegateName,
+              // Use the order of the parameters from the @AssistedInject constructor but
+              // use the parameter names of the @AssistedFactory method.
+              metadata.assistedInjectAssistedParameters().stream()
+                  .map(metadata.assistedFactoryAssistedParametersMap()::get)
+                  .map(param -> XCodeBlock.of("%N", param.getJvmName()))
+                  .collect(toParametersCodeBlock()));
+      return overriding(metadata.factoryMethod(), metadata.factoryType(), compilerOptions)
+          .addStatement("return %L", instance)
+          .build();
     }
 
     /** Returns the generated factory {@link XTypeName type} for an @AssistedInject constructor. */

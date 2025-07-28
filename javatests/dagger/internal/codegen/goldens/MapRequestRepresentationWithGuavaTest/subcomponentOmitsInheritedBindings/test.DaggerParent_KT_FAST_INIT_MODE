@@ -64,7 +64,7 @@ final class DaggerParent {
 
     @Override
     public Map<String, Object> objectMap() {
-      return ImmutableMap.<String, Object>of("parent key", ParentModule_ParentKeyObjectFactory.parentKeyObject(parentImpl.parentModule));
+      return (Map<String, Object>) ((Object) (ImmutableMap.of("parent key", ParentModule_ParentKeyObjectFactory.parentKeyObject(parentImpl.parentModule))));
     }
   }
 

@@ -22,9 +22,9 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class SimpleType_Factory implements Factory<SimpleType> {
+public final class SimpleType_Factory implements Factory<Object> {
   @Override
-  public SimpleType get() {
+  public Object get() {
     return newInstance();
   }
 

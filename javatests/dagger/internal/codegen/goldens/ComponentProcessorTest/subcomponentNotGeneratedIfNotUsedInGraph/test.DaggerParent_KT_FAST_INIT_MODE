@@ -48,7 +48,7 @@ final class DaggerParent {
 
     @Override
     public String notSubcomponent() {
-      return ParentModule_NotSubcomponentFactory.notSubcomponent();
+      return (String) ((Object) (ParentModule_NotSubcomponentFactory.notSubcomponent()));
     }
   }
 }

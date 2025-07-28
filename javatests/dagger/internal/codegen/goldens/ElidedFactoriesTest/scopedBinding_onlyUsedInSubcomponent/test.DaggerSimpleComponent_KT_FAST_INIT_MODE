@@ -53,14 +53,17 @@ final class DaggerSimpleComponent {
 
     @Override
     public DependsOnScoped dependsOnScoped() {
-      return new DependsOnScoped(simpleComponentImpl.scopedTypeProvider.get());
+      return (DependsOnScoped) ((Object) (DependsOnScoped_Factory.newInstance(simpleComponentImpl.scopedTypeProvider.get())));
     }
   }
 
   private static final class SimpleComponentImpl implements SimpleComponent {
     private final SimpleComponentImpl simpleComponentImpl = this;
 
-    Provider<ScopedType> scopedTypeProvider;
+    /**
+     * {@code Provider<ScopedType>}
+     */
+    Provider<?> scopedTypeProvider;
 
     SimpleComponentImpl() {
 
@@ -70,7 +73,7 @@ final class DaggerSimpleComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.scopedTypeProvider = DoubleCheck.provider(new SwitchingProvider<ScopedType>(simpleComponentImpl, 0));
+      this.scopedTypeProvider = DoubleCheck.provider(new SwitchingProvider<>(simpleComponentImpl, 0));
     }
 
     @Override
@@ -93,7 +96,7 @@ final class DaggerSimpleComponent {
       public T get() {
         switch (id) {
           case 0: // test.ScopedType
-          return (T) new ScopedType();
+          return (T) ScopedType_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }

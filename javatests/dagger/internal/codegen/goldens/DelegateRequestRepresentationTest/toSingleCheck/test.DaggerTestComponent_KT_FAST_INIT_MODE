@@ -44,13 +44,25 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<RegularScoped> regularScopedProvider;
+    /**
+     * {@code Provider<RegularScoped>}
+     */
+    Provider<?> regularScopedProvider;
 
-    Provider<ReusableScoped> reusableScopedProvider;
+    /**
+     * {@code Provider<ReusableScoped>}
+     */
+    Provider<?> reusableScopedProvider;
 
-    Provider<Unscoped> unscopedProvider;
+    /**
+     * {@code Provider<Unscoped>}
+     */
+    Provider<?> unscopedProvider;
 
-    Provider<Object> unscopedProvider2;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> unscopedProvider2;
 
     TestComponentImpl() {
 
@@ -60,25 +72,25 @@ final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.regularScopedProvider = DoubleCheck.provider(new SwitchingProvider<RegularScoped>(testComponentImpl, 0));
-      this.reusableScopedProvider = SingleCheck.provider(new SwitchingProvider<ReusableScoped>(testComponentImpl, 1));
+      this.regularScopedProvider = DoubleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
+      this.reusableScopedProvider = SingleCheck.provider(new SwitchingProvider<>(testComponentImpl, 1));
       this.unscopedProvider = new SwitchingProvider<>(testComponentImpl, 2);
       this.unscopedProvider2 = SingleCheck.provider((Provider) (unscopedProvider));
     }
 
     @Override
     public Object regular() {
-      return regularScopedProvider.get();
+      return (Object) ((Object) (regularScopedProvider.get()));
     }
 
     @Override
     public Object reusable() {
-      return reusableScopedProvider.get();
+      return (Object) ((Object) (reusableScopedProvider.get()));
     }
 
     @Override
     public Object unscoped() {
-      return unscopedProvider2.get();
+      return (Object) ((Object) (unscopedProvider2.get()));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -96,13 +108,13 @@ final class DaggerTestComponent {
       public T get() {
         switch (id) {
           case 0: // test.RegularScoped
-          return (T) new RegularScoped();
+          return (T) RegularScoped_Factory.newInstance();
 
           case 1: // test.ReusableScoped
-          return (T) new ReusableScoped();
+          return (T) ReusableScoped_Factory.newInstance();
 
           case 2: // test.Unscoped
-          return (T) new Unscoped();
+          return (T) Unscoped_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }

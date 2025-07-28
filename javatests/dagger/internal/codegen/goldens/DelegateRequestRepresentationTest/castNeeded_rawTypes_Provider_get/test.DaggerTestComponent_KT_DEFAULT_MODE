@@ -45,8 +45,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider subtypeProvider;
+    /**
+     * {@code Provider<other.Subtype>}
+     */
+    Provider<?> subtypeProvider;
 
     TestComponentImpl() {
 
@@ -61,7 +63,7 @@ final class DaggerTestComponent {
 
     @Override
     public Supertype supertype() {
-      return (Supertype) (subtypeProvider.get());
+      return (Supertype) ((Object) (subtypeProvider.get()));
     }
   }
 }

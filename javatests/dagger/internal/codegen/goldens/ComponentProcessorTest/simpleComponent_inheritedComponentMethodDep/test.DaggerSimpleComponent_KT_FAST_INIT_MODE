@@ -48,7 +48,7 @@ final class DaggerSimpleComponent {
 
     @Override
     public SomeInjectableType someInjectableType() {
-      return new SomeInjectableType();
+      return (SomeInjectableType) ((Object) (SomeInjectableType_Factory.newInstance()));
     }
   }
 }

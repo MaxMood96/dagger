@@ -46,7 +46,10 @@ final class DaggerMyComponent {
 
     MyAssistedClass_Factory myAssistedClassProvider;
 
-    Provider<MySubcomponentAssistedFactory> mySubcomponentAssistedFactoryProvider;
+    /**
+     * {@code Provider<MySubcomponentAssistedFactory>}
+     */
+    Provider<?> mySubcomponentAssistedFactoryProvider;
 
     MySubcomponentImpl(MyComponentImpl myComponentImpl) {
       this.myComponentImpl = myComponentImpl;
@@ -63,7 +66,7 @@ final class DaggerMyComponent {
 
     @Override
     public MySubcomponentAssistedFactory mySubcomponentAssistedFactory() {
-      return mySubcomponentAssistedFactoryProvider.get();
+      return (MySubcomponentAssistedFactory) ((Object) (mySubcomponentAssistedFactoryProvider.get()));
     }
   }
 
@@ -72,7 +75,10 @@ final class DaggerMyComponent {
 
     MyAssistedClass_Factory myAssistedClassProvider;
 
-    Provider<MyComponentAssistedFactory> myComponentAssistedFactoryProvider;
+    /**
+     * {@code Provider<MyComponentAssistedFactory>}
+     */
+    Provider<?> myComponentAssistedFactoryProvider;
 
     MyComponentImpl() {
 
@@ -88,7 +94,7 @@ final class DaggerMyComponent {
 
     @Override
     public MyComponentAssistedFactory myComponentAssistedFactory() {
-      return myComponentAssistedFactoryProvider.get();
+      return (MyComponentAssistedFactory) ((Object) (myComponentAssistedFactoryProvider.get()));
     }
 
     @Override

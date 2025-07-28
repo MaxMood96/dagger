@@ -24,7 +24,7 @@ import other.pkg.Outer;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class InjectConstructor_Factory implements Factory<InjectConstructor> {
+public final class InjectConstructor_Factory implements Factory<Object> {
   private final Provider<Outer.Factory> factoryProvider;
 
   private InjectConstructor_Factory(Provider<Outer.Factory> factoryProvider) {
@@ -32,15 +32,15 @@ public final class InjectConstructor_Factory implements Factory<InjectConstructo
   }
 
   @Override
-  public InjectConstructor get() {
+  public Object get() {
     return newInstance(factoryProvider.get());
   }
 
-  public static InjectConstructor_Factory create(Provider<Outer.Factory> factoryProvider) {
-    return new InjectConstructor_Factory(factoryProvider);
+  public static InjectConstructor_Factory create(Provider<?> factoryProvider) {
+    return new InjectConstructor_Factory((Provider<Outer.Factory>) (factoryProvider));
   }
 
-  public static InjectConstructor newInstance(Outer.Factory factory) {
-    return new InjectConstructor(factory);
+  public static InjectConstructor newInstance(Object factory) {
+    return new InjectConstructor((Outer.Factory) (factory));
   }
 }

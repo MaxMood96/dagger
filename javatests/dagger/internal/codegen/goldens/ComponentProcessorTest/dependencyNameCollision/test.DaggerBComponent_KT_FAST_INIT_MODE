@@ -4,7 +4,6 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
 import dagger.internal.Provider;
 import javax.annotation.processing.Generated;
-import pkg1.A;
 import pkg1.AComponent;
 
 @DaggerGenerated
@@ -61,9 +60,15 @@ final class DaggerBComponent {
 
     private final BComponentImpl bComponentImpl = this;
 
-    Provider<A> aProvider;
+    /**
+     * {@code Provider<pkg1.A>}
+     */
+    Provider<?> aProvider;
 
-    Provider<pkg2.A> aProvider2;
+    /**
+     * {@code Provider<pkg2.A>}
+     */
+    Provider<?> aProvider2;
 
     BComponentImpl(AComponent aComponentParam, pkg2.AComponent aComponentParam2) {
       this.aComponent = aComponentParam;
@@ -81,7 +86,7 @@ final class DaggerBComponent {
 
     @Override
     public B b() {
-      return new B(aProvider, aProvider2);
+      return (B) ((Object) (B_Factory.newInstance(aProvider, aProvider2)));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

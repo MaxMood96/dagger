@@ -49,7 +49,7 @@ final class DaggerOuterType_SimpleComponent {
 
     @Override
     public OuterType.A a() {
-      return new OuterType.A();
+      return (OuterType.A) ((Object) (OuterType_A_Factory.newInstance()));
     }
 
     @Override
@@ -59,7 +59,7 @@ final class DaggerOuterType_SimpleComponent {
 
     @CanIgnoreReturnValue
     private OuterType.B injectB(OuterType.B instance) {
-      OuterType_B_MembersInjector.injectA(instance, new OuterType.A());
+      OuterType_B_MembersInjector.injectA(instance, OuterType_A_Factory.newInstance());
       return instance;
     }
   }

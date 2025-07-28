@@ -224,6 +224,10 @@ public final class ComponentRequestRepresentations {
             .asMemberOf(componentImplementation.graph().componentTypeElement().getType())
             .getReturnType();
 
+    if (isVoid(returnType)) {
+      return expression;
+    }
+
     // When compiling with -source 7, javac's type inference isn't strong enough to match things
     // like Optional<javax.inject.Provider<T>> to Optional<dagger.internal.Provider<T>>.
     if (isPreJava8SourceVersion(processingEnv)
@@ -232,7 +236,7 @@ public final class ComponentRequestRepresentations {
       return expression.castTo(returnType.getRawType());
     }
 
-    return !isVoid(returnType) && !expression.type().isAssignableTo(returnType)
+    return !expression.type().isAssignableTo(returnType)
         ? expression.castTo(returnType)
         : expression;
   }

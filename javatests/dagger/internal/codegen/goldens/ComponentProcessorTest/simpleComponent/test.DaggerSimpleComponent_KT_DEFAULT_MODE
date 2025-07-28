@@ -51,17 +51,17 @@ final class DaggerSimpleComponent {
 
     @Override
     public SomeInjectableType someInjectableType() {
-      return new SomeInjectableType();
+      return (SomeInjectableType) ((Object) (SomeInjectableType_Factory.newInstance()));
     }
 
     @Override
     public Lazy<SomeInjectableType> lazySomeInjectableType() {
-      return DoubleCheck.lazy(SomeInjectableType_Factory.create());
+      return (Lazy<SomeInjectableType>) ((Object) (DoubleCheck.lazy(SomeInjectableType_Factory.create())));
     }
 
     @Override
     public Provider<SomeInjectableType> someInjectableTypeProvider() {
-      return SomeInjectableType_Factory.create();
+      return (Provider<SomeInjectableType>) ((Object) (SomeInjectableType_Factory.create()));
     }
   }
 }

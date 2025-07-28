@@ -43,9 +43,15 @@ final class DaggerSimpleComponent {
   private static final class SimpleComponentImpl implements SimpleComponent {
     private final SimpleComponentImpl simpleComponentImpl = this;
 
-    Provider<ScopedType> scopedTypeProvider;
+    /**
+     * {@code Provider<ScopedType>}
+     */
+    Provider<?> scopedTypeProvider;
 
-    Provider<DependsOnScoped> dependsOnScopedProvider;
+    /**
+     * {@code Provider<DependsOnScoped>}
+     */
+    Provider<?> dependsOnScopedProvider;
 
     SimpleComponentImpl() {
 
@@ -61,7 +67,7 @@ final class DaggerSimpleComponent {
 
     @Override
     public NeedsProvider needsProvider() {
-      return new NeedsProvider(dependsOnScopedProvider);
+      return (NeedsProvider) ((Object) (NeedsProvider_Factory.newInstance(dependsOnScopedProvider)));
     }
   }
 }

@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import androidx.room.compiler.codegen.XCodeBlock;
 import dagger.internal.codegen.binding.BindingRequest;
 import dagger.internal.codegen.binding.ContributionBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.writing.ComponentImplementation.ShardImplementation;
 import dagger.internal.codegen.writing.FrameworkFieldInitializer.FrameworkInstanceCreationExpression;
@@ -32,14 +33,17 @@ abstract class MultibindingFactoryCreationExpression
   private final ShardImplementation shardImplementation;
   private final ComponentRequestRepresentations componentRequestRepresentations;
   private final ContributionBinding binding;
+  private final CompilerOptions compilerOptions;
 
   MultibindingFactoryCreationExpression(
       ContributionBinding binding,
       ComponentImplementation componentImplementation,
-      ComponentRequestRepresentations componentRequestRepresentations) {
+      ComponentRequestRepresentations componentRequestRepresentations,
+      CompilerOptions compilerOptions) {
     this.binding = checkNotNull(binding);
     this.shardImplementation = checkNotNull(componentImplementation).shardImplementation(binding);
     this.componentRequestRepresentations = checkNotNull(componentRequestRepresentations);
+    this.compilerOptions = checkNotNull(compilerOptions);
   }
 
   /** Returns the expression for a dependency of this multibinding. */

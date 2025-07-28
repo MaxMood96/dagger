@@ -51,7 +51,7 @@ final class DaggerTestComponent {
 
     @Override
     public UsesInaccessible usesInaccessible() {
-      return UsesInaccessible_Factory.newInstance(ImmutableMap.of());
+      return (UsesInaccessible) ((Object) (UsesInaccessible_Factory.newInstance(ImmutableMap.of())));
     }
   }
 }

@@ -44,7 +44,10 @@ final class DaggerTestComponent {
 
     Foo_Factory<String> fooProvider;
 
-    Provider<FooFactory<String>> fooFactoryProvider;
+    /**
+     * {@code Provider<FooFactory<String>>}
+     */
+    Provider<?> fooFactoryProvider;
 
     TestComponentImpl() {
 
@@ -60,7 +63,7 @@ final class DaggerTestComponent {
 
     @Override
     public FooFactory<String> getFooFactory() {
-      return fooFactoryProvider.get();
+      return (FooFactory<String>) ((Object) (fooFactoryProvider.get()));
     }
   }
 }

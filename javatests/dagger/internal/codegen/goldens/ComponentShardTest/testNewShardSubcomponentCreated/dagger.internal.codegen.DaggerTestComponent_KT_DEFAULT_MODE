@@ -47,9 +47,15 @@ final class DaggerTestComponent {
 
     private final TestSubcomponentImpl testSubcomponentImpl = this;
 
-    Provider<Binding1> binding1Provider;
+    /**
+     * {@code Provider<Binding1>}
+     */
+    Provider<?> binding1Provider;
 
-    Provider<Binding2> binding2Provider;
+    /**
+     * {@code Provider<Binding2>}
+     */
+    Provider<?> binding2Provider;
 
     TestSubcomponentImpl(TestComponentImpl testComponentImpl) {
       this.testComponentImpl = testComponentImpl;
@@ -66,32 +72,32 @@ final class DaggerTestComponent {
 
     @Override
     public Binding1 binding1() {
-      return binding1Provider.get();
+      return (Binding1) ((Object) (binding1Provider.get()));
     }
 
     @Override
     public Binding2 binding2() {
-      return binding2Provider.get();
+      return (Binding2) ((Object) (binding2Provider.get()));
     }
 
     @Override
     public Binding3 binding3() {
-      return testSubcomponentImpl.testSubcomponentImplShard.binding3Provider.get();
+      return (Binding3) ((Object) (testSubcomponentImpl.testSubcomponentImplShard.binding3Provider.get()));
     }
 
     @Override
     public javax.inject.Provider<Binding1> providerBinding1() {
-      return binding1Provider;
+      return (javax.inject.Provider<Binding1>) ((Object) (binding1Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding2> providerBinding2() {
-      return binding2Provider;
+      return (javax.inject.Provider<Binding2>) ((Object) (binding2Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding3> providerBinding3() {
-      return testSubcomponentImpl.testSubcomponentImplShard.binding3Provider;
+      return (javax.inject.Provider<Binding3>) ((Object) (testSubcomponentImpl.testSubcomponentImplShard.binding3Provider));
     }
   }
 
@@ -114,7 +120,10 @@ final class DaggerTestComponent {
 
     private final TestSubcomponentImpl testSubcomponentImpl;
 
-    Provider<Binding3> binding3Provider;
+    /**
+     * {@code Provider<Binding3>}
+     */
+    Provider<?> binding3Provider;
 
     TestSubcomponentImplShard(TestComponentImpl testComponentImpl,
         TestSubcomponentImpl testSubcomponentImpl) {

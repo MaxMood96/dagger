@@ -29,7 +29,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class TestModule_ProvideObjectsFactory implements Factory<List<Object>> {
+public final class TestModule_ProvideObjectsFactory implements Factory<Object> {
   private final TestModule module;
 
   private final Provider<Object> aProvider;
@@ -47,16 +47,16 @@ public final class TestModule_ProvideObjectsFactory implements Factory<List<Obje
   }
 
   @Override
-  public List<Object> get() {
+  public Object get() {
     return provideObjects(module, aProvider.get(), bProvider.get(), xInjectorProvider.get());
   }
 
-  public static TestModule_ProvideObjectsFactory create(Object module, Provider<Object> aProvider,
-      Provider<Object> bProvider, Provider<?> xInjectorProvider) {
-    return new TestModule_ProvideObjectsFactory((TestModule) (module), aProvider, bProvider, (Provider<MembersInjector<X>>) (xInjectorProvider));
+  public static TestModule_ProvideObjectsFactory create(Object module, Provider<?> aProvider,
+      Provider<?> bProvider, Provider<?> xInjectorProvider) {
+    return new TestModule_ProvideObjectsFactory((TestModule) (module), (Provider<Object>) (aProvider), (Provider<Object>) (bProvider), (Provider<MembersInjector<X>>) (xInjectorProvider));
   }
 
   public static List<Object> provideObjects(Object instance, Object a, Object b, Object xInjector) {
-    return Preconditions.checkNotNullFromProvides(((TestModule) (instance)).provideObjects(a, b, (MembersInjector<X>) (xInjector)));
+    return Preconditions.checkNotNullFromProvides(((TestModule) (instance)).provideObjects((Object) (a), (Object) (b), (MembersInjector<X>) (xInjector)));
   }
 }

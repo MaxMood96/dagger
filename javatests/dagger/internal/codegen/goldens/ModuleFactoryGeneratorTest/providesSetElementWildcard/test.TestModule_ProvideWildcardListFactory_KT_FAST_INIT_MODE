@@ -24,7 +24,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class TestModule_ProvideWildcardListFactory implements Factory<List<List<?>>> {
+public final class TestModule_ProvideWildcardListFactory implements Factory<Object> {
   private final TestModule module;
 
   private TestModule_ProvideWildcardListFactory(TestModule module) {
@@ -32,7 +32,7 @@ public final class TestModule_ProvideWildcardListFactory implements Factory<List
   }
 
   @Override
-  public List<List<?>> get() {
+  public Object get() {
     return provideWildcardList(module);
   }
 

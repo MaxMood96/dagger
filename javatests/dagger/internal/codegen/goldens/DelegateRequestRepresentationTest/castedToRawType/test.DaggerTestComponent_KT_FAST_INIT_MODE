@@ -42,7 +42,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<String> provideStringProvider;
+    /**
+     * {@code Provider<String>}
+     */
+    Provider<?> provideStringProvider;
 
     TestComponentImpl() {
 
@@ -57,17 +60,17 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<CharSequence> charSequence() {
-      return ((Provider) (provideStringProvider));
+      return (javax.inject.Provider<CharSequence>) ((Object) (provideStringProvider));
     }
 
     @Override
     public CharSequence charSequenceInstance() {
-      return (CharSequence) (((Provider) (provideStringProvider)).get());
+      return (CharSequence) ((Object) (provideStringProvider.get()));
     }
 
     @Override
     public javax.inject.Provider<String> namedString() {
-      return provideStringProvider;
+      return (javax.inject.Provider<String>) ((Object) (provideStringProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

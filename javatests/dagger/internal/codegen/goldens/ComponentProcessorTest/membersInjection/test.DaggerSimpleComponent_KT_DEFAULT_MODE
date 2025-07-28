@@ -54,12 +54,12 @@ final class DaggerSimpleComponent {
 
     @Override
     public SomeInjectedType injectAndReturn(SomeInjectedType instance) {
-      return injectSomeInjectedType(instance);
+      return (SomeInjectedType) ((Object) (injectSomeInjectedType(instance)));
     }
 
     @CanIgnoreReturnValue
     private SomeInjectedType injectSomeInjectedType(SomeInjectedType instance) {
-      SomeInjectedType_MembersInjector.injectInjectedField(instance, new SomeInjectableType());
+      SomeInjectedType_MembersInjector.injectInjectedField(instance, SomeInjectableType_Factory.newInstance());
       return instance;
     }
   }

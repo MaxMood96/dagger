@@ -65,11 +65,20 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Handler> provideAdminHandlerProvider;
+    /**
+     * {@code Provider<Handler>}
+     */
+    Provider<?> provideAdminHandlerProvider;
 
-    Provider<Handler> provideLoginHandlerProvider;
+    /**
+     * {@code Provider<Handler>}
+     */
+    Provider<?> provideLoginHandlerProvider;
 
-    Provider mapOfStringAndProviderOfHandlerProvider;
+    /**
+     * {@code Provider}
+     */
+    Provider<?> mapOfStringAndProviderOfHandlerProvider;
 
     TestComponentImpl(MapModuleOne mapModuleOneParam, MapModuleTwo mapModuleTwoParam) {
 
@@ -85,17 +94,17 @@ final class DaggerTestComponent {
       this.mapOfStringAndProviderOfHandlerProvider = mapOfStringAndProviderOfHandlerBuilder(mapModuleOneParam, mapModuleTwoParam);
     }
 
-    MapProviderFactory<String, Handler> mapOfStringAndProviderOfHandlerBuilder(
+    MapProviderFactory<Object, Object> mapOfStringAndProviderOfHandlerBuilder(
         MapModuleOne mapModuleOneParam, MapModuleTwo mapModuleTwoParam) {
-      MapProviderFactory.Builder<String, Handler> builder = MapProviderFactory.builder(2);
-      builder.put("Admin", provideAdminHandlerProvider);
-      builder.put("Login", provideLoginHandlerProvider);
+      MapProviderFactory.Builder<Object, Object> builder = MapProviderFactory.builder(2);
+      builder.put("Admin", (Provider<Object>) (provideAdminHandlerProvider));
+      builder.put("Login", (Provider<Object>) (provideLoginHandlerProvider));
       return builder.build();
     }
 
     @Override
     public javax.inject.Provider<Map<String, javax.inject.Provider<Handler>>> dispatcher() {
-      return mapOfStringAndProviderOfHandlerProvider;
+      return (javax.inject.Provider<Map<String, javax.inject.Provider<Handler>>>) ((Object) (mapOfStringAndProviderOfHandlerProvider));
     }
   }
 }

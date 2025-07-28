@@ -31,23 +31,23 @@ import com.google.common.collect.ImmutableSet;
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedFactory;
 import dagger.assisted.AssistedInject;
-import dagger.internal.codegen.base.ContributionType;
 import dagger.internal.codegen.base.SetType;
 import dagger.internal.codegen.base.UniqueNameSet;
 import dagger.internal.codegen.binding.BindingGraph;
 import dagger.internal.codegen.binding.BindingType;
 import dagger.internal.codegen.binding.KeyVariableNamer;
 import dagger.internal.codegen.binding.MultiboundSetBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.writing.ComponentImplementation.ShardImplementation;
 import dagger.internal.codegen.xprocessing.XTypeNames;
 
 /** A factory creation expression for a multibound set. */
 final class SetFactoryCreationExpression extends MultibindingFactoryCreationExpression {
+  private final CompilerOptions compilerOptions;
   private final BindingGraph graph;
   private final MultiboundSetBinding binding;
   private final ShardImplementation shardImplementation;
-  private final XTypeName valueTypeName;
   private String methodName;
 
   @AssistedInject
@@ -55,16 +55,13 @@ final class SetFactoryCreationExpression extends MultibindingFactoryCreationExpr
       @Assisted MultiboundSetBinding binding,
       ComponentImplementation componentImplementation,
       ComponentRequestRepresentations componentRequestRepresentations,
+      CompilerOptions compilerOptions,
       BindingGraph graph) {
-    super(binding, componentImplementation, componentRequestRepresentations);
+    super(binding, componentImplementation, componentRequestRepresentations, compilerOptions);
     this.binding = checkNotNull(binding);
     this.shardImplementation = componentImplementation.shardImplementation(binding);
+    this.compilerOptions = compilerOptions;
     this.graph = graph;
-    SetType setType = SetType.from(binding.key());
-    this.valueTypeName =
-        setType.elementsAreTypeOf(XTypeNames.PRODUCED)
-            ? setType.unwrappedElementType(XTypeNames.PRODUCED).asTypeName()
-            : setType.elementType().asTypeName();
   }
 
   @Override
@@ -93,10 +90,9 @@ final class SetFactoryCreationExpression extends MultibindingFactoryCreationExpr
           binding.bindingType().equals(BindingType.PROVISION) ? "Provider" : "Producer";
 
       for (DependencyRequest dependency : binding.dependencies()) {
-        ContributionType contributionType =
-            graph.contributionBinding(dependency.key()).contributionType();
         String methodNamePrefix;
-        switch (contributionType) {
+        XCodeBlock dependencyExpression = multibindingDependencyExpression(dependency);
+        switch (graph.contributionBinding(dependency.key()).contributionType()) {
           case SET:
             individualProviders++;
             methodNamePrefix = "add";
@@ -114,7 +110,7 @@ final class SetFactoryCreationExpression extends MultibindingFactoryCreationExpr
             builderName,
             methodNamePrefix,
             methodNameSuffix,
-            multibindingDependencyExpression(dependency));
+            dependencyExpression);
       }
 
       XFunSpec methodSpec =
@@ -148,7 +144,7 @@ final class SetFactoryCreationExpression extends MultibindingFactoryCreationExpr
   private XTypeName setFactoryType() {
     return useRawType()
         ? setFactoryClassName(binding)
-        : setFactoryClassName(binding).parametrizedBy(valueTypeName);
+        : setFactoryClassName(binding).parametrizedBy(valueTypeName());
   }
 
   private XTypeName setFactoryBuilderType() {
@@ -156,7 +152,14 @@ final class SetFactoryCreationExpression extends MultibindingFactoryCreationExpr
         ? setFactoryClassName(binding).nestedClass("Builder")
         : setFactoryClassName(binding)
             .nestedClass("Builder")
-            .parametrizedBy(valueTypeName);
+            .parametrizedBy(valueTypeName());
+  }
+
+  private XTypeName valueTypeName() {
+    SetType setType = SetType.from(binding.key());
+    return setType.elementsAreTypeOf(XTypeNames.PRODUCED)
+        ? setType.unwrappedElementType(XTypeNames.PRODUCED).asTypeName()
+        : setType.elementType().asTypeName();
   }
 
   @AssistedFactory

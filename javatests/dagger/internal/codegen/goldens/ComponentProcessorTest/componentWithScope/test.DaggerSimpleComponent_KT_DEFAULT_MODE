@@ -44,7 +44,10 @@ final class DaggerSimpleComponent {
   private static final class SimpleComponentImpl implements SimpleComponent {
     private final SimpleComponentImpl simpleComponentImpl = this;
 
-    Provider<SomeInjectableType> someInjectableTypeProvider;
+    /**
+     * {@code Provider<SomeInjectableType>}
+     */
+    Provider<?> someInjectableTypeProvider;
 
     SimpleComponentImpl() {
 
@@ -59,17 +62,17 @@ final class DaggerSimpleComponent {
 
     @Override
     public SomeInjectableType someInjectableType() {
-      return someInjectableTypeProvider.get();
+      return (SomeInjectableType) ((Object) (someInjectableTypeProvider.get()));
     }
 
     @Override
     public Lazy<SomeInjectableType> lazySomeInjectableType() {
-      return DoubleCheck.lazy(someInjectableTypeProvider);
+      return (Lazy<SomeInjectableType>) ((Object) (DoubleCheck.lazy(someInjectableTypeProvider)));
     }
 
     @Override
     public javax.inject.Provider<SomeInjectableType> someInjectableTypeProvider() {
-      return someInjectableTypeProvider;
+      return (javax.inject.Provider<SomeInjectableType>) ((Object) (someInjectableTypeProvider));
     }
   }
 }

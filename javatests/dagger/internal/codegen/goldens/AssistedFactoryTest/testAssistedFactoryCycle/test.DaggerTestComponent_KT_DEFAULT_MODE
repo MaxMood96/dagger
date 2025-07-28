@@ -43,9 +43,15 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<FooFactory> fooFactoryProvider;
+    /**
+     * {@code Provider<FooFactory>}
+     */
+    Provider<?> fooFactoryProvider;
 
-    Provider<Bar> barProvider;
+    /**
+     * {@code Provider<Bar>}
+     */
+    Provider<?> barProvider;
 
     Foo_Factory fooProvider;
 
@@ -60,12 +66,12 @@ final class DaggerTestComponent {
       this.fooFactoryProvider = new DelegateFactory<>();
       this.barProvider = Bar_Factory.create(fooFactoryProvider);
       this.fooProvider = Foo_Factory.create(barProvider);
-      DelegateFactory.setDelegate(fooFactoryProvider, FooFactory_Impl.createFactoryProvider(fooProvider));
+      DelegateFactory.setDelegate((Provider<Object>) (fooFactoryProvider), (Provider<Object>) (FooFactory_Impl.createFactoryProvider(fooProvider)));
     }
 
     @Override
     public FooFactory fooFactory() {
-      return fooFactoryProvider.get();
+      return (FooFactory) ((Object) (fooFactoryProvider.get()));
     }
   }
 }

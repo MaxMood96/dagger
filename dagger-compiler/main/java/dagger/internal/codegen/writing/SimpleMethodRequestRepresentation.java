@@ -91,8 +91,8 @@ final class SimpleMethodRequestRepresentation extends RequestRepresentation {
 
   @Override
   XExpression getDependencyExpression(XClassName requestingClass) {
-    return requiresInjectionMethod(requestingClass)
-        ? invokeInjectionMethod(requestingClass)
+    return requiresProxyMethod(requestingClass)
+        ? invokeProxyMethod(requestingClass)
         : invokeMethod(requestingClass);
   }
 
@@ -138,7 +138,7 @@ final class SimpleMethodRequestRepresentation extends RequestRepresentation {
         : type.getRawType().asTypeName();
   }
 
-  private XExpression invokeInjectionMethod(XClassName requestingClass) {
+  private XExpression invokeProxyMethod(XClassName requestingClass) {
     return injectMembers(
         ProvisionMethod.invoke(
             binding,
@@ -187,7 +187,7 @@ final class SimpleMethodRequestRepresentation extends RequestRepresentation {
     return binding.contributedPrimitiveType().orElse(binding.key().type().xprocessing());
   }
 
-  private boolean requiresInjectionMethod(XClassName requestingClass) {
+  private boolean requiresProxyMethod(XClassName requestingClass) {
     XExecutableElement executableElement = asExecutable(binding.bindingElement().get());
     return hasInjectionSites(binding)
         || binding.shouldCheckForNull(compilerOptions)

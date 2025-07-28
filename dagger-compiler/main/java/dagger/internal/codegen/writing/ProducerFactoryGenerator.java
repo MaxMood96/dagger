@@ -24,11 +24,13 @@ import static dagger.internal.codegen.binding.SourceFiles.generatedClassNameForB
 import static dagger.internal.codegen.binding.SourceFiles.parameterizedGeneratedTypeNameForBinding;
 import static dagger.internal.codegen.extension.DaggerStreams.toImmutableList;
 import static dagger.internal.codegen.writing.GwtCompatibility.gwtIncompatibleAnnotation;
+import static dagger.internal.codegen.writing.InjectionMethods.copyFrameworkParameter;
+import static dagger.internal.codegen.writing.InjectionMethods.copyParameter;
+import static dagger.internal.codegen.xprocessing.Accessibility.isTypeAccessibleFromPublicApi;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression.FUTURE_RETURN_VALUE_IGNORED;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression.UNCHECKED;
 import static dagger.internal.codegen.xprocessing.XAnnotationSpecs.suppressWarnings;
 import static dagger.internal.codegen.xprocessing.XCodeBlocks.makeParametersCodeBlock;
-import static dagger.internal.codegen.xprocessing.XCodeBlocks.parameterNames;
 import static dagger.internal.codegen.xprocessing.XElements.asMethod;
 import static dagger.internal.codegen.xprocessing.XElements.getSimpleName;
 import static dagger.internal.codegen.xprocessing.XFunSpecs.constructorBuilder;
@@ -43,7 +45,6 @@ import static javax.lang.model.element.Modifier.PROTECTED;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
-import androidx.room.compiler.codegen.VisibilityModifier;
 import androidx.room.compiler.codegen.XClassName;
 import androidx.room.compiler.codegen.XCodeBlock;
 import androidx.room.compiler.codegen.XFunSpec;
@@ -55,6 +56,7 @@ import androidx.room.compiler.processing.XElement;
 import androidx.room.compiler.processing.XFiler;
 import androidx.room.compiler.processing.XMethodElement;
 import androidx.room.compiler.processing.XProcessingEnv;
+import androidx.room.compiler.processing.XType;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -67,9 +69,11 @@ import dagger.internal.codegen.binding.SourceFiles;
 import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.model.RequestKind;
+import dagger.internal.codegen.xprocessing.Nullability;
 import dagger.internal.codegen.xprocessing.XAnnotationSpecs.Suppression;
 import dagger.internal.codegen.xprocessing.XFunSpecs;
 import dagger.internal.codegen.xprocessing.XParameterSpecs;
+import dagger.internal.codegen.xprocessing.XPropertySpecs;
 import dagger.internal.codegen.xprocessing.XTypeNames;
 import dagger.internal.codegen.xprocessing.XTypeSpecs;
 import java.util.Optional;
@@ -190,16 +194,51 @@ public final class ProducerFactoryGenerator extends SourceFileGenerator<Producti
   //       module, executorProvider, productionComponentMonitorProvider, fooProducer, barProducer);
   // }
   private XFunSpec staticCreateMethod(ProductionBinding binding, FactoryFields factoryFields) {
-    ImmutableList<XParameterSpec> params = constructorParameters(binding, factoryFields);
-    return XFunSpecs.methodBuilder("create")
-        .addModifiers(PUBLIC, STATIC)
-        .returns(parameterizedGeneratedTypeNameForBinding(binding))
-        .addTypeVariableNames(bindingTypeElementTypeVariableNames(binding))
-        .addParameters(params)
+    XFunSpecs.Builder createMethodBuilder =
+        XFunSpecs.methodBuilder("create")
+            .addModifiers(PUBLIC, STATIC)
+            .returns(parameterizedGeneratedTypeNameForBinding(binding))
+            .addTypeVariableNames(bindingTypeElementTypeVariableNames(binding));
+
+    ImmutableList.Builder<XCodeBlock> arguments = ImmutableList.builder();
+    factoryFields.moduleField.ifPresent(
+        module -> {
+          String moduleName = module.getName(); // SUPPRESS_GET_NAME_CHECK
+          XType moduleType = binding.bindingTypeElement().get().getType();
+          arguments.add(
+              copyParameter(
+                  createMethodBuilder,
+                  moduleName,
+                  moduleType.asTypeName(),
+                  Nullability.NOT_NULLABLE,
+                  /* isTypeNameAccessible= */
+                  isTypeAccessibleFromPublicApi(moduleType, compilerOptions),
+                  compilerOptions));
+        });
+
+    factoryFields.frameworkFields
+        .forEach(
+            (dependencyRequest, field) -> {
+              String parameterName = field.getName(); // SUPPRESS_GET_NAME_CHECK
+              XType dependencyType = dependencyRequest.key().type().xprocessing();
+              arguments.add(
+                  copyFrameworkParameter(
+                      createMethodBuilder,
+                      parameterName,
+                      field.getType(),
+                      Nullability.NOT_NULLABLE,
+                      /* isTypeNameAccessible= */
+                      isTypeAccessibleFromPublicApi(dependencyType, compilerOptions),
+                      compilerOptions));
+            });
+
+    return createMethodBuilder
         .addStatement(
             "return %L",
             XCodeBlock.ofNewInstance(
-                parameterizedGeneratedTypeNameForBinding(binding), "%L", parameterNames(params)))
+                parameterizedGeneratedTypeNameForBinding(binding),
+                "%L",
+                makeParametersCodeBlock(arguments.build())))
         .build();
   }
 
@@ -433,13 +472,7 @@ public final class ProducerFactoryGenerator extends SourceFileGenerator<Producti
     }
 
     private static XPropertySpec createField(XTypeName type, String name) {
-      return XPropertySpec.builder(
-              /* name= */ name,
-              /* typeName= */ type,
-              /* visibility= */ VisibilityModifier.PRIVATE,
-              /* isMutable= */ false,
-              /* addJavaNullabilityAnnotation= */ false)
-          .build();
+      return XPropertySpecs.of(name, type, PRIVATE, FINAL);
     }
 
     private final Optional<XPropertySpec> moduleField;

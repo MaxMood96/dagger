@@ -24,9 +24,9 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class ParameterizedModule_ProvideMapStringNumberFactory implements Factory<Map<String, Number>> {
+public final class ParameterizedModule_ProvideMapStringNumberFactory implements Factory<Object> {
   @Override
-  public Map<String, Number> get() {
+  public Object get() {
     return provideMapStringNumber();
   }
 

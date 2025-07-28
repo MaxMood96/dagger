@@ -49,7 +49,7 @@ final class DaggerTestComponent {
 
     @Override
     public Integer nonNullableInteger() {
-      return TestModule.primitiveInteger();
+      return (Integer) ((Object) (TestModule_PrimitiveIntegerFactory.primitiveInteger()));
     }
 
     @Override
@@ -59,7 +59,7 @@ final class DaggerTestComponent {
 
     @CanIgnoreReturnValue
     private InjectsMember injectInjectsMember(InjectsMember instance) {
-      InjectsMember_MembersInjector.injectMember(instance, TestModule.primitiveInteger());
+      InjectsMember_MembersInjector.injectMember(instance, TestModule_PrimitiveIntegerFactory.primitiveInteger());
       return instance;
     }
   }

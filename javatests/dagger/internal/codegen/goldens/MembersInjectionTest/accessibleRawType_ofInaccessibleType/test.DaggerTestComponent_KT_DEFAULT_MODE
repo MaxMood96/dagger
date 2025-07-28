@@ -48,8 +48,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider inaccessiblesProvider;
+    /**
+     * {@code Provider<java.util.List<other.Inaccessible>>}
+     */
+    Provider<?> inaccessiblesProvider;
 
     TestComponentImpl() {
 
@@ -64,7 +66,7 @@ final class DaggerTestComponent {
 
     @Override
     public UsesInaccessibles usesInaccessibles() {
-      return injectUsesInaccessibles(UsesInaccessibles_Factory.newInstance());
+      return (UsesInaccessibles) ((Object) (injectUsesInaccessibles(UsesInaccessibles_Factory.newInstance())));
     }
 
     @CanIgnoreReturnValue

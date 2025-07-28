@@ -32,9 +32,8 @@ public final class A_MembersInjector implements MembersInjector<A> {
     this.valueAProvider = valueAProvider;
   }
 
-  public static MembersInjector<A> create(Provider<String> valueCProvider,
-      Provider<String> valueAProvider) {
-    return new A_MembersInjector(valueCProvider, valueAProvider);
+  public static MembersInjector<A> create(Provider<?> valueCProvider, Provider<?> valueAProvider) {
+    return new A_MembersInjector((Provider<String>) (valueCProvider), (Provider<String>) (valueAProvider));
   }
 
   @Override
@@ -44,7 +43,7 @@ public final class A_MembersInjector implements MembersInjector<A> {
   }
 
   @InjectedFieldSignature("test.A.valueA")
-  public static void injectValueA(Object instance, String valueA) {
-    ((A) (instance)).valueA = valueA;
+  public static void injectValueA(Object instance, Object valueA) {
+    ((A) (instance)).valueA = (String) (valueA);
   }
 }

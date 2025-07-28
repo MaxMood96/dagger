@@ -29,8 +29,8 @@ public final class FieldInjection_MembersInjector implements MembersInjector<Fie
     this.stringProvider = stringProvider;
   }
 
-  public static MembersInjector<FieldInjection> create(Provider<String> stringProvider) {
-    return new FieldInjection_MembersInjector(stringProvider);
+  public static MembersInjector<FieldInjection> create(Provider<?> stringProvider) {
+    return new FieldInjection_MembersInjector((Provider<String>) (stringProvider));
   }
 
   @Override
@@ -39,7 +39,7 @@ public final class FieldInjection_MembersInjector implements MembersInjector<Fie
   }
 
   @InjectedFieldSignature("test.FieldInjection.string")
-  public static void injectString(Object instance, @Nullable String string) {
-    ((FieldInjection) (instance)).string = string;
+  public static void injectString(Object instance, @Nullable Object string) {
+    ((FieldInjection) (instance)).string = (String) (string);
   }
 }

@@ -38,9 +38,9 @@ public final class FieldInjection_MembersInjector implements MembersInjector<Fie
     this.stringProvider3 = stringProvider3;
   }
 
-  public static MembersInjector<FieldInjection> create(Provider<String> stringProvider,
-      Provider<String> stringProvider2, Provider<String> stringProvider3) {
-    return new FieldInjection_MembersInjector(stringProvider, stringProvider2, stringProvider3);
+  public static MembersInjector<FieldInjection> create(Provider<?> stringProvider,
+      Provider<?> stringProvider2, Provider<?> stringProvider3) {
+    return new FieldInjection_MembersInjector((Provider<String>) (stringProvider), (Provider<String>) (stringProvider2), (Provider<String>) (stringProvider3));
   }
 
   @Override
@@ -51,18 +51,17 @@ public final class FieldInjection_MembersInjector implements MembersInjector<Fie
   }
 
   @InjectedFieldSignature("test.FieldInjection.string")
-  public static void injectString(Object instance, String string) {
-    ((FieldInjection) (instance)).string = string;
+  public static void injectString(Object instance, Object string) {
+    ((FieldInjection) (instance)).string = (String) (string);
   }
 
   @InjectedFieldSignature("test.FieldInjection.lazyString")
-  public static void injectLazyString(Object instance, Lazy<String> lazyString) {
-    ((FieldInjection) (instance)).lazyString = lazyString;
+  public static void injectLazyString(Object instance, Object lazyString) {
+    ((FieldInjection) (instance)).lazyString = (Lazy<String>) (lazyString);
   }
 
   @InjectedFieldSignature("test.FieldInjection.stringProvider")
-  public static void injectStringProvider(Object instance,
-      javax.inject.Provider<String> stringProvider) {
-    ((FieldInjection) (instance)).stringProvider = stringProvider;
+  public static void injectStringProvider(Object instance, Object stringProvider) {
+    ((FieldInjection) (instance)).stringProvider = (javax.inject.Provider<String>) (stringProvider);
   }
 }

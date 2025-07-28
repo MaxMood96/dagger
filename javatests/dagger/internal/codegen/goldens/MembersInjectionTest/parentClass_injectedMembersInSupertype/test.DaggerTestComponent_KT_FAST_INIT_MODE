@@ -49,12 +49,12 @@ final class DaggerTestComponent {
 
     @Override
     public Child child() {
-      return injectChild(Child_Factory.newInstance());
+      return (Child) ((Object) (injectChild(Child_Factory.newInstance())));
     }
 
     @CanIgnoreReturnValue
     private Child injectChild(Child instance) {
-      Parent_MembersInjector.injectDep(instance, new Dep());
+      Parent_MembersInjector.injectDep(instance, Dep_Factory.newInstance());
       return instance;
     }
   }

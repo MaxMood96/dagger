@@ -60,7 +60,7 @@ final class DaggerTestComponent {
 
     @Override
     public String string() {
-      return TestModule_StringFactory.string(testModule);
+      return (String) ((Object) (TestModule_StringFactory.string(testModule)));
     }
   }
 }

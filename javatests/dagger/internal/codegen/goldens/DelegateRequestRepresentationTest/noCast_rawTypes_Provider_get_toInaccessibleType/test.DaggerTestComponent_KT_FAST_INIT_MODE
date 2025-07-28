@@ -46,8 +46,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider subtypeProvider;
+    /**
+     * {@code Provider<other.Subtype>}
+     */
+    Provider<?> subtypeProvider;
 
     TestComponentImpl() {
 
@@ -57,12 +59,12 @@ final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.subtypeProvider = DoubleCheck.provider(new SwitchingProvider<Object>(testComponentImpl, 0));
+      this.subtypeProvider = DoubleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
     }
 
     @Override
     public UsesSupertype usesSupertype() {
-      return UsesSupertype_Factory.newInstance(subtypeProvider.get());
+      return (UsesSupertype) ((Object) (UsesSupertype_Factory.newInstance(subtypeProvider.get())));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

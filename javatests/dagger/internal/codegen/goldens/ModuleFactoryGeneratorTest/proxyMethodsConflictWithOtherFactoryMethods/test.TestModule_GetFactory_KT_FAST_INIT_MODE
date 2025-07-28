@@ -22,9 +22,9 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class TestModule_GetFactory implements Factory<Integer> {
+public final class TestModule_GetFactory implements Factory<Object> {
   @Override
-  public Integer get() {
+  public Object get() {
     return proxyGet();
   }
 

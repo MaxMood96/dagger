@@ -49,7 +49,7 @@ public final class DaggerMyComponent {
 
     @Override
     public Foo foo() {
-      return injectFoo(Foo_Factory.newInstance());
+      return (Foo) ((Object) (injectFoo(Foo_Factory.newInstance())));
     }
 
     @Override
@@ -59,7 +59,7 @@ public final class DaggerMyComponent {
 
     @CanIgnoreReturnValue
     private Foo injectFoo(Foo instance) {
-      Foo_MembersInjector.injectBar(instance, new Bar());
+      Foo_MembersInjector.injectBar(instance, Bar_Factory.newInstance());
       return instance;
     }
   }

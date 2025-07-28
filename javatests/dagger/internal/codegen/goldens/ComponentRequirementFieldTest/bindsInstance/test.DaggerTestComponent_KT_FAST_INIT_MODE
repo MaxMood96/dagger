@@ -67,12 +67,12 @@ final class DaggerTestComponent {
 
     @Override
     public int i() {
-      return i;
+      return (int) ((Object) (i));
     }
 
     @Override
     public List<String> list() {
-      return list;
+      return (List<String>) ((Object) (list));
     }
   }
 }

@@ -29,8 +29,8 @@ public final class C_MembersInjector implements MembersInjector<C> {
     this.valueCProvider = valueCProvider;
   }
 
-  public static MembersInjector<C> create(Provider<String> valueCProvider) {
-    return new C_MembersInjector(valueCProvider);
+  public static MembersInjector<C> create(Provider<?> valueCProvider) {
+    return new C_MembersInjector((Provider<String>) (valueCProvider));
   }
 
   @Override
@@ -39,7 +39,7 @@ public final class C_MembersInjector implements MembersInjector<C> {
   }
 
   @InjectedFieldSignature("test.C.valueC")
-  public static void injectValueC(Object instance, String valueC) {
-    ((C) (instance)).valueC = valueC;
+  public static void injectValueC(Object instance, Object valueC) {
+    ((C) (instance)).valueC = (String) (valueC);
   }
 }

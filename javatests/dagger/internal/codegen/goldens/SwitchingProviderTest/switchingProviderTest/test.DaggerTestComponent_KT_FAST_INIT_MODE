@@ -42,207 +42,510 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Binding0> binding0Provider;
-
-    Provider<Binding1> binding1Provider;
-
-    Provider<Binding2> binding2Provider;
-
-    Provider<Binding3> binding3Provider;
-
-    Provider<Binding4> binding4Provider;
-
-    Provider<Binding5> binding5Provider;
-
-    Provider<Binding6> binding6Provider;
-
-    Provider<Binding7> binding7Provider;
-
-    Provider<Binding8> binding8Provider;
-
-    Provider<Binding9> binding9Provider;
-
-    Provider<Binding10> binding10Provider;
-
-    Provider<Binding11> binding11Provider;
-
-    Provider<Binding12> binding12Provider;
-
-    Provider<Binding13> binding13Provider;
-
-    Provider<Binding14> binding14Provider;
-
-    Provider<Binding15> binding15Provider;
-
-    Provider<Binding16> binding16Provider;
-
-    Provider<Binding17> binding17Provider;
-
-    Provider<Binding18> binding18Provider;
-
-    Provider<Binding19> binding19Provider;
-
-    Provider<Binding20> binding20Provider;
-
-    Provider<Binding21> binding21Provider;
-
-    Provider<Binding22> binding22Provider;
-
-    Provider<Binding23> binding23Provider;
-
-    Provider<Binding24> binding24Provider;
-
-    Provider<Binding25> binding25Provider;
-
-    Provider<Binding26> binding26Provider;
-
-    Provider<Binding27> binding27Provider;
-
-    Provider<Binding28> binding28Provider;
-
-    Provider<Binding29> binding29Provider;
-
-    Provider<Binding30> binding30Provider;
-
-    Provider<Binding31> binding31Provider;
-
-    Provider<Binding32> binding32Provider;
-
-    Provider<Binding33> binding33Provider;
-
-    Provider<Binding34> binding34Provider;
-
-    Provider<Binding35> binding35Provider;
-
-    Provider<Binding36> binding36Provider;
-
-    Provider<Binding37> binding37Provider;
-
-    Provider<Binding38> binding38Provider;
-
-    Provider<Binding39> binding39Provider;
-
-    Provider<Binding40> binding40Provider;
-
-    Provider<Binding41> binding41Provider;
-
-    Provider<Binding42> binding42Provider;
-
-    Provider<Binding43> binding43Provider;
-
-    Provider<Binding44> binding44Provider;
-
-    Provider<Binding45> binding45Provider;
-
-    Provider<Binding46> binding46Provider;
-
-    Provider<Binding47> binding47Provider;
-
-    Provider<Binding48> binding48Provider;
-
-    Provider<Binding49> binding49Provider;
-
-    Provider<Binding50> binding50Provider;
-
-    Provider<Binding51> binding51Provider;
-
-    Provider<Binding52> binding52Provider;
-
-    Provider<Binding53> binding53Provider;
-
-    Provider<Binding54> binding54Provider;
-
-    Provider<Binding55> binding55Provider;
-
-    Provider<Binding56> binding56Provider;
-
-    Provider<Binding57> binding57Provider;
-
-    Provider<Binding58> binding58Provider;
-
-    Provider<Binding59> binding59Provider;
-
-    Provider<Binding60> binding60Provider;
-
-    Provider<Binding61> binding61Provider;
-
-    Provider<Binding62> binding62Provider;
-
-    Provider<Binding63> binding63Provider;
-
-    Provider<Binding64> binding64Provider;
-
-    Provider<Binding65> binding65Provider;
-
-    Provider<Binding66> binding66Provider;
-
-    Provider<Binding67> binding67Provider;
-
-    Provider<Binding68> binding68Provider;
-
-    Provider<Binding69> binding69Provider;
-
-    Provider<Binding70> binding70Provider;
-
-    Provider<Binding71> binding71Provider;
-
-    Provider<Binding72> binding72Provider;
-
-    Provider<Binding73> binding73Provider;
-
-    Provider<Binding74> binding74Provider;
-
-    Provider<Binding75> binding75Provider;
-
-    Provider<Binding76> binding76Provider;
-
-    Provider<Binding77> binding77Provider;
-
-    Provider<Binding78> binding78Provider;
-
-    Provider<Binding79> binding79Provider;
-
-    Provider<Binding80> binding80Provider;
-
-    Provider<Binding81> binding81Provider;
-
-    Provider<Binding82> binding82Provider;
-
-    Provider<Binding83> binding83Provider;
-
-    Provider<Binding84> binding84Provider;
-
-    Provider<Binding85> binding85Provider;
-
-    Provider<Binding86> binding86Provider;
-
-    Provider<Binding87> binding87Provider;
-
-    Provider<Binding88> binding88Provider;
-
-    Provider<Binding89> binding89Provider;
-
-    Provider<Binding90> binding90Provider;
-
-    Provider<Binding91> binding91Provider;
-
-    Provider<Binding92> binding92Provider;
-
-    Provider<Binding93> binding93Provider;
-
-    Provider<Binding94> binding94Provider;
-
-    Provider<Binding95> binding95Provider;
-
-    Provider<Binding96> binding96Provider;
-
-    Provider<Binding97> binding97Provider;
-
-    Provider<Binding98> binding98Provider;
-
-    Provider<Binding99> binding99Provider;
-
-    Provider<Binding100> binding100Provider;
+    /**
+     * {@code Provider<Binding0>}
+     */
+    Provider<?> binding0Provider;
+
+    /**
+     * {@code Provider<Binding1>}
+     */
+    Provider<?> binding1Provider;
+
+    /**
+     * {@code Provider<Binding2>}
+     */
+    Provider<?> binding2Provider;
+
+    /**
+     * {@code Provider<Binding3>}
+     */
+    Provider<?> binding3Provider;
+
+    /**
+     * {@code Provider<Binding4>}
+     */
+    Provider<?> binding4Provider;
+
+    /**
+     * {@code Provider<Binding5>}
+     */
+    Provider<?> binding5Provider;
+
+    /**
+     * {@code Provider<Binding6>}
+     */
+    Provider<?> binding6Provider;
+
+    /**
+     * {@code Provider<Binding7>}
+     */
+    Provider<?> binding7Provider;
+
+    /**
+     * {@code Provider<Binding8>}
+     */
+    Provider<?> binding8Provider;
+
+    /**
+     * {@code Provider<Binding9>}
+     */
+    Provider<?> binding9Provider;
+
+    /**
+     * {@code Provider<Binding10>}
+     */
+    Provider<?> binding10Provider;
+
+    /**
+     * {@code Provider<Binding11>}
+     */
+    Provider<?> binding11Provider;
+
+    /**
+     * {@code Provider<Binding12>}
+     */
+    Provider<?> binding12Provider;
+
+    /**
+     * {@code Provider<Binding13>}
+     */
+    Provider<?> binding13Provider;
+
+    /**
+     * {@code Provider<Binding14>}
+     */
+    Provider<?> binding14Provider;
+
+    /**
+     * {@code Provider<Binding15>}
+     */
+    Provider<?> binding15Provider;
+
+    /**
+     * {@code Provider<Binding16>}
+     */
+    Provider<?> binding16Provider;
+
+    /**
+     * {@code Provider<Binding17>}
+     */
+    Provider<?> binding17Provider;
+
+    /**
+     * {@code Provider<Binding18>}
+     */
+    Provider<?> binding18Provider;
+
+    /**
+     * {@code Provider<Binding19>}
+     */
+    Provider<?> binding19Provider;
+
+    /**
+     * {@code Provider<Binding20>}
+     */
+    Provider<?> binding20Provider;
+
+    /**
+     * {@code Provider<Binding21>}
+     */
+    Provider<?> binding21Provider;
+
+    /**
+     * {@code Provider<Binding22>}
+     */
+    Provider<?> binding22Provider;
+
+    /**
+     * {@code Provider<Binding23>}
+     */
+    Provider<?> binding23Provider;
+
+    /**
+     * {@code Provider<Binding24>}
+     */
+    Provider<?> binding24Provider;
+
+    /**
+     * {@code Provider<Binding25>}
+     */
+    Provider<?> binding25Provider;
+
+    /**
+     * {@code Provider<Binding26>}
+     */
+    Provider<?> binding26Provider;
+
+    /**
+     * {@code Provider<Binding27>}
+     */
+    Provider<?> binding27Provider;
+
+    /**
+     * {@code Provider<Binding28>}
+     */
+    Provider<?> binding28Provider;
+
+    /**
+     * {@code Provider<Binding29>}
+     */
+    Provider<?> binding29Provider;
+
+    /**
+     * {@code Provider<Binding30>}
+     */
+    Provider<?> binding30Provider;
+
+    /**
+     * {@code Provider<Binding31>}
+     */
+    Provider<?> binding31Provider;
+
+    /**
+     * {@code Provider<Binding32>}
+     */
+    Provider<?> binding32Provider;
+
+    /**
+     * {@code Provider<Binding33>}
+     */
+    Provider<?> binding33Provider;
+
+    /**
+     * {@code Provider<Binding34>}
+     */
+    Provider<?> binding34Provider;
+
+    /**
+     * {@code Provider<Binding35>}
+     */
+    Provider<?> binding35Provider;
+
+    /**
+     * {@code Provider<Binding36>}
+     */
+    Provider<?> binding36Provider;
+
+    /**
+     * {@code Provider<Binding37>}
+     */
+    Provider<?> binding37Provider;
+
+    /**
+     * {@code Provider<Binding38>}
+     */
+    Provider<?> binding38Provider;
+
+    /**
+     * {@code Provider<Binding39>}
+     */
+    Provider<?> binding39Provider;
+
+    /**
+     * {@code Provider<Binding40>}
+     */
+    Provider<?> binding40Provider;
+
+    /**
+     * {@code Provider<Binding41>}
+     */
+    Provider<?> binding41Provider;
+
+    /**
+     * {@code Provider<Binding42>}
+     */
+    Provider<?> binding42Provider;
+
+    /**
+     * {@code Provider<Binding43>}
+     */
+    Provider<?> binding43Provider;
+
+    /**
+     * {@code Provider<Binding44>}
+     */
+    Provider<?> binding44Provider;
+
+    /**
+     * {@code Provider<Binding45>}
+     */
+    Provider<?> binding45Provider;
+
+    /**
+     * {@code Provider<Binding46>}
+     */
+    Provider<?> binding46Provider;
+
+    /**
+     * {@code Provider<Binding47>}
+     */
+    Provider<?> binding47Provider;
+
+    /**
+     * {@code Provider<Binding48>}
+     */
+    Provider<?> binding48Provider;
+
+    /**
+     * {@code Provider<Binding49>}
+     */
+    Provider<?> binding49Provider;
+
+    /**
+     * {@code Provider<Binding50>}
+     */
+    Provider<?> binding50Provider;
+
+    /**
+     * {@code Provider<Binding51>}
+     */
+    Provider<?> binding51Provider;
+
+    /**
+     * {@code Provider<Binding52>}
+     */
+    Provider<?> binding52Provider;
+
+    /**
+     * {@code Provider<Binding53>}
+     */
+    Provider<?> binding53Provider;
+
+    /**
+     * {@code Provider<Binding54>}
+     */
+    Provider<?> binding54Provider;
+
+    /**
+     * {@code Provider<Binding55>}
+     */
+    Provider<?> binding55Provider;
+
+    /**
+     * {@code Provider<Binding56>}
+     */
+    Provider<?> binding56Provider;
+
+    /**
+     * {@code Provider<Binding57>}
+     */
+    Provider<?> binding57Provider;
+
+    /**
+     * {@code Provider<Binding58>}
+     */
+    Provider<?> binding58Provider;
+
+    /**
+     * {@code Provider<Binding59>}
+     */
+    Provider<?> binding59Provider;
+
+    /**
+     * {@code Provider<Binding60>}
+     */
+    Provider<?> binding60Provider;
+
+    /**
+     * {@code Provider<Binding61>}
+     */
+    Provider<?> binding61Provider;
+
+    /**
+     * {@code Provider<Binding62>}
+     */
+    Provider<?> binding62Provider;
+
+    /**
+     * {@code Provider<Binding63>}
+     */
+    Provider<?> binding63Provider;
+
+    /**
+     * {@code Provider<Binding64>}
+     */
+    Provider<?> binding64Provider;
+
+    /**
+     * {@code Provider<Binding65>}
+     */
+    Provider<?> binding65Provider;
+
+    /**
+     * {@code Provider<Binding66>}
+     */
+    Provider<?> binding66Provider;
+
+    /**
+     * {@code Provider<Binding67>}
+     */
+    Provider<?> binding67Provider;
+
+    /**
+     * {@code Provider<Binding68>}
+     */
+    Provider<?> binding68Provider;
+
+    /**
+     * {@code Provider<Binding69>}
+     */
+    Provider<?> binding69Provider;
+
+    /**
+     * {@code Provider<Binding70>}
+     */
+    Provider<?> binding70Provider;
+
+    /**
+     * {@code Provider<Binding71>}
+     */
+    Provider<?> binding71Provider;
+
+    /**
+     * {@code Provider<Binding72>}
+     */
+    Provider<?> binding72Provider;
+
+    /**
+     * {@code Provider<Binding73>}
+     */
+    Provider<?> binding73Provider;
+
+    /**
+     * {@code Provider<Binding74>}
+     */
+    Provider<?> binding74Provider;
+
+    /**
+     * {@code Provider<Binding75>}
+     */
+    Provider<?> binding75Provider;
+
+    /**
+     * {@code Provider<Binding76>}
+     */
+    Provider<?> binding76Provider;
+
+    /**
+     * {@code Provider<Binding77>}
+     */
+    Provider<?> binding77Provider;
+
+    /**
+     * {@code Provider<Binding78>}
+     */
+    Provider<?> binding78Provider;
+
+    /**
+     * {@code Provider<Binding79>}
+     */
+    Provider<?> binding79Provider;
+
+    /**
+     * {@code Provider<Binding80>}
+     */
+    Provider<?> binding80Provider;
+
+    /**
+     * {@code Provider<Binding81>}
+     */
+    Provider<?> binding81Provider;
+
+    /**
+     * {@code Provider<Binding82>}
+     */
+    Provider<?> binding82Provider;
+
+    /**
+     * {@code Provider<Binding83>}
+     */
+    Provider<?> binding83Provider;
+
+    /**
+     * {@code Provider<Binding84>}
+     */
+    Provider<?> binding84Provider;
+
+    /**
+     * {@code Provider<Binding85>}
+     */
+    Provider<?> binding85Provider;
+
+    /**
+     * {@code Provider<Binding86>}
+     */
+    Provider<?> binding86Provider;
+
+    /**
+     * {@code Provider<Binding87>}
+     */
+    Provider<?> binding87Provider;
+
+    /**
+     * {@code Provider<Binding88>}
+     */
+    Provider<?> binding88Provider;
+
+    /**
+     * {@code Provider<Binding89>}
+     */
+    Provider<?> binding89Provider;
+
+    /**
+     * {@code Provider<Binding90>}
+     */
+    Provider<?> binding90Provider;
+
+    /**
+     * {@code Provider<Binding91>}
+     */
+    Provider<?> binding91Provider;
+
+    /**
+     * {@code Provider<Binding92>}
+     */
+    Provider<?> binding92Provider;
+
+    /**
+     * {@code Provider<Binding93>}
+     */
+    Provider<?> binding93Provider;
+
+    /**
+     * {@code Provider<Binding94>}
+     */
+    Provider<?> binding94Provider;
+
+    /**
+     * {@code Provider<Binding95>}
+     */
+    Provider<?> binding95Provider;
+
+    /**
+     * {@code Provider<Binding96>}
+     */
+    Provider<?> binding96Provider;
+
+    /**
+     * {@code Provider<Binding97>}
+     */
+    Provider<?> binding97Provider;
+
+    /**
+     * {@code Provider<Binding98>}
+     */
+    Provider<?> binding98Provider;
+
+    /**
+     * {@code Provider<Binding99>}
+     */
+    Provider<?> binding99Provider;
+
+    /**
+     * {@code Provider<Binding100>}
+     */
+    Provider<?> binding100Provider;
 
     TestComponentImpl() {
 
@@ -377,507 +680,507 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Binding0> getBinding0Provider() {
-      return binding0Provider;
+      return (javax.inject.Provider<Binding0>) ((Object) (binding0Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding1> getBinding1Provider() {
-      return binding1Provider;
+      return (javax.inject.Provider<Binding1>) ((Object) (binding1Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding2> getBinding2Provider() {
-      return binding2Provider;
+      return (javax.inject.Provider<Binding2>) ((Object) (binding2Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding3> getBinding3Provider() {
-      return binding3Provider;
+      return (javax.inject.Provider<Binding3>) ((Object) (binding3Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding4> getBinding4Provider() {
-      return binding4Provider;
+      return (javax.inject.Provider<Binding4>) ((Object) (binding4Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding5> getBinding5Provider() {
-      return binding5Provider;
+      return (javax.inject.Provider<Binding5>) ((Object) (binding5Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding6> getBinding6Provider() {
-      return binding6Provider;
+      return (javax.inject.Provider<Binding6>) ((Object) (binding6Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding7> getBinding7Provider() {
-      return binding7Provider;
+      return (javax.inject.Provider<Binding7>) ((Object) (binding7Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding8> getBinding8Provider() {
-      return binding8Provider;
+      return (javax.inject.Provider<Binding8>) ((Object) (binding8Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding9> getBinding9Provider() {
-      return binding9Provider;
+      return (javax.inject.Provider<Binding9>) ((Object) (binding9Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding10> getBinding10Provider() {
-      return binding10Provider;
+      return (javax.inject.Provider<Binding10>) ((Object) (binding10Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding11> getBinding11Provider() {
-      return binding11Provider;
+      return (javax.inject.Provider<Binding11>) ((Object) (binding11Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding12> getBinding12Provider() {
-      return binding12Provider;
+      return (javax.inject.Provider<Binding12>) ((Object) (binding12Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding13> getBinding13Provider() {
-      return binding13Provider;
+      return (javax.inject.Provider<Binding13>) ((Object) (binding13Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding14> getBinding14Provider() {
-      return binding14Provider;
+      return (javax.inject.Provider<Binding14>) ((Object) (binding14Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding15> getBinding15Provider() {
-      return binding15Provider;
+      return (javax.inject.Provider<Binding15>) ((Object) (binding15Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding16> getBinding16Provider() {
-      return binding16Provider;
+      return (javax.inject.Provider<Binding16>) ((Object) (binding16Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding17> getBinding17Provider() {
-      return binding17Provider;
+      return (javax.inject.Provider<Binding17>) ((Object) (binding17Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding18> getBinding18Provider() {
-      return binding18Provider;
+      return (javax.inject.Provider<Binding18>) ((Object) (binding18Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding19> getBinding19Provider() {
-      return binding19Provider;
+      return (javax.inject.Provider<Binding19>) ((Object) (binding19Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding20> getBinding20Provider() {
-      return binding20Provider;
+      return (javax.inject.Provider<Binding20>) ((Object) (binding20Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding21> getBinding21Provider() {
-      return binding21Provider;
+      return (javax.inject.Provider<Binding21>) ((Object) (binding21Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding22> getBinding22Provider() {
-      return binding22Provider;
+      return (javax.inject.Provider<Binding22>) ((Object) (binding22Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding23> getBinding23Provider() {
-      return binding23Provider;
+      return (javax.inject.Provider<Binding23>) ((Object) (binding23Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding24> getBinding24Provider() {
-      return binding24Provider;
+      return (javax.inject.Provider<Binding24>) ((Object) (binding24Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding25> getBinding25Provider() {
-      return binding25Provider;
+      return (javax.inject.Provider<Binding25>) ((Object) (binding25Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding26> getBinding26Provider() {
-      return binding26Provider;
+      return (javax.inject.Provider<Binding26>) ((Object) (binding26Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding27> getBinding27Provider() {
-      return binding27Provider;
+      return (javax.inject.Provider<Binding27>) ((Object) (binding27Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding28> getBinding28Provider() {
-      return binding28Provider;
+      return (javax.inject.Provider<Binding28>) ((Object) (binding28Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding29> getBinding29Provider() {
-      return binding29Provider;
+      return (javax.inject.Provider<Binding29>) ((Object) (binding29Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding30> getBinding30Provider() {
-      return binding30Provider;
+      return (javax.inject.Provider<Binding30>) ((Object) (binding30Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding31> getBinding31Provider() {
-      return binding31Provider;
+      return (javax.inject.Provider<Binding31>) ((Object) (binding31Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding32> getBinding32Provider() {
-      return binding32Provider;
+      return (javax.inject.Provider<Binding32>) ((Object) (binding32Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding33> getBinding33Provider() {
-      return binding33Provider;
+      return (javax.inject.Provider<Binding33>) ((Object) (binding33Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding34> getBinding34Provider() {
-      return binding34Provider;
+      return (javax.inject.Provider<Binding34>) ((Object) (binding34Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding35> getBinding35Provider() {
-      return binding35Provider;
+      return (javax.inject.Provider<Binding35>) ((Object) (binding35Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding36> getBinding36Provider() {
-      return binding36Provider;
+      return (javax.inject.Provider<Binding36>) ((Object) (binding36Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding37> getBinding37Provider() {
-      return binding37Provider;
+      return (javax.inject.Provider<Binding37>) ((Object) (binding37Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding38> getBinding38Provider() {
-      return binding38Provider;
+      return (javax.inject.Provider<Binding38>) ((Object) (binding38Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding39> getBinding39Provider() {
-      return binding39Provider;
+      return (javax.inject.Provider<Binding39>) ((Object) (binding39Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding40> getBinding40Provider() {
-      return binding40Provider;
+      return (javax.inject.Provider<Binding40>) ((Object) (binding40Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding41> getBinding41Provider() {
-      return binding41Provider;
+      return (javax.inject.Provider<Binding41>) ((Object) (binding41Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding42> getBinding42Provider() {
-      return binding42Provider;
+      return (javax.inject.Provider<Binding42>) ((Object) (binding42Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding43> getBinding43Provider() {
-      return binding43Provider;
+      return (javax.inject.Provider<Binding43>) ((Object) (binding43Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding44> getBinding44Provider() {
-      return binding44Provider;
+      return (javax.inject.Provider<Binding44>) ((Object) (binding44Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding45> getBinding45Provider() {
-      return binding45Provider;
+      return (javax.inject.Provider<Binding45>) ((Object) (binding45Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding46> getBinding46Provider() {
-      return binding46Provider;
+      return (javax.inject.Provider<Binding46>) ((Object) (binding46Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding47> getBinding47Provider() {
-      return binding47Provider;
+      return (javax.inject.Provider<Binding47>) ((Object) (binding47Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding48> getBinding48Provider() {
-      return binding48Provider;
+      return (javax.inject.Provider<Binding48>) ((Object) (binding48Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding49> getBinding49Provider() {
-      return binding49Provider;
+      return (javax.inject.Provider<Binding49>) ((Object) (binding49Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding50> getBinding50Provider() {
-      return binding50Provider;
+      return (javax.inject.Provider<Binding50>) ((Object) (binding50Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding51> getBinding51Provider() {
-      return binding51Provider;
+      return (javax.inject.Provider<Binding51>) ((Object) (binding51Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding52> getBinding52Provider() {
-      return binding52Provider;
+      return (javax.inject.Provider<Binding52>) ((Object) (binding52Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding53> getBinding53Provider() {
-      return binding53Provider;
+      return (javax.inject.Provider<Binding53>) ((Object) (binding53Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding54> getBinding54Provider() {
-      return binding54Provider;
+      return (javax.inject.Provider<Binding54>) ((Object) (binding54Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding55> getBinding55Provider() {
-      return binding55Provider;
+      return (javax.inject.Provider<Binding55>) ((Object) (binding55Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding56> getBinding56Provider() {
-      return binding56Provider;
+      return (javax.inject.Provider<Binding56>) ((Object) (binding56Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding57> getBinding57Provider() {
-      return binding57Provider;
+      return (javax.inject.Provider<Binding57>) ((Object) (binding57Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding58> getBinding58Provider() {
-      return binding58Provider;
+      return (javax.inject.Provider<Binding58>) ((Object) (binding58Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding59> getBinding59Provider() {
-      return binding59Provider;
+      return (javax.inject.Provider<Binding59>) ((Object) (binding59Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding60> getBinding60Provider() {
-      return binding60Provider;
+      return (javax.inject.Provider<Binding60>) ((Object) (binding60Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding61> getBinding61Provider() {
-      return binding61Provider;
+      return (javax.inject.Provider<Binding61>) ((Object) (binding61Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding62> getBinding62Provider() {
-      return binding62Provider;
+      return (javax.inject.Provider<Binding62>) ((Object) (binding62Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding63> getBinding63Provider() {
-      return binding63Provider;
+      return (javax.inject.Provider<Binding63>) ((Object) (binding63Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding64> getBinding64Provider() {
-      return binding64Provider;
+      return (javax.inject.Provider<Binding64>) ((Object) (binding64Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding65> getBinding65Provider() {
-      return binding65Provider;
+      return (javax.inject.Provider<Binding65>) ((Object) (binding65Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding66> getBinding66Provider() {
-      return binding66Provider;
+      return (javax.inject.Provider<Binding66>) ((Object) (binding66Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding67> getBinding67Provider() {
-      return binding67Provider;
+      return (javax.inject.Provider<Binding67>) ((Object) (binding67Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding68> getBinding68Provider() {
-      return binding68Provider;
+      return (javax.inject.Provider<Binding68>) ((Object) (binding68Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding69> getBinding69Provider() {
-      return binding69Provider;
+      return (javax.inject.Provider<Binding69>) ((Object) (binding69Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding70> getBinding70Provider() {
-      return binding70Provider;
+      return (javax.inject.Provider<Binding70>) ((Object) (binding70Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding71> getBinding71Provider() {
-      return binding71Provider;
+      return (javax.inject.Provider<Binding71>) ((Object) (binding71Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding72> getBinding72Provider() {
-      return binding72Provider;
+      return (javax.inject.Provider<Binding72>) ((Object) (binding72Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding73> getBinding73Provider() {
-      return binding73Provider;
+      return (javax.inject.Provider<Binding73>) ((Object) (binding73Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding74> getBinding74Provider() {
-      return binding74Provider;
+      return (javax.inject.Provider<Binding74>) ((Object) (binding74Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding75> getBinding75Provider() {
-      return binding75Provider;
+      return (javax.inject.Provider<Binding75>) ((Object) (binding75Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding76> getBinding76Provider() {
-      return binding76Provider;
+      return (javax.inject.Provider<Binding76>) ((Object) (binding76Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding77> getBinding77Provider() {
-      return binding77Provider;
+      return (javax.inject.Provider<Binding77>) ((Object) (binding77Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding78> getBinding78Provider() {
-      return binding78Provider;
+      return (javax.inject.Provider<Binding78>) ((Object) (binding78Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding79> getBinding79Provider() {
-      return binding79Provider;
+      return (javax.inject.Provider<Binding79>) ((Object) (binding79Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding80> getBinding80Provider() {
-      return binding80Provider;
+      return (javax.inject.Provider<Binding80>) ((Object) (binding80Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding81> getBinding81Provider() {
-      return binding81Provider;
+      return (javax.inject.Provider<Binding81>) ((Object) (binding81Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding82> getBinding82Provider() {
-      return binding82Provider;
+      return (javax.inject.Provider<Binding82>) ((Object) (binding82Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding83> getBinding83Provider() {
-      return binding83Provider;
+      return (javax.inject.Provider<Binding83>) ((Object) (binding83Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding84> getBinding84Provider() {
-      return binding84Provider;
+      return (javax.inject.Provider<Binding84>) ((Object) (binding84Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding85> getBinding85Provider() {
-      return binding85Provider;
+      return (javax.inject.Provider<Binding85>) ((Object) (binding85Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding86> getBinding86Provider() {
-      return binding86Provider;
+      return (javax.inject.Provider<Binding86>) ((Object) (binding86Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding87> getBinding87Provider() {
-      return binding87Provider;
+      return (javax.inject.Provider<Binding87>) ((Object) (binding87Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding88> getBinding88Provider() {
-      return binding88Provider;
+      return (javax.inject.Provider<Binding88>) ((Object) (binding88Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding89> getBinding89Provider() {
-      return binding89Provider;
+      return (javax.inject.Provider<Binding89>) ((Object) (binding89Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding90> getBinding90Provider() {
-      return binding90Provider;
+      return (javax.inject.Provider<Binding90>) ((Object) (binding90Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding91> getBinding91Provider() {
-      return binding91Provider;
+      return (javax.inject.Provider<Binding91>) ((Object) (binding91Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding92> getBinding92Provider() {
-      return binding92Provider;
+      return (javax.inject.Provider<Binding92>) ((Object) (binding92Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding93> getBinding93Provider() {
-      return binding93Provider;
+      return (javax.inject.Provider<Binding93>) ((Object) (binding93Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding94> getBinding94Provider() {
-      return binding94Provider;
+      return (javax.inject.Provider<Binding94>) ((Object) (binding94Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding95> getBinding95Provider() {
-      return binding95Provider;
+      return (javax.inject.Provider<Binding95>) ((Object) (binding95Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding96> getBinding96Provider() {
-      return binding96Provider;
+      return (javax.inject.Provider<Binding96>) ((Object) (binding96Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding97> getBinding97Provider() {
-      return binding97Provider;
+      return (javax.inject.Provider<Binding97>) ((Object) (binding97Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding98> getBinding98Provider() {
-      return binding98Provider;
+      return (javax.inject.Provider<Binding98>) ((Object) (binding98Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding99> getBinding99Provider() {
-      return binding99Provider;
+      return (javax.inject.Provider<Binding99>) ((Object) (binding99Provider));
     }
 
     @Override
     public javax.inject.Provider<Binding100> getBinding100Provider() {
-      return binding100Provider;
+      return (javax.inject.Provider<Binding100>) ((Object) (binding100Provider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -894,304 +1197,304 @@ final class DaggerTestComponent {
       private T get0() {
         switch (id) {
           case 0: // test.Binding0
-          return (T) new Binding0();
+          return (T) Binding0_Factory.newInstance();
 
           case 1: // test.Binding1
-          return (T) new Binding1();
+          return (T) Binding1_Factory.newInstance();
 
           case 2: // test.Binding2
-          return (T) new Binding2();
+          return (T) Binding2_Factory.newInstance();
 
           case 3: // test.Binding3
-          return (T) new Binding3();
+          return (T) Binding3_Factory.newInstance();
 
           case 4: // test.Binding4
-          return (T) new Binding4();
+          return (T) Binding4_Factory.newInstance();
 
           case 5: // test.Binding5
-          return (T) new Binding5();
+          return (T) Binding5_Factory.newInstance();
 
           case 6: // test.Binding6
-          return (T) new Binding6();
+          return (T) Binding6_Factory.newInstance();
 
           case 7: // test.Binding7
-          return (T) new Binding7();
+          return (T) Binding7_Factory.newInstance();
 
           case 8: // test.Binding8
-          return (T) new Binding8();
+          return (T) Binding8_Factory.newInstance();
 
           case 9: // test.Binding9
-          return (T) new Binding9();
+          return (T) Binding9_Factory.newInstance();
 
           case 10: // test.Binding10
-          return (T) new Binding10();
+          return (T) Binding10_Factory.newInstance();
 
           case 11: // test.Binding11
-          return (T) new Binding11();
+          return (T) Binding11_Factory.newInstance();
 
           case 12: // test.Binding12
-          return (T) new Binding12();
+          return (T) Binding12_Factory.newInstance();
 
           case 13: // test.Binding13
-          return (T) new Binding13();
+          return (T) Binding13_Factory.newInstance();
 
           case 14: // test.Binding14
-          return (T) new Binding14();
+          return (T) Binding14_Factory.newInstance();
 
           case 15: // test.Binding15
-          return (T) new Binding15();
+          return (T) Binding15_Factory.newInstance();
 
           case 16: // test.Binding16
-          return (T) new Binding16();
+          return (T) Binding16_Factory.newInstance();
 
           case 17: // test.Binding17
-          return (T) new Binding17();
+          return (T) Binding17_Factory.newInstance();
 
           case 18: // test.Binding18
-          return (T) new Binding18();
+          return (T) Binding18_Factory.newInstance();
 
           case 19: // test.Binding19
-          return (T) new Binding19();
+          return (T) Binding19_Factory.newInstance();
 
           case 20: // test.Binding20
-          return (T) new Binding20();
+          return (T) Binding20_Factory.newInstance();
 
           case 21: // test.Binding21
-          return (T) new Binding21();
+          return (T) Binding21_Factory.newInstance();
 
           case 22: // test.Binding22
-          return (T) new Binding22();
+          return (T) Binding22_Factory.newInstance();
 
           case 23: // test.Binding23
-          return (T) new Binding23();
+          return (T) Binding23_Factory.newInstance();
 
           case 24: // test.Binding24
-          return (T) new Binding24();
+          return (T) Binding24_Factory.newInstance();
 
           case 25: // test.Binding25
-          return (T) new Binding25();
+          return (T) Binding25_Factory.newInstance();
 
           case 26: // test.Binding26
-          return (T) new Binding26();
+          return (T) Binding26_Factory.newInstance();
 
           case 27: // test.Binding27
-          return (T) new Binding27();
+          return (T) Binding27_Factory.newInstance();
 
           case 28: // test.Binding28
-          return (T) new Binding28();
+          return (T) Binding28_Factory.newInstance();
 
           case 29: // test.Binding29
-          return (T) new Binding29();
+          return (T) Binding29_Factory.newInstance();
 
           case 30: // test.Binding30
-          return (T) new Binding30();
+          return (T) Binding30_Factory.newInstance();
 
           case 31: // test.Binding31
-          return (T) new Binding31();
+          return (T) Binding31_Factory.newInstance();
 
           case 32: // test.Binding32
-          return (T) new Binding32();
+          return (T) Binding32_Factory.newInstance();
 
           case 33: // test.Binding33
-          return (T) new Binding33();
+          return (T) Binding33_Factory.newInstance();
 
           case 34: // test.Binding34
-          return (T) new Binding34();
+          return (T) Binding34_Factory.newInstance();
 
           case 35: // test.Binding35
-          return (T) new Binding35();
+          return (T) Binding35_Factory.newInstance();
 
           case 36: // test.Binding36
-          return (T) new Binding36();
+          return (T) Binding36_Factory.newInstance();
 
           case 37: // test.Binding37
-          return (T) new Binding37();
+          return (T) Binding37_Factory.newInstance();
 
           case 38: // test.Binding38
-          return (T) new Binding38();
+          return (T) Binding38_Factory.newInstance();
 
           case 39: // test.Binding39
-          return (T) new Binding39();
+          return (T) Binding39_Factory.newInstance();
 
           case 40: // test.Binding40
-          return (T) new Binding40();
+          return (T) Binding40_Factory.newInstance();
 
           case 41: // test.Binding41
-          return (T) new Binding41();
+          return (T) Binding41_Factory.newInstance();
 
           case 42: // test.Binding42
-          return (T) new Binding42();
+          return (T) Binding42_Factory.newInstance();
 
           case 43: // test.Binding43
-          return (T) new Binding43();
+          return (T) Binding43_Factory.newInstance();
 
           case 44: // test.Binding44
-          return (T) new Binding44();
+          return (T) Binding44_Factory.newInstance();
 
           case 45: // test.Binding45
-          return (T) new Binding45();
+          return (T) Binding45_Factory.newInstance();
 
           case 46: // test.Binding46
-          return (T) new Binding46();
+          return (T) Binding46_Factory.newInstance();
 
           case 47: // test.Binding47
-          return (T) new Binding47();
+          return (T) Binding47_Factory.newInstance();
 
           case 48: // test.Binding48
-          return (T) new Binding48();
+          return (T) Binding48_Factory.newInstance();
 
           case 49: // test.Binding49
-          return (T) new Binding49();
+          return (T) Binding49_Factory.newInstance();
 
           case 50: // test.Binding50
-          return (T) new Binding50();
+          return (T) Binding50_Factory.newInstance();
 
           case 51: // test.Binding51
-          return (T) new Binding51();
+          return (T) Binding51_Factory.newInstance();
 
           case 52: // test.Binding52
-          return (T) new Binding52();
+          return (T) Binding52_Factory.newInstance();
 
           case 53: // test.Binding53
-          return (T) new Binding53();
+          return (T) Binding53_Factory.newInstance();
 
           case 54: // test.Binding54
-          return (T) new Binding54();
+          return (T) Binding54_Factory.newInstance();
 
           case 55: // test.Binding55
-          return (T) new Binding55();
+          return (T) Binding55_Factory.newInstance();
 
           case 56: // test.Binding56
-          return (T) new Binding56();
+          return (T) Binding56_Factory.newInstance();
 
           case 57: // test.Binding57
-          return (T) new Binding57();
+          return (T) Binding57_Factory.newInstance();
 
           case 58: // test.Binding58
-          return (T) new Binding58();
+          return (T) Binding58_Factory.newInstance();
 
           case 59: // test.Binding59
-          return (T) new Binding59();
+          return (T) Binding59_Factory.newInstance();
 
           case 60: // test.Binding60
-          return (T) new Binding60();
+          return (T) Binding60_Factory.newInstance();
 
           case 61: // test.Binding61
-          return (T) new Binding61();
+          return (T) Binding61_Factory.newInstance();
 
           case 62: // test.Binding62
-          return (T) new Binding62();
+          return (T) Binding62_Factory.newInstance();
 
           case 63: // test.Binding63
-          return (T) new Binding63();
+          return (T) Binding63_Factory.newInstance();
 
           case 64: // test.Binding64
-          return (T) new Binding64();
+          return (T) Binding64_Factory.newInstance();
 
           case 65: // test.Binding65
-          return (T) new Binding65();
+          return (T) Binding65_Factory.newInstance();
 
           case 66: // test.Binding66
-          return (T) new Binding66();
+          return (T) Binding66_Factory.newInstance();
 
           case 67: // test.Binding67
-          return (T) new Binding67();
+          return (T) Binding67_Factory.newInstance();
 
           case 68: // test.Binding68
-          return (T) new Binding68();
+          return (T) Binding68_Factory.newInstance();
 
           case 69: // test.Binding69
-          return (T) new Binding69();
+          return (T) Binding69_Factory.newInstance();
 
           case 70: // test.Binding70
-          return (T) new Binding70();
+          return (T) Binding70_Factory.newInstance();
 
           case 71: // test.Binding71
-          return (T) new Binding71();
+          return (T) Binding71_Factory.newInstance();
 
           case 72: // test.Binding72
-          return (T) new Binding72();
+          return (T) Binding72_Factory.newInstance();
 
           case 73: // test.Binding73
-          return (T) new Binding73();
+          return (T) Binding73_Factory.newInstance();
 
           case 74: // test.Binding74
-          return (T) new Binding74();
+          return (T) Binding74_Factory.newInstance();
 
           case 75: // test.Binding75
-          return (T) new Binding75();
+          return (T) Binding75_Factory.newInstance();
 
           case 76: // test.Binding76
-          return (T) new Binding76();
+          return (T) Binding76_Factory.newInstance();
 
           case 77: // test.Binding77
-          return (T) new Binding77();
+          return (T) Binding77_Factory.newInstance();
 
           case 78: // test.Binding78
-          return (T) new Binding78();
+          return (T) Binding78_Factory.newInstance();
 
           case 79: // test.Binding79
-          return (T) new Binding79();
+          return (T) Binding79_Factory.newInstance();
 
           case 80: // test.Binding80
-          return (T) new Binding80();
+          return (T) Binding80_Factory.newInstance();
 
           case 81: // test.Binding81
-          return (T) new Binding81();
+          return (T) Binding81_Factory.newInstance();
 
           case 82: // test.Binding82
-          return (T) new Binding82();
+          return (T) Binding82_Factory.newInstance();
 
           case 83: // test.Binding83
-          return (T) new Binding83();
+          return (T) Binding83_Factory.newInstance();
 
           case 84: // test.Binding84
-          return (T) new Binding84();
+          return (T) Binding84_Factory.newInstance();
 
           case 85: // test.Binding85
-          return (T) new Binding85();
+          return (T) Binding85_Factory.newInstance();
 
           case 86: // test.Binding86
-          return (T) new Binding86();
+          return (T) Binding86_Factory.newInstance();
 
           case 87: // test.Binding87
-          return (T) new Binding87();
+          return (T) Binding87_Factory.newInstance();
 
           case 88: // test.Binding88
-          return (T) new Binding88();
+          return (T) Binding88_Factory.newInstance();
 
           case 89: // test.Binding89
-          return (T) new Binding89();
+          return (T) Binding89_Factory.newInstance();
 
           case 90: // test.Binding90
-          return (T) new Binding90();
+          return (T) Binding90_Factory.newInstance();
 
           case 91: // test.Binding91
-          return (T) new Binding91();
+          return (T) Binding91_Factory.newInstance();
 
           case 92: // test.Binding92
-          return (T) new Binding92();
+          return (T) Binding92_Factory.newInstance();
 
           case 93: // test.Binding93
-          return (T) new Binding93();
+          return (T) Binding93_Factory.newInstance();
 
           case 94: // test.Binding94
-          return (T) new Binding94();
+          return (T) Binding94_Factory.newInstance();
 
           case 95: // test.Binding95
-          return (T) new Binding95();
+          return (T) Binding95_Factory.newInstance();
 
           case 96: // test.Binding96
-          return (T) new Binding96();
+          return (T) Binding96_Factory.newInstance();
 
           case 97: // test.Binding97
-          return (T) new Binding97();
+          return (T) Binding97_Factory.newInstance();
 
           case 98: // test.Binding98
-          return (T) new Binding98();
+          return (T) Binding98_Factory.newInstance();
 
           case 99: // test.Binding99
-          return (T) new Binding99();
+          return (T) Binding99_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }
@@ -1201,7 +1504,7 @@ final class DaggerTestComponent {
       private T get1() {
         switch (id) {
           case 100: // test.Binding100
-          return (T) new Binding100();
+          return (T) Binding100_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }

@@ -3,7 +3,6 @@ package test;
 import com.google.common.collect.ImmutableSet;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import dagger.internal.DaggerGenerated;
-import java.util.Set;
 import javax.annotation.processing.Generated;
 
 @DaggerGenerated
@@ -52,17 +51,17 @@ public final class DaggerMyComponent {
 
     }
 
-    Set<String> setOfString() {
-      return ImmutableSet.<String>of(MyComponentModule_ProvideStringFactory.provideString(), MySubcomponentModule_ProvideStringFactory.provideString());
+    Object setOfString() {
+      return ImmutableSet.of(MyComponentModule_ProvideStringFactory.provideString(), MySubcomponentModule_ProvideStringFactory.provideString());
     }
 
-    Bar bar() {
+    Object bar() {
       return injectBar(Bar_Factory.newInstance());
     }
 
     @Override
     public Foo foo() {
-      return new Foo(bar());
+      return (Foo) ((Object) (Foo_Factory.newInstance(bar())));
     }
 
     @CanIgnoreReturnValue
@@ -80,8 +79,8 @@ public final class DaggerMyComponent {
 
     }
 
-    Set<String> setOfString() {
-      return ImmutableSet.<String>of(MyComponentModule_ProvideStringFactory.provideString());
+    Object setOfString() {
+      return ImmutableSet.of(MyComponentModule_ProvideStringFactory.provideString());
     }
 
     @Override

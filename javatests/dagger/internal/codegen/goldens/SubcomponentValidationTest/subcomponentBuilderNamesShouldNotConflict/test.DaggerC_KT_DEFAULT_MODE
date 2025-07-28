@@ -98,12 +98,12 @@ final class DaggerC {
 
     @Override
     public C.Foo.Sub.Builder fooBuilder() {
-      return new F_SubBuilder(cImpl);
+      return (C.Foo.Sub.Builder) ((Object) (new F_SubBuilder(cImpl)));
     }
 
     @Override
     public C.Bar.Sub.Builder barBuilder() {
-      return new B_SubBuilder(cImpl);
+      return (C.Bar.Sub.Builder) ((Object) (new B_SubBuilder(cImpl)));
     }
   }
 }

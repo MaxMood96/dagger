@@ -28,8 +28,8 @@ public final class A_MembersInjector implements MembersInjector<A> {
     this.valueBProvider = valueBProvider;
   }
 
-  public static MembersInjector<A> create(Provider<String> valueBProvider) {
-    return new A_MembersInjector(valueBProvider);
+  public static MembersInjector<A> create(Provider<?> valueBProvider) {
+    return new A_MembersInjector((Provider<String>) (valueBProvider));
   }
 
   @Override

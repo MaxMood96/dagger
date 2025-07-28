@@ -74,12 +74,12 @@ final class DaggerTestComponent {
 
     @Override
     public A a() {
-      return TestModule_AFactory.a(testModule);
+      return (A) ((Object) (TestModule_AFactory.a(testModule)));
     }
 
     @Override
     public other.test.A otherA() {
-      return other.test.TestModule_AFactory.a(testModule2);
+      return (other.test.A) ((Object) (other.test.TestModule_AFactory.a(testModule2)));
     }
   }
 }

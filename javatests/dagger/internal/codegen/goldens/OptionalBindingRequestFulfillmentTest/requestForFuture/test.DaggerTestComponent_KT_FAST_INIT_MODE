@@ -55,12 +55,12 @@ final class DaggerTestComponent {
 
     @Override
     public ListenableFuture<Optional<Maybe>> maybe() {
-      return Futures.immediateFuture(Optional.of(Maybe_MaybeModule_ProvideMaybeFactory.provideMaybe()));
+      return (ListenableFuture<Optional<Maybe>>) ((Object) (Futures.immediateFuture(Optional.of(Maybe_MaybeModule_ProvideMaybeFactory.provideMaybe()))));
     }
 
     @Override
     public ListenableFuture<Optional<DefinitelyNot>> definitelyNot() {
-      return Futures.immediateFuture(Optional.absent());
+      return (ListenableFuture<Optional<DefinitelyNot>>) ((Object) (Futures.immediateFuture(Optional.absent())));
     }
 
     @Override

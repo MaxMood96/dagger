@@ -33,9 +33,9 @@ public final class InjectedType_MembersInjector implements MembersInjector<Injec
     this.boxedIntProvider = boxedIntProvider;
   }
 
-  public static MembersInjector<InjectedType> create(Provider<Integer> primitiveIntProvider,
-      Provider<Integer> boxedIntProvider) {
-    return new InjectedType_MembersInjector(primitiveIntProvider, boxedIntProvider);
+  public static MembersInjector<InjectedType> create(Provider<?> primitiveIntProvider,
+      Provider<?> boxedIntProvider) {
+    return new InjectedType_MembersInjector((Provider<Integer>) (primitiveIntProvider), (Provider<Integer>) (boxedIntProvider));
   }
 
   @Override
@@ -45,12 +45,12 @@ public final class InjectedType_MembersInjector implements MembersInjector<Injec
   }
 
   @InjectedFieldSignature("test.InjectedType.primitiveInt")
-  public static void injectPrimitiveInt(Object instance, int primitiveInt) {
-    ((InjectedType) (instance)).primitiveInt = primitiveInt;
+  public static void injectPrimitiveInt(Object instance, Object primitiveInt) {
+    ((InjectedType) (instance)).primitiveInt = (int) (primitiveInt);
   }
 
   @InjectedFieldSignature("test.InjectedType.boxedInt")
-  public static void injectBoxedInt(Object instance, Integer boxedInt) {
-    ((InjectedType) (instance)).boxedInt = boxedInt;
+  public static void injectBoxedInt(Object instance, Object boxedInt) {
+    ((InjectedType) (instance)).boxedInt = (Integer) (boxedInt);
   }
 }

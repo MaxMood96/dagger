@@ -52,7 +52,7 @@ public final class DaggerMyComponent {
 
     @Override
     public Foo injectAndReturn(Foo foo) {
-      return foo;
+      return (Foo) ((Object) (foo));
     }
   }
 }

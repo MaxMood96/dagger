@@ -48,7 +48,7 @@ final class DaggerTestComponent {
 
     @Override
     public Injected injected() {
-      return new Injected(TestModule_QualifiedFactory.qualified());
+      return (Injected) ((Object) (Injected_Factory.newInstance(TestModule_QualifiedFactory.qualified())));
     }
   }
 }

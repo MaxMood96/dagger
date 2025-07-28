@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
 import dagger.internal.Provider;
-import java.util.Set;
 import javax.annotation.processing.Generated;
 
 @DaggerGenerated
@@ -57,7 +56,10 @@ final class DaggerTestComponent {
 
     private final TestSubcomponentImpl testSubcomponentImpl = this;
 
-    Provider<Object> reliesOnMultibindingProvider;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> reliesOnMultibindingProvider;
 
     TestSubcomponentImpl(TestComponentImpl testComponentImpl) {
       this.testComponentImpl = testComponentImpl;
@@ -66,8 +68,8 @@ final class DaggerTestComponent {
 
     }
 
-    Set<Object> setOfObject() {
-      return ImmutableSet.<Object>of(ParentModule_ContributionFactory.contribution(), ChildModule_ContributionFactory.contribution());
+    Object setOfObject() {
+      return ImmutableSet.of(ParentModule_ContributionFactory.contribution(), ChildModule_ContributionFactory.contribution());
     }
 
     @SuppressWarnings("unchecked")
@@ -77,7 +79,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Object> dependsOnMultibinding() {
-      return reliesOnMultibindingProvider;
+      return (javax.inject.Provider<Object>) ((Object) (reliesOnMultibindingProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -112,7 +114,10 @@ final class DaggerTestComponent {
 
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Object> reliesOnMultibindingProvider;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> reliesOnMultibindingProvider;
 
     TestComponentImpl(ParentModule parentModuleParam) {
       this.parentModule = parentModuleParam;
@@ -120,8 +125,8 @@ final class DaggerTestComponent {
 
     }
 
-    Set<Object> setOfObject() {
-      return ImmutableSet.<Object>of(ParentModule_ContributionFactory.contribution());
+    Object setOfObject() {
+      return ImmutableSet.of(ParentModule_ContributionFactory.contribution());
     }
 
     @SuppressWarnings("unchecked")
@@ -131,7 +136,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Object> dependsOnMultibinding() {
-      return reliesOnMultibindingProvider;
+      return (javax.inject.Provider<Object>) ((Object) (reliesOnMultibindingProvider));
     }
 
     @Override

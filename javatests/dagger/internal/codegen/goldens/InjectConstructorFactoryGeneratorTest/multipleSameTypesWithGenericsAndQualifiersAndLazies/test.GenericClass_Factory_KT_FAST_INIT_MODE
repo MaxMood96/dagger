@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class GenericClass_Factory<A, B> implements Factory<GenericClass<A, B>> {
+public final class GenericClass_Factory<A, B> implements Factory<Object> {
   private final Provider<A> aProvider;
 
   private final Provider<A> a2Provider;
@@ -80,22 +80,21 @@ public final class GenericClass_Factory<A, B> implements Factory<GenericClass<A,
   }
 
   @Override
-  public GenericClass<A, B> get() {
+  public Object get() {
     return newInstance(aProvider.get(), a2Provider.get(), paProvider, qaProvider.get(), DoubleCheck.lazy(laProvider), sProvider.get(), s2Provider.get(), psProvider, qsProvider.get(), DoubleCheck.lazy(lsProvider), bProvider.get(), b2Provider.get(), pbProvider, qbProvider.get(), DoubleCheck.lazy(lbProvider));
   }
 
   public static <A, B> GenericClass_Factory<A, B> create(Provider<?> aProvider,
       Provider<?> a2Provider, Provider<?> paProvider, Provider<?> qaProvider,
-      Provider<?> laProvider, Provider<String> sProvider, Provider<String> s2Provider,
-      Provider<String> psProvider, Provider<String> qsProvider, Provider<String> lsProvider,
-      Provider<?> bProvider, Provider<?> b2Provider, Provider<?> pbProvider, Provider<?> qbProvider,
-      Provider<?> lbProvider) {
-    return new GenericClass_Factory<A, B>((Provider<A>) (aProvider), (Provider<A>) (a2Provider), (Provider<A>) (paProvider), (Provider<A>) (qaProvider), (Provider<A>) (laProvider), sProvider, s2Provider, psProvider, qsProvider, lsProvider, (Provider<B>) (bProvider), (Provider<B>) (b2Provider), (Provider<B>) (pbProvider), (Provider<B>) (qbProvider), (Provider<B>) (lbProvider));
+      Provider<?> laProvider, Provider<?> sProvider, Provider<?> s2Provider, Provider<?> psProvider,
+      Provider<?> qsProvider, Provider<?> lsProvider, Provider<?> bProvider, Provider<?> b2Provider,
+      Provider<?> pbProvider, Provider<?> qbProvider, Provider<?> lbProvider) {
+    return new GenericClass_Factory<A, B>((Provider<A>) (aProvider), (Provider<A>) (a2Provider), (Provider<A>) (paProvider), (Provider<A>) (qaProvider), (Provider<A>) (laProvider), (Provider<String>) (sProvider), (Provider<String>) (s2Provider), (Provider<String>) (psProvider), (Provider<String>) (qsProvider), (Provider<String>) (lsProvider), (Provider<B>) (bProvider), (Provider<B>) (b2Provider), (Provider<B>) (pbProvider), (Provider<B>) (qbProvider), (Provider<B>) (lbProvider));
   }
 
   public static <A, B> GenericClass<A, B> newInstance(Object a, Object a2, Object pa, Object qa,
-      Object la, String s, String s2, javax.inject.Provider<String> ps, String qs, Lazy<String> ls,
-      Object b, Object b2, Object pb, Object qb, Object lb) {
-    return new GenericClass<A, B>((A) (a), (A) (a2), (javax.inject.Provider<A>) (pa), (A) (qa), (Lazy<A>) (la), s, s2, ps, qs, ls, (B) (b), (B) (b2), (javax.inject.Provider<B>) (pb), (B) (qb), (Lazy<B>) (lb));
+      Object la, Object s, Object s2, Object ps, Object qs, Object ls, Object b, Object b2,
+      Object pb, Object qb, Object lb) {
+    return new GenericClass<A, B>((A) (a), (A) (a2), (javax.inject.Provider<A>) (pa), (A) (qa), (Lazy<A>) (la), (String) (s), (String) (s2), (javax.inject.Provider<String>) (ps), (String) (qs), (Lazy<String>) (ls), (B) (b), (B) (b2), (javax.inject.Provider<B>) (pb), (B) (qb), (Lazy<B>) (lb));
   }
 }

@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class AllInjections_Factory implements Factory<AllInjections> {
+public final class AllInjections_Factory implements Factory<Object> {
   private final Provider<String> sProvider;
 
   private final Provider<String> sProvider2;
@@ -38,19 +38,19 @@ public final class AllInjections_Factory implements Factory<AllInjections> {
   }
 
   @Override
-  public AllInjections get() {
-    AllInjections instance = newInstance(sProvider.get());
+  public Object get() {
+    Object instance = newInstance(sProvider.get());
     AllInjections_MembersInjector.injectS(instance, sProvider2.get());
     AllInjections_MembersInjector.injectS2(instance, sProvider3.get());
     return instance;
   }
 
-  public static AllInjections_Factory create(Provider<String> sProvider,
-      Provider<String> sProvider2, Provider<String> sProvider3) {
-    return new AllInjections_Factory(sProvider, sProvider2, sProvider3);
+  public static AllInjections_Factory create(Provider<?> sProvider, Provider<?> sProvider2,
+      Provider<?> sProvider3) {
+    return new AllInjections_Factory((Provider<String>) (sProvider), (Provider<String>) (sProvider2), (Provider<String>) (sProvider3));
   }
 
-  public static AllInjections newInstance(String s) {
-    return new AllInjections(s);
+  public static AllInjections newInstance(Object s) {
+    return new AllInjections((String) (s));
   }
 }

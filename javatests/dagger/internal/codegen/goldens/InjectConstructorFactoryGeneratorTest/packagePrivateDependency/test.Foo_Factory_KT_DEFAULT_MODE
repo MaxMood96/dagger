@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class Foo_Factory implements Factory<Foo> {
+public final class Foo_Factory implements Factory<Object> {
   private final Provider<Bar> barProvider;
 
   private Foo_Factory(Provider<Bar> barProvider) {
@@ -31,7 +31,7 @@ public final class Foo_Factory implements Factory<Foo> {
   }
 
   @Override
-  public Foo get() {
+  public Object get() {
     return newInstance(barProvider.get());
   }
 

@@ -44,9 +44,15 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<RegularScoped> regularScopedProvider;
+    /**
+     * {@code Provider<RegularScoped>}
+     */
+    Provider<?> regularScopedProvider;
 
-    Provider<ReusableScoped> reusableScopedProvider;
+    /**
+     * {@code Provider<ReusableScoped>}
+     */
+    Provider<?> reusableScopedProvider;
 
     TestComponentImpl() {
 
@@ -62,17 +68,17 @@ final class DaggerTestComponent {
 
     @Override
     public Object regular() {
-      return regularScopedProvider.get();
+      return (Object) ((Object) (regularScopedProvider.get()));
     }
 
     @Override
     public Object reusable() {
-      return reusableScopedProvider.get();
+      return (Object) ((Object) (reusableScopedProvider.get()));
     }
 
     @Override
     public Object unscoped() {
-      return new Unscoped();
+      return (Object) ((Object) (Unscoped_Factory.newInstance()));
     }
   }
 }

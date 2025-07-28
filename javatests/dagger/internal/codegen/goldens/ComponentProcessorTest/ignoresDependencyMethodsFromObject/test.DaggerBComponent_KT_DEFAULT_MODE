@@ -55,7 +55,7 @@ final class DaggerBComponent {
 
     @Override
     public InjectedType injectedType() {
-      return new InjectedType(Preconditions.checkNotNullFromComponent(aComponent.someStringInjection()), aComponent.someIntInjection(), aComponent, Preconditions.checkNotNullFromComponent(aComponent.someClassInjection()));
+      return (InjectedType) ((Object) (InjectedType_Factory.newInstance(Preconditions.checkNotNullFromComponent(aComponent.someStringInjection()), aComponent.someIntInjection(), aComponent, Preconditions.checkNotNullFromComponent(aComponent.someClassInjection()))));
     }
   }
 }

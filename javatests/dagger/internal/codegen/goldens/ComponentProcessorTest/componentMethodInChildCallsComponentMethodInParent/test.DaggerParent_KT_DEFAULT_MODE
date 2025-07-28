@@ -53,14 +53,17 @@ final class DaggerParent {
 
     @Override
     public String string() {
-      return parentImpl.string();
+      return (String) ((Object) (parentImpl.string()));
     }
   }
 
   private static final class ParentImpl implements Parent {
     private final ParentImpl parentImpl = this;
 
-    Provider<Number> numberProvider;
+    /**
+     * {@code Provider<java.lang.Number>}
+     */
+    Provider<?> numberProvider;
 
     ParentImpl() {
 
@@ -75,7 +78,7 @@ final class DaggerParent {
 
     @Override
     public String string() {
-      return TestModule_StringFactory.string(numberProvider.get());
+      return (String) ((Object) (TestModule_StringFactory.string(numberProvider.get())));
     }
 
     @Override

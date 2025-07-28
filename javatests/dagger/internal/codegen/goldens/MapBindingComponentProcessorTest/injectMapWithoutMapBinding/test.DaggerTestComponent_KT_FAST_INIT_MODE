@@ -62,7 +62,7 @@ final class DaggerTestComponent {
 
     @Override
     public Map<String, String> dispatcher() {
-      return MapModule_ProvideAMapFactory.provideAMap(mapModule);
+      return (Map<String, String>) ((Object) (MapModule_ProvideAMapFactory.provideAMap(mapModule)));
     }
   }
 }

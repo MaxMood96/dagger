@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class Foo_Factory implements Factory<Foo> {
+public final class Foo_Factory implements Factory<Object> {
   private final Provider<Integer> iProvider;
 
   private final Provider<String> injectFieldProvider;
@@ -41,21 +41,20 @@ public final class Foo_Factory implements Factory<Foo> {
   }
 
   @Override
-  public Foo get() {
-    Foo instance = newInstance(iProvider.get());
+  public Object get() {
+    Object instance = newInstance(iProvider.get());
     FooBase_MembersInjector.injectInjectField(instance, injectFieldProvider.get());
     Foo_MembersInjector.injectInjectField(instance, injectFieldProvider2.get());
     Foo_MembersInjector.injectInjectMethod(instance, fProvider.get());
     return instance;
   }
 
-  public static Foo_Factory create(Provider<Integer> iProvider,
-      Provider<String> injectFieldProvider, Provider<String> injectFieldProvider2,
-      Provider<Float> fProvider) {
-    return new Foo_Factory(iProvider, injectFieldProvider, injectFieldProvider2, fProvider);
+  public static Foo_Factory create(Provider<?> iProvider, Provider<?> injectFieldProvider,
+      Provider<?> injectFieldProvider2, Provider<?> fProvider) {
+    return new Foo_Factory((Provider<Integer>) (iProvider), (Provider<String>) (injectFieldProvider), (Provider<String>) (injectFieldProvider2), (Provider<Float>) (fProvider));
   }
 
-  public static Foo newInstance(int i) {
-    return new Foo(i);
+  public static Foo newInstance(Object i) {
+    return new Foo((int) (i));
   }
 }

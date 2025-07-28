@@ -41,6 +41,7 @@ import androidx.room.compiler.processing.XProcessingEnv;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import dagger.internal.codegen.binding.ContributionBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.BindingKind;
 import dagger.internal.codegen.model.Key;
 import dagger.internal.codegen.writing.ComponentImplementation.ShardImplementation;
@@ -84,10 +85,15 @@ final class SwitchingProviders {
       new LinkedHashMap<>();
 
   private final ShardImplementation shardImplementation;
+  private final CompilerOptions compilerOptions;
   private final XProcessingEnv processingEnv;
 
-  SwitchingProviders(ShardImplementation shardImplementation, XProcessingEnv processingEnv) {
+  SwitchingProviders(
+      ShardImplementation shardImplementation,
+      CompilerOptions compilerOptions,
+      XProcessingEnv processingEnv) {
     this.shardImplementation = checkNotNull(shardImplementation);
+    this.compilerOptions = checkNotNull(compilerOptions);
     this.processingEnv = checkNotNull(processingEnv);
   }
 
@@ -139,19 +145,22 @@ final class SwitchingProviders {
       return XCodeBlock.of(
           "new %T<%L>(%L, %L)",
           switchingProviderType,
-          // Add the type parameter explicitly when the binding is scoped because Java can't
-          // resolve the type when wrapped. For example, the following will error:
-          //   fooProvider = DoubleCheck.provider(new SwitchingProvider<>(1));
-          (binding.scope().isPresent()
-                  || binding.kind().equals(BindingKind.ASSISTED_FACTORY)
-                  || XProcessingEnvs.isPreJava8SourceVersion(processingEnv))
-              ? XCodeBlock.of(
-                  "%T", shardImplementation.accessibleTypeName(binding.contributedType()))
-              : "",
+          maybeTypeParameter(binding),
           shardImplementation.componentFieldsByImplementation().values().stream()
               .map(field -> XCodeBlock.of("%N", field))
               .collect(toParametersCodeBlock()),
           switchIds.get(key));
+    }
+
+    private XCodeBlock maybeTypeParameter(ContributionBinding binding) {
+      // Add the type parameter explicitly when the binding is scoped because Java can't
+      // resolve the type when wrapped. For example, the following will error:
+      //   fooProvider = DoubleCheck.provider(new SwitchingProvider<>(1));
+      return (binding.scope().isPresent()
+              || binding.kind().equals(BindingKind.ASSISTED_FACTORY)
+              || XProcessingEnvs.isPreJava8SourceVersion(processingEnv))
+          ? XCodeBlock.of("%T", shardImplementation.accessibleTypeName(binding.contributedType()))
+          : XCodeBlock.of("");
     }
 
     private XCodeBlock createSwitchCaseCodeBlock(

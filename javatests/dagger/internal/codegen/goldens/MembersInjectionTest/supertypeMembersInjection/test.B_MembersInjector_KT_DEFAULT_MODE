@@ -29,8 +29,8 @@ public final class B_MembersInjector implements MembersInjector<B> {
     this.sProvider = sProvider;
   }
 
-  public static MembersInjector<B> create(Provider<String> sProvider) {
-    return new B_MembersInjector(sProvider);
+  public static MembersInjector<B> create(Provider<?> sProvider) {
+    return new B_MembersInjector((Provider<String>) (sProvider));
   }
 
   @Override
@@ -39,7 +39,7 @@ public final class B_MembersInjector implements MembersInjector<B> {
   }
 
   @InjectedFieldSignature("test.B.s")
-  public static void injectS(Object instance, String s) {
-    ((B) (instance)).s = s;
+  public static void injectS(Object instance, Object s) {
+    ((B) (instance)).s = (String) (s);
   }
 }

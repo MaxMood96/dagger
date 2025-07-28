@@ -44,7 +44,10 @@ final class DaggerSimpleComponent {
   private static final class SimpleComponentImpl implements SimpleComponent {
     private final SimpleComponentImpl simpleComponentImpl = this;
 
-    Provider<SomeInjectableType> someInjectableTypeProvider;
+    /**
+     * {@code Provider<SomeInjectableType>}
+     */
+    Provider<?> someInjectableTypeProvider;
 
     SimpleComponentImpl() {
 
@@ -54,22 +57,22 @@ final class DaggerSimpleComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.someInjectableTypeProvider = DoubleCheck.provider(new SwitchingProvider<SomeInjectableType>(simpleComponentImpl, 0));
+      this.someInjectableTypeProvider = DoubleCheck.provider(new SwitchingProvider<>(simpleComponentImpl, 0));
     }
 
     @Override
     public SomeInjectableType someInjectableType() {
-      return someInjectableTypeProvider.get();
+      return (SomeInjectableType) ((Object) (someInjectableTypeProvider.get()));
     }
 
     @Override
     public Lazy<SomeInjectableType> lazySomeInjectableType() {
-      return DoubleCheck.lazy(someInjectableTypeProvider);
+      return (Lazy<SomeInjectableType>) ((Object) (DoubleCheck.lazy(someInjectableTypeProvider)));
     }
 
     @Override
     public javax.inject.Provider<SomeInjectableType> someInjectableTypeProvider() {
-      return someInjectableTypeProvider;
+      return (javax.inject.Provider<SomeInjectableType>) ((Object) (someInjectableTypeProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -87,7 +90,7 @@ final class DaggerSimpleComponent {
       public T get() {
         switch (id) {
           case 0: // test.SomeInjectableType
-          return (T) new SomeInjectableType();
+          return (T) SomeInjectableType_Factory.newInstance();
 
           default: throw new AssertionError(id);
         }

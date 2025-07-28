@@ -59,7 +59,7 @@ final class DaggerTestComponent {
 
     @Override
     public InjectsSubtype injectsSubtype() {
-      return InjectsSubtype_Factory.newInstance(subtype());
+      return (InjectsSubtype) ((Object) (InjectsSubtype_Factory.newInstance(subtype())));
     }
 
     @CanIgnoreReturnValue

@@ -53,7 +53,7 @@ final class DaggerTestComponent {
 
     @Override
     public ListenableFuture<Map<String, String>> stringMap() {
-      return Futures.immediateFuture(ImmutableMap.<String, String>of());
+      return (ListenableFuture<Map<String, String>>) ((Object) (Futures.immediateFuture(ImmutableMap.of())));
     }
 
     @Override

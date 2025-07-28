@@ -45,7 +45,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<MembersInjector<Foo>> fooMembersInjectorProvider;
+    /**
+     * {@code Provider<MembersInjector<Foo>>}
+     */
+    Provider<?> fooMembersInjectorProvider;
 
     TestComponentImpl() {
 
@@ -60,7 +63,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<MembersInjector<Foo>> providerOfMembersInjector() {
-      return fooMembersInjectorProvider;
+      return (javax.inject.Provider<MembersInjector<Foo>>) ((Object) (fooMembersInjectorProvider));
     }
   }
 }

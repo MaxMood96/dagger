@@ -4,7 +4,6 @@ import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
 import dagger.internal.Provider;
 import dagger.internal.SetFactory;
-import java.util.Set;
 import javax.annotation.processing.Generated;
 
 @DaggerGenerated
@@ -57,9 +56,15 @@ final class DaggerTestComponent {
 
     private final TestSubcomponentImpl testSubcomponentImpl = this;
 
-    Provider<Set<Object>> setOfObjectProvider;
+    /**
+     * {@code Provider<java.util.Set<Object>>}
+     */
+    Provider<?> setOfObjectProvider;
 
-    Provider<Object> reliesOnMultibindingProvider;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> reliesOnMultibindingProvider;
 
     TestSubcomponentImpl(TestComponentImpl testComponentImpl) {
       this.testComponentImpl = testComponentImpl;
@@ -83,7 +88,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Object> dependsOnMultibinding() {
-      return reliesOnMultibindingProvider;
+      return (javax.inject.Provider<Object>) ((Object) (reliesOnMultibindingProvider));
     }
   }
 
@@ -92,9 +97,15 @@ final class DaggerTestComponent {
 
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Set<Object>> setOfObjectProvider;
+    /**
+     * {@code Provider<java.util.Set<Object>>}
+     */
+    Provider<?> setOfObjectProvider;
 
-    Provider<Object> reliesOnMultibindingProvider;
+    /**
+     * {@code Provider<Object>}
+     */
+    Provider<?> reliesOnMultibindingProvider;
 
     TestComponentImpl(ParentModule parentModuleParam) {
       this.parentModule = parentModuleParam;
@@ -116,7 +127,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Object> dependsOnMultibinding() {
-      return reliesOnMultibindingProvider;
+      return (javax.inject.Provider<Object>) ((Object) (reliesOnMultibindingProvider));
     }
 
     @Override

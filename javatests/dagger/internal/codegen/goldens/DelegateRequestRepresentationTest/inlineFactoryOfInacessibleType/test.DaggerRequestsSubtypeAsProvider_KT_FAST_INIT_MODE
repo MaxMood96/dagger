@@ -44,8 +44,10 @@ final class DaggerRequestsSubtypeAsProvider {
   private static final class RequestsSubtypeAsProviderImpl implements RequestsSubtypeAsProvider {
     private final RequestsSubtypeAsProviderImpl requestsSubtypeAsProviderImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    Provider subtypeProvider;
+    /**
+     * {@code Provider<other.Subtype>}
+     */
+    Provider<?> subtypeProvider;
 
     RequestsSubtypeAsProviderImpl() {
 
@@ -60,7 +62,7 @@ final class DaggerRequestsSubtypeAsProvider {
 
     @Override
     public javax.inject.Provider<Supertype> supertypeProvider() {
-      return subtypeProvider;
+      return (javax.inject.Provider<Supertype>) ((Object) (subtypeProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

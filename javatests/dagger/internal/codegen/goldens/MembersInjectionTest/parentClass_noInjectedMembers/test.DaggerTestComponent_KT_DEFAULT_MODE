@@ -48,7 +48,7 @@ final class DaggerTestComponent {
 
     @Override
     public Child child() {
-      return new Child();
+      return (Child) ((Object) (Child_Factory.newInstance()));
     }
   }
 }

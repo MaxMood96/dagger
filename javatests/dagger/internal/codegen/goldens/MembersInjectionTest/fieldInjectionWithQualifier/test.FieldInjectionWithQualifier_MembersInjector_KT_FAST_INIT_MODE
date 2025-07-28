@@ -34,9 +34,9 @@ public final class FieldInjectionWithQualifier_MembersInjector implements Member
     this.bProvider = bProvider;
   }
 
-  public static MembersInjector<FieldInjectionWithQualifier> create(Provider<String> aProvider,
-      Provider<String> bProvider) {
-    return new FieldInjectionWithQualifier_MembersInjector(aProvider, bProvider);
+  public static MembersInjector<FieldInjectionWithQualifier> create(Provider<?> aProvider,
+      Provider<?> bProvider) {
+    return new FieldInjectionWithQualifier_MembersInjector((Provider<String>) (aProvider), (Provider<String>) (bProvider));
   }
 
   @Override
@@ -47,13 +47,13 @@ public final class FieldInjectionWithQualifier_MembersInjector implements Member
 
   @InjectedFieldSignature("test.FieldInjectionWithQualifier.a")
   @Named("A")
-  public static void injectA(Object instance, String a) {
-    ((FieldInjectionWithQualifier) (instance)).a = a;
+  public static void injectA(Object instance, Object a) {
+    ((FieldInjectionWithQualifier) (instance)).a = (String) (a);
   }
 
   @InjectedFieldSignature("test.FieldInjectionWithQualifier.b")
   @Named("B")
-  public static void injectB(Object instance, String b) {
-    ((FieldInjectionWithQualifier) (instance)).b = b;
+  public static void injectB(Object instance, Object b) {
+    ((FieldInjectionWithQualifier) (instance)).b = (String) (b);
   }
 }

@@ -494,8 +494,11 @@ public final class FactoryGenerator extends SourceFileGenerator<ContributionBind
   }
 
   private XTypeName providedTypeName(ContributionBinding binding) {
-    return asNullableTypeName(
-        binding.contributedType().asTypeName(), binding.nullability(), compilerOptions);
+    XTypeName typeName =
+        isTypeAccessibleFromPublicApi(binding.contributedType(), compilerOptions)
+            ? binding.contributedType().asTypeName()
+            : XTypeName.ANY_OBJECT;
+    return asNullableTypeName(typeName, binding.nullability(), compilerOptions);
   }
 
   private Optional<XTypeName> factoryTypeName(ContributionBinding binding) {

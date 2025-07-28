@@ -41,10 +41,9 @@ public final class MethodInjection_MembersInjector implements MembersInjector<Me
     this.stringProvider4 = stringProvider4;
   }
 
-  public static MembersInjector<MethodInjection> create(Provider<String> stringProvider,
-      Provider<String> stringProvider2, Provider<String> stringProvider3,
-      Provider<String> stringProvider4) {
-    return new MethodInjection_MembersInjector(stringProvider, stringProvider2, stringProvider3, stringProvider4);
+  public static MembersInjector<MethodInjection> create(Provider<?> stringProvider,
+      Provider<?> stringProvider2, Provider<?> stringProvider3, Provider<?> stringProvider4) {
+    return new MethodInjection_MembersInjector((Provider<String>) (stringProvider), (Provider<String>) (stringProvider2), (Provider<String>) (stringProvider3), (Provider<String>) (stringProvider4));
   }
 
   @Override
@@ -58,12 +57,12 @@ public final class MethodInjection_MembersInjector implements MembersInjector<Me
     ((MethodInjection) (instance)).noArgs();
   }
 
-  public static void injectOneArg(Object instance, String string) {
-    ((MethodInjection) (instance)).oneArg(string);
+  public static void injectOneArg(Object instance, Object string) {
+    ((MethodInjection) (instance)).oneArg((String) (string));
   }
 
-  public static void injectManyArgs(Object instance, String string, Lazy<String> lazyString,
-      javax.inject.Provider<String> stringProvider) {
-    ((MethodInjection) (instance)).manyArgs(string, lazyString, stringProvider);
+  public static void injectManyArgs(Object instance, Object string, Object lazyString,
+      Object stringProvider) {
+    ((MethodInjection) (instance)).manyArgs((String) (string), (Lazy<String>) (lazyString), (javax.inject.Provider<String>) (stringProvider));
   }
 }

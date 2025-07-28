@@ -46,11 +46,20 @@ final class DaggerTestComponent {
 
     private final SubImpl subImpl = this;
 
-    Provider<Long> provideLong3Provider;
+    /**
+     * {@code Provider<Long>}
+     */
+    Provider<?> provideLong3Provider;
 
-    Provider<Long> provideLong4Provider;
+    /**
+     * {@code Provider<Long>}
+     */
+    Provider<?> provideLong4Provider;
 
-    Provider<Long> provideLong5Provider;
+    /**
+     * {@code Provider<Long>}
+     */
+    Provider<?> provideLong5Provider;
 
     SubImpl(TestComponentImpl testComponentImpl) {
       this.testComponentImpl = testComponentImpl;
@@ -68,12 +77,12 @@ final class DaggerTestComponent {
 
     @Override
     public Map<Long, Long> longs() {
-      return ImmutableMap.<Long, Long>builderWithExpectedSize(6).put(0L, testComponentImpl.provideLong0Provider.get()).put(1L, testComponentImpl.provideLong1Provider.get()).put(2L, testComponentImpl.provideLong2Provider.get()).put(3L, provideLong3Provider.get()).put(4L, provideLong4Provider.get()).put(5L, provideLong5Provider.get()).build();
+      return (Map<Long, Long>) ((Object) (ImmutableMap.builderWithExpectedSize(6).put(0L, testComponentImpl.provideLong0Provider.get()).put(1L, testComponentImpl.provideLong1Provider.get()).put(2L, testComponentImpl.provideLong2Provider.get()).put(3L, provideLong3Provider.get()).put(4L, provideLong4Provider.get()).put(5L, provideLong5Provider.get()).build()));
     }
 
     @Override
     public Map<Long, javax.inject.Provider<Long>> providerLongs() {
-      return ImmutableMap.<Long, javax.inject.Provider<Long>>builderWithExpectedSize(6).put(0L, testComponentImpl.provideLong0Provider).put(1L, testComponentImpl.provideLong1Provider).put(2L, testComponentImpl.provideLong2Provider).put(3L, provideLong3Provider).put(4L, provideLong4Provider).put(5L, provideLong5Provider).build();
+      return (Map<Long, javax.inject.Provider<Long>>) ((Object) (ImmutableMap.builderWithExpectedSize(6).put(0L, testComponentImpl.provideLong0Provider).put(1L, testComponentImpl.provideLong1Provider).put(2L, testComponentImpl.provideLong2Provider).put(3L, provideLong3Provider).put(4L, provideLong4Provider).put(5L, provideLong5Provider).build()));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -94,13 +103,13 @@ final class DaggerTestComponent {
       public T get() {
         switch (id) {
           case 0: // java.util.Map<java.lang.Long,java.lang.Long> test.SubcomponentMapModule#provideLong3
-          return (T) (Long) (SubcomponentMapModule.provideLong3());
+          return (T) (Long) (SubcomponentMapModule_ProvideLong3Factory.provideLong3());
 
           case 1: // java.util.Map<java.lang.Long,java.lang.Long> test.SubcomponentMapModule#provideLong4
-          return (T) (Long) (SubcomponentMapModule.provideLong4());
+          return (T) (Long) (SubcomponentMapModule_ProvideLong4Factory.provideLong4());
 
           case 2: // java.util.Map<java.lang.Long,java.lang.Long> test.SubcomponentMapModule#provideLong5
-          return (T) (Long) (SubcomponentMapModule.provideLong5());
+          return (T) (Long) (SubcomponentMapModule_ProvideLong5Factory.provideLong5());
 
           default: throw new AssertionError(id);
         }
@@ -111,13 +120,25 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Integer> provideIntProvider;
+    /**
+     * {@code Provider<Integer>}
+     */
+    Provider<?> provideIntProvider;
 
-    Provider<Long> provideLong0Provider;
+    /**
+     * {@code Provider<Long>}
+     */
+    Provider<?> provideLong0Provider;
 
-    Provider<Long> provideLong1Provider;
+    /**
+     * {@code Provider<Long>}
+     */
+    Provider<?> provideLong1Provider;
 
-    Provider<Long> provideLong2Provider;
+    /**
+     * {@code Provider<Long>}
+     */
+    Provider<?> provideLong2Provider;
 
     TestComponentImpl() {
 
@@ -135,32 +156,32 @@ final class DaggerTestComponent {
 
     @Override
     public Map<String, String> strings() {
-      return ImmutableMap.<String, String>of();
+      return (Map<String, String>) ((Object) (ImmutableMap.of()));
     }
 
     @Override
     public Map<String, javax.inject.Provider<String>> providerStrings() {
-      return ImmutableMap.<String, javax.inject.Provider<String>>of();
+      return (Map<String, javax.inject.Provider<String>>) ((Object) (ImmutableMap.of()));
     }
 
     @Override
     public Map<Integer, Integer> ints() {
-      return ImmutableMap.<Integer, Integer>of(0, provideIntProvider.get());
+      return (Map<Integer, Integer>) ((Object) (ImmutableMap.of(0, provideIntProvider.get())));
     }
 
     @Override
     public Map<Integer, javax.inject.Provider<Integer>> providerInts() {
-      return ImmutableMap.<Integer, javax.inject.Provider<Integer>>of(0, provideIntProvider);
+      return (Map<Integer, javax.inject.Provider<Integer>>) ((Object) (ImmutableMap.of(0, provideIntProvider)));
     }
 
     @Override
     public Map<Long, Long> longs() {
-      return ImmutableMap.<Long, Long>of(0L, provideLong0Provider.get(), 1L, provideLong1Provider.get(), 2L, provideLong2Provider.get());
+      return (Map<Long, Long>) ((Object) (ImmutableMap.of(0L, provideLong0Provider.get(), 1L, provideLong1Provider.get(), 2L, provideLong2Provider.get())));
     }
 
     @Override
     public Map<Long, javax.inject.Provider<Long>> providerLongs() {
-      return ImmutableMap.<Long, javax.inject.Provider<Long>>of(0L, provideLong0Provider, 1L, provideLong1Provider, 2L, provideLong2Provider);
+      return (Map<Long, javax.inject.Provider<Long>>) ((Object) (ImmutableMap.of(0L, provideLong0Provider, 1L, provideLong1Provider, 2L, provideLong2Provider)));
     }
 
     @Override
@@ -183,16 +204,16 @@ final class DaggerTestComponent {
       public T get() {
         switch (id) {
           case 0: // java.util.Map<java.lang.Integer,java.lang.Integer> test.MapModule#provideInt
-          return (T) (Integer) (MapModule.provideInt());
+          return (T) (Integer) (MapModule_ProvideIntFactory.provideInt());
 
           case 1: // java.util.Map<java.lang.Long,java.lang.Long> test.MapModule#provideLong0
-          return (T) (Long) (MapModule.provideLong0());
+          return (T) (Long) (MapModule_ProvideLong0Factory.provideLong0());
 
           case 2: // java.util.Map<java.lang.Long,java.lang.Long> test.MapModule#provideLong1
-          return (T) (Long) (MapModule.provideLong1());
+          return (T) (Long) (MapModule_ProvideLong1Factory.provideLong1());
 
           case 3: // java.util.Map<java.lang.Long,java.lang.Long> test.MapModule#provideLong2
-          return (T) (Long) (MapModule.provideLong2());
+          return (T) (Long) (MapModule_ProvideLong2Factory.provideLong2());
 
           default: throw new AssertionError(id);
         }

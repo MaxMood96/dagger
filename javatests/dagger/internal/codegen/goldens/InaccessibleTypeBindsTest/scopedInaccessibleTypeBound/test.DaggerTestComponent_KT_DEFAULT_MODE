@@ -44,7 +44,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Foo> bindProvider;
+    /**
+     * {@code Provider<Foo>}
+     */
+    Provider<?> bindProvider;
 
     TestComponentImpl() {
 
@@ -59,7 +62,7 @@ final class DaggerTestComponent {
 
     @Override
     public Foo getFoo() {
-      return bindProvider.get();
+      return (Foo) ((Object) (bindProvider.get()));
     }
   }
 }

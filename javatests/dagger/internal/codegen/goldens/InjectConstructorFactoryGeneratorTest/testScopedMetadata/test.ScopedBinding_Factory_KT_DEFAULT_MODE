@@ -22,9 +22,9 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class ScopedBinding_Factory implements Factory<ScopedBinding> {
+public final class ScopedBinding_Factory implements Factory<Object> {
   @Override
-  public ScopedBinding get() {
+  public Object get() {
     return newInstance();
   }
 

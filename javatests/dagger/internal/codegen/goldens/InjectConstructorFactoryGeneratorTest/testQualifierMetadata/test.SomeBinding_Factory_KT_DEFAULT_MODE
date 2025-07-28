@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class SomeBinding_Factory implements Factory<SomeBinding> {
+public final class SomeBinding_Factory implements Factory<Object> {
   private final Provider<Double> dProvider;
 
   private final Provider<String> injectFieldProvider;
@@ -38,19 +38,19 @@ public final class SomeBinding_Factory implements Factory<SomeBinding> {
   }
 
   @Override
-  public SomeBinding get() {
-    SomeBinding instance = newInstance(dProvider.get());
+  public Object get() {
+    Object instance = newInstance(dProvider.get());
     SomeBinding_MembersInjector.injectInjectField(instance, injectFieldProvider.get());
     SomeBinding_MembersInjector.injectInjectMethod(instance, fProvider.get());
     return instance;
   }
 
-  public static SomeBinding_Factory create(Provider<Double> dProvider,
-      Provider<String> injectFieldProvider, Provider<Float> fProvider) {
-    return new SomeBinding_Factory(dProvider, injectFieldProvider, fProvider);
+  public static SomeBinding_Factory create(Provider<?> dProvider, Provider<?> injectFieldProvider,
+      Provider<?> fProvider) {
+    return new SomeBinding_Factory((Provider<Double>) (dProvider), (Provider<String>) (injectFieldProvider), (Provider<Float>) (fProvider));
   }
 
-  public static SomeBinding newInstance(Double d) {
-    return new SomeBinding(d);
+  public static SomeBinding newInstance(Object d) {
+    return new SomeBinding((Double) (d));
   }
 }

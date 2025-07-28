@@ -51,7 +51,7 @@ final class DaggerTestComponent {
 
     @Override
     public Map<Class<?>, Integer> classKey() {
-      return LazyClassKeyMap.<Integer>of(ImmutableMap.<String, Integer>of(MapKeyBindingsModule_ClassKey_LazyMapKey.lazyClassKeyName, MapKeyBindingsModule.classKey(), MapKeyBindingsModule_ClassKey2_LazyMapKey.lazyClassKeyName, MapKeyBindingsModule.classKey2()));
+      return (Map<Class<?>, Integer>) ((Object) (LazyClassKeyMap.<Object>of(ImmutableMap.of(MapKeyBindingsModule_ClassKey_LazyMapKey.lazyClassKeyName, MapKeyBindingsModule_ClassKeyFactory.classKey(), MapKeyBindingsModule_ClassKey2_LazyMapKey.lazyClassKeyName, MapKeyBindingsModule_ClassKey2Factory.classKey2()))));
     }
   }
 }

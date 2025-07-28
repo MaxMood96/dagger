@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class InjectConstructor_Factory implements Factory<InjectConstructor> {
+public final class InjectConstructor_Factory implements Factory<Object> {
   private final Provider<String> sProvider;
 
   private InjectConstructor_Factory(Provider<String> sProvider) {
@@ -31,15 +31,15 @@ public final class InjectConstructor_Factory implements Factory<InjectConstructo
   }
 
   @Override
-  public InjectConstructor get() {
+  public Object get() {
     return newInstance(sProvider.get());
   }
 
-  public static InjectConstructor_Factory create(Provider<String> sProvider) {
-    return new InjectConstructor_Factory(sProvider);
+  public static InjectConstructor_Factory create(Provider<?> sProvider) {
+    return new InjectConstructor_Factory((Provider<String>) (sProvider));
   }
 
-  public static InjectConstructor newInstance(String s) {
-    return new InjectConstructor(s);
+  public static InjectConstructor newInstance(Object s) {
+    return new InjectConstructor((String) (s));
   }
 }

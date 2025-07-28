@@ -43,7 +43,10 @@ final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<FooFactory> fooFactoryProvider;
+    /**
+     * {@code Provider<FooFactory>}
+     */
+    Provider<?> fooFactoryProvider;
 
     TestComponentImpl() {
 
@@ -53,12 +56,12 @@ final class DaggerTestComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.fooFactoryProvider = SingleCheck.provider(new SwitchingProvider<FooFactory>(testComponentImpl, 0));
+      this.fooFactoryProvider = SingleCheck.provider(new SwitchingProvider<>(testComponentImpl, 0));
     }
 
     @Override
     public FooFactory fooFactory() {
-      return fooFactoryProvider.get();
+      return (FooFactory) ((Object) (fooFactoryProvider.get()));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -79,7 +82,7 @@ final class DaggerTestComponent {
           return (T) new FooFactory() {
             @Override
             public Foo create(String str) {
-              return new Foo(str, new Bar());
+              return Foo_Factory.newInstance(str, Bar_Factory.newInstance());
             }
           };
 

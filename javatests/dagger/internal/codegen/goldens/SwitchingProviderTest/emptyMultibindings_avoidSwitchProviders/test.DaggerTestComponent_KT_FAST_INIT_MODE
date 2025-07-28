@@ -53,12 +53,12 @@ final class DaggerTestComponent {
 
     @Override
     public Provider<Set<String>> setProvider() {
-      return SetFactory.<String>empty();
+      return (Provider<Set<String>>) ((Object) (SetFactory.<String>empty()));
     }
 
     @Override
     public Provider<Map<String, String>> mapProvider() {
-      return MapFactory.<String, String>emptyMapProvider();
+      return (Provider<Map<String, String>>) ((Object) (MapFactory.<String, String>emptyMapProvider()));
     }
   }
 }

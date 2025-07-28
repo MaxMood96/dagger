@@ -45,7 +45,10 @@ final class DaggerMyComponent {
 
     private final MySubcomponentImpl mySubcomponentImpl = this;
 
-    Provider<MySubcomponentAssistedFactory> mySubcomponentAssistedFactoryProvider;
+    /**
+     * {@code Provider<MySubcomponentAssistedFactory>}
+     */
+    Provider<?> mySubcomponentAssistedFactoryProvider;
 
     MySubcomponentImpl(MyComponentImpl myComponentImpl) {
       this.myComponentImpl = myComponentImpl;
@@ -56,12 +59,12 @@ final class DaggerMyComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.mySubcomponentAssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<MySubcomponentAssistedFactory>(myComponentImpl, mySubcomponentImpl, 0));
+      this.mySubcomponentAssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<>(myComponentImpl, mySubcomponentImpl, 0));
     }
 
     @Override
     public MySubcomponentAssistedFactory mySubcomponentAssistedFactory() {
-      return mySubcomponentAssistedFactoryProvider.get();
+      return (MySubcomponentAssistedFactory) ((Object) (mySubcomponentAssistedFactoryProvider.get()));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -86,7 +89,7 @@ final class DaggerMyComponent {
           return (T) new MySubcomponentAssistedFactory() {
             @Override
             public MyAssistedClass create(Bar bar, Foo foo) {
-              return new MyAssistedClass(foo, new Baz(), bar);
+              return MyAssistedClass_Factory.newInstance(foo, Baz_Factory.newInstance(), bar);
             }
           };
 
@@ -99,7 +102,10 @@ final class DaggerMyComponent {
   private static final class MyComponentImpl implements MyComponent {
     private final MyComponentImpl myComponentImpl = this;
 
-    Provider<MyComponentAssistedFactory> myComponentAssistedFactoryProvider;
+    /**
+     * {@code Provider<MyComponentAssistedFactory>}
+     */
+    Provider<?> myComponentAssistedFactoryProvider;
 
     MyComponentImpl() {
 
@@ -109,12 +115,12 @@ final class DaggerMyComponent {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.myComponentAssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<MyComponentAssistedFactory>(myComponentImpl, 0));
+      this.myComponentAssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<>(myComponentImpl, 0));
     }
 
     @Override
     public MyComponentAssistedFactory myComponentAssistedFactory() {
-      return myComponentAssistedFactoryProvider.get();
+      return (MyComponentAssistedFactory) ((Object) (myComponentAssistedFactoryProvider.get()));
     }
 
     @Override
@@ -140,7 +146,7 @@ final class DaggerMyComponent {
           return (T) new MyComponentAssistedFactory() {
             @Override
             public MyAssistedClass create(Bar bar, Foo foo) {
-              return new MyAssistedClass(foo, new Baz(), bar);
+              return MyAssistedClass_Factory.newInstance(foo, Baz_Factory.newInstance(), bar);
             }
           };
 

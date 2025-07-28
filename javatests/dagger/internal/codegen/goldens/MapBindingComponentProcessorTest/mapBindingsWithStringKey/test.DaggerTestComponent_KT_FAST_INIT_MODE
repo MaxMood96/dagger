@@ -69,11 +69,20 @@ final class DaggerTestComponent {
 
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Handler> provideAdminHandlerProvider;
+    /**
+     * {@code Provider<Handler>}
+     */
+    Provider<?> provideAdminHandlerProvider;
 
-    Provider<Handler> provideLoginHandlerProvider;
+    /**
+     * {@code Provider<Handler>}
+     */
+    Provider<?> provideLoginHandlerProvider;
 
-    Provider mapOfStringAndProviderOfHandlerProvider;
+    /**
+     * {@code Provider}
+     */
+    Provider<?> mapOfStringAndProviderOfHandlerProvider;
 
     TestComponentImpl(MapModuleOne mapModuleOneParam, MapModuleTwo mapModuleTwoParam) {
       this.mapModuleOne = mapModuleOneParam;
@@ -92,7 +101,7 @@ final class DaggerTestComponent {
 
     @Override
     public javax.inject.Provider<Map<String, javax.inject.Provider<Handler>>> dispatcher() {
-      return mapOfStringAndProviderOfHandlerProvider;
+      return (javax.inject.Provider<Map<String, javax.inject.Provider<Handler>>>) ((Object) (mapOfStringAndProviderOfHandlerProvider));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -110,7 +119,7 @@ final class DaggerTestComponent {
       public T get() {
         switch (id) {
           case 0: // java.util.Map<java.lang.String,javax.inject.Provider<test.Handler>>
-          return (T) ImmutableMap.<String, javax.inject.Provider<Handler>>of("Admin", testComponentImpl.provideAdminHandlerProvider, "Login", testComponentImpl.provideLoginHandlerProvider);
+          return (T) ImmutableMap.of("Admin", testComponentImpl.provideAdminHandlerProvider, "Login", testComponentImpl.provideLoginHandlerProvider);
 
           case 1: // java.util.Map<java.lang.String,test.Handler> test.MapModuleOne#provideAdminHandler
           return (T) MapModuleOne_ProvideAdminHandlerFactory.provideAdminHandler(testComponentImpl.mapModuleOne);

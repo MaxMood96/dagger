@@ -56,12 +56,12 @@ final class DaggerTestComponent {
 
     @Override
     public TestComponent parent() {
-      return testComponentImpl;
+      return (TestComponent) ((Object) (testComponentImpl));
     }
 
     @Override
     public Dep depFromSubcomponent() {
-      return testComponentImpl.dep;
+      return (Dep) ((Object) (testComponentImpl.dep));
     }
   }
 
@@ -77,22 +77,22 @@ final class DaggerTestComponent {
 
     @Override
     public TestComponent self() {
-      return this;
+      return (TestComponent) ((Object) (this));
     }
 
     @Override
     public Dep dep() {
-      return dep;
+      return (Dep) ((Object) (dep));
     }
 
     @Override
     public String methodOnDep() {
-      return Preconditions.checkNotNullFromComponent(dep.string());
+      return (String) ((Object) (Preconditions.checkNotNullFromComponent(dep.string())));
     }
 
     @Override
     public Object otherMethodOnDep() {
-      return Preconditions.checkNotNullFromComponent(dep.object());
+      return (Object) ((Object) (Preconditions.checkNotNullFromComponent(dep.object())));
     }
 
     @Override

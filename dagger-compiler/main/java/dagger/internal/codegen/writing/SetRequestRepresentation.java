@@ -34,6 +34,7 @@ import dagger.internal.codegen.base.ContributionType;
 import dagger.internal.codegen.base.SetType;
 import dagger.internal.codegen.binding.BindingGraph;
 import dagger.internal.codegen.binding.MultiboundSetBinding;
+import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.DependencyRequest;
 import dagger.internal.codegen.xprocessing.XCodeBlocks;
 import dagger.internal.codegen.xprocessing.XExpression;
@@ -44,6 +45,7 @@ final class SetRequestRepresentation extends RequestRepresentation {
   private final MultiboundSetBinding binding;
   private final BindingGraph graph;
   private final ComponentRequestRepresentations componentRequestRepresentations;
+  private final CompilerOptions compilerOptions;
   private final XProcessingEnv processingEnv;
 
   @AssistedInject
@@ -52,10 +54,12 @@ final class SetRequestRepresentation extends RequestRepresentation {
       BindingGraph graph,
       ComponentImplementation componentImplementation,
       ComponentRequestRepresentations componentRequestRepresentations,
+      CompilerOptions compilerOptions,
       XProcessingEnv processingEnv) {
     this.binding = binding;
     this.graph = graph;
     this.componentRequestRepresentations = componentRequestRepresentations;
+    this.compilerOptions = compilerOptions;
     this.processingEnv = processingEnv;
   }
 
@@ -138,14 +142,16 @@ final class SetRequestRepresentation extends RequestRepresentation {
     RequestRepresentation bindingExpression =
         componentRequestRepresentations.getRequestRepresentation(bindingRequest(dependency));
     XCodeBlock expression = bindingExpression.getDependencyExpression(requestingClass).codeBlock();
-
+    if (isSingleValue(dependency)) {
+      return expression;
+    }
+    // Multivalue expressions call Set#addAll(Collection) and may require a cast to Collection.
     // TODO(b/211774331): Type casting should be Set after contributions to Set multibinding are
     // limited to be Set.
     // Add a cast to "(Collection)" when the contribution is a raw "Provider" type because the
     // "addAll()" method expects a collection. For example, ".addAll((Collection)
     // provideInaccessibleSetOfFoo.get())"
-    return (!isSingleValue(dependency)
-            && !isTypeAccessibleFrom(
+    return (!isTypeAccessibleFrom(
                 binding.key().type().xprocessing(), requestingClass.getPackageName())
             // TODO(bcorso): Replace instanceof checks with validation on the binding.
             && (bindingExpression instanceof DerivedFromFrameworkInstanceRequestRepresentation

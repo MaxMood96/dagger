@@ -47,7 +47,10 @@ final class DaggerBComponent {
   private static final class BComponentImpl implements BComponent {
     private final BComponentImpl bComponentImpl = this;
 
-    Provider<Integer> iProvider;
+    /**
+     * {@code Provider<Integer>}
+     */
+    Provider<?> iProvider;
 
     BComponentImpl(IntComponent intComponentParam) {
 
@@ -62,7 +65,7 @@ final class DaggerBComponent {
 
     @Override
     public B b() {
-      return new B(iProvider);
+      return (B) ((Object) (B_Factory.newInstance(iProvider)));
     }
 
     private static final class IProvider implements Provider<Integer> {

@@ -25,7 +25,7 @@ import javax.annotation.processing.Generated;
     "deprecation",
     "nullness:initialization.field.uninitialized"
 })
-public final class ParentModule_ProvideListBFactory<A extends CharSequence, B, C extends Number & Comparable<C>> implements Factory<List<B>> {
+public final class ParentModule_ProvideListBFactory<A extends CharSequence, B, C extends Number & Comparable<C>> implements Factory<Object> {
   private final ParentModule<A, B, C> module;
 
   private final Provider<B> bProvider;
@@ -36,7 +36,7 @@ public final class ParentModule_ProvideListBFactory<A extends CharSequence, B, C
   }
 
   @Override
-  public List<B> get() {
+  public Object get() {
     return provideListB(module, bProvider.get());
   }
 

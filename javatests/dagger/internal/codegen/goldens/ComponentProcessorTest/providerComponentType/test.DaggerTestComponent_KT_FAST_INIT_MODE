@@ -42,7 +42,10 @@ public final class DaggerTestComponent {
   private static final class TestComponentImpl implements TestComponent {
     private final TestComponentImpl testComponentImpl = this;
 
-    Provider<Foo> fooProvider;
+    /**
+     * {@code Provider<Foo>}
+     */
+    Provider<?> fooProvider;
 
     TestComponentImpl() {
 
@@ -57,7 +60,7 @@ public final class DaggerTestComponent {
 
     @Override
     public SomeEntryPoint someEntryPoint() {
-      return new SomeEntryPoint(fooProvider.get(), fooProvider);
+      return (SomeEntryPoint) ((Object) (SomeEntryPoint_Factory.newInstance(fooProvider.get(), fooProvider)));
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -75,7 +78,7 @@ public final class DaggerTestComponent {
       public T get() {
         switch (id) {
           case 0: // test.Foo
-          return (T) new Foo(new Bar());
+          return (T) Foo_Factory.newInstance(Bar_Factory.newInstance());
 
           default: throw new AssertionError(id);
         }

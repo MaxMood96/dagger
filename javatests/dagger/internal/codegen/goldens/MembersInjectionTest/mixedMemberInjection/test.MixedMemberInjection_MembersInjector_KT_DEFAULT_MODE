@@ -39,9 +39,9 @@ public final class MixedMemberInjection_MembersInjector implements MembersInject
     this.oProvider = oProvider;
   }
 
-  public static MembersInjector<MixedMemberInjection> create(Provider<String> stringProvider,
-      Provider<Object> objectProvider, Provider<String> sProvider, Provider<Object> oProvider) {
-    return new MixedMemberInjection_MembersInjector(stringProvider, objectProvider, sProvider, oProvider);
+  public static MembersInjector<MixedMemberInjection> create(Provider<?> stringProvider,
+      Provider<?> objectProvider, Provider<?> sProvider, Provider<?> oProvider) {
+    return new MixedMemberInjection_MembersInjector((Provider<String>) (stringProvider), (Provider<Object>) (objectProvider), (Provider<String>) (sProvider), (Provider<Object>) (oProvider));
   }
 
   @Override
@@ -53,20 +53,20 @@ public final class MixedMemberInjection_MembersInjector implements MembersInject
   }
 
   @InjectedFieldSignature("test.MixedMemberInjection.string")
-  public static void injectString(Object instance, String string) {
-    ((MixedMemberInjection) (instance)).string = string;
+  public static void injectString(Object instance, Object string) {
+    ((MixedMemberInjection) (instance)).string = (String) (string);
   }
 
   @InjectedFieldSignature("test.MixedMemberInjection.object")
   public static void injectObject(Object instance, Object object) {
-    ((MixedMemberInjection) (instance)).object = object;
+    ((MixedMemberInjection) (instance)).object = (Object) (object);
   }
 
-  public static void injectSetString(Object instance, String s) {
-    ((MixedMemberInjection) (instance)).setString(s);
+  public static void injectSetString(Object instance, Object s) {
+    ((MixedMemberInjection) (instance)).setString((String) (s));
   }
 
   public static void injectSetObject(Object instance, Object o) {
-    ((MixedMemberInjection) (instance)).setObject(o);
+    ((MixedMemberInjection) (instance)).setObject((Object) (o));
   }
 }

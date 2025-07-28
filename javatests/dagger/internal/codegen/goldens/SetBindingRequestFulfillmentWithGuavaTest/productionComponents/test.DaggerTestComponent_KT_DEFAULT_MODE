@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import dagger.internal.DaggerGenerated;
 import dagger.producers.internal.CancellationListener;
+import java.util.Collection;
 import java.util.Set;
 import javax.annotation.processing.Generated;
 
@@ -51,13 +52,13 @@ final class DaggerTestComponent {
 
     }
 
-    Set<String> setOfString() {
-      return ImmutableSet.<String>copyOf(EmptySetModule_EmptySetFactory.emptySet());
+    Object setOfString() {
+      return ImmutableSet.copyOf((Collection<?>) (EmptySetModule_EmptySetFactory.emptySet()));
     }
 
     @Override
     public ListenableFuture<Set<String>> strings() {
-      return Futures.immediateFuture(setOfString());
+      return (ListenableFuture<Set<String>>) ((Object) (Futures.immediateFuture(setOfString())));
     }
 
     @Override

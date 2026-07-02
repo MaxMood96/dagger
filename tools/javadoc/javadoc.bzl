@@ -89,6 +89,7 @@ def _javadoc_library(ctx):
 
     srcs = depset(transitive = [src.files for src in ctx.attr.srcs]).to_list()
     ctx.actions.run_shell(
+        mnemonic = "DaggerJavadocLibrary",
         inputs = srcs + classpath + ctx.files._jdk,
         command = "%s $@ && %s" % (javadoc_command, jar_command),
         arguments = [javadoc_arguments],

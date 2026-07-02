@@ -43,6 +43,7 @@ def _jarjar_library(ctx):
     )
 
     ctx.actions.run_shell(
+        mnemonic = "ExternalJarjarLibrary",
         command = command,
         inputs = [ctx.outputs._rules_file] + jar_files + ctx.files._jdk,
         outputs = [ctx.outputs.jar],

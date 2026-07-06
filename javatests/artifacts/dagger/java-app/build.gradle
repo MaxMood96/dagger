@@ -19,12 +19,6 @@ plugins {
   id 'application'
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}
-
 dependencies {
   implementation "com.google.dagger:dagger:$dagger_version"
   annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"

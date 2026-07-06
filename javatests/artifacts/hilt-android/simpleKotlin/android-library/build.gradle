@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'com.android.experimental.built-in-kotlin'
     id 'com.android.legacy-kapt'
     id 'com.google.devtools.ksp'
 }
@@ -15,10 +16,6 @@ android {
         versionName "1.0"
     }
     namespace "dagger.hilt.android.simpleKotlin.lib"
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
     flavorDimensions "tier", "processorConfig"
     productFlavors {
         free {
@@ -36,9 +33,6 @@ android {
     }
 }
 
-kotlin {
-    jvmToolchain(11)
-}
 
 dependencies {
     implementation project(':deep-android-lib')

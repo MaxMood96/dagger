@@ -16,7 +16,8 @@
 
 buildscript {
     ext {
-        agp_version = System.getenv('AGP_VERSION')
+        agp_version = project.findProperty("agpVersion") ?: System.getenv('AGP_VERSION')
+        java_version = project.findProperty("javaVersion") ?: "11"
     }
     repositories {
         google()
@@ -44,6 +45,17 @@ allprojects {
             showStackTraces true
             showStandardStreams true
             events = ["passed", "skipped", "failed", "standardOut", "standardError"]
+        }
+    }
+}
+
+subprojects {
+    plugins.withType(com.android.build.gradle.BasePlugin).configureEach {
+        project.android {
+            compileOptions {
+                sourceCompatibility JavaVersion.toVersion(java_version)
+                targetCompatibility JavaVersion.toVersion(java_version)
+            }
         }
     }
 }

@@ -12,21 +12,28 @@ runs:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        key: ${{ runner.os }}-gradle-java-${{ env.USE_JAVA_VERSION_FOR_GRADLE }}-kotlin-${{ env.USE_KOTLIN_VERSION }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
+          ${{ runner.os }}-gradle-java-${{ env.USE_JAVA_VERSION_FOR_GRADLE }}-kotlin-${{ env.USE_KOTLIN_VERSION }}-
+          ${{ runner.os }}-gradle-java-${{ env.USE_JAVA_VERSION_FOR_GRADLE }}-
           ${{ runner.os }}-gradle-
     - name: 'Download local snapshot for tests'
       uses: actions/download-artifact@v4
       with:
         name: local-snapshot
         path: ~/.m2/repository/com/google/dagger
-    - name: 'Install Java ${{ env.USE_JAVA_VERSION_FOR_GRADLE }}'
+    - name: 'Install Java ${{ env.USE_JAVA_VERSION_FOR_GRADLE }} (Target)'
       uses: actions/setup-java@v4
       with:
         distribution: '${{ env.USE_JAVA_DISTRIBUTION }}'
         java-version: '${{ env.USE_JAVA_VERSION_FOR_GRADLE }}'
-    - name: 'Gradle Android local tests (AGP ${{ env.USE_AGP_VERSION }})'
-      run: ./util/run-local-gradle-android-tests.sh "${{ env.USE_AGP_VERSION }}"
+    - name: 'Install Java 21 (Gradle Boot JDK)'
+      uses: actions/setup-java@v4
+      with:
+        distribution: '${{ env.USE_JAVA_DISTRIBUTION }}'
+        java-version: '21'
+    - name: 'Gradle Android local tests (AGP ${{ env.USE_AGP_VERSION }}, Java ${{ env.USE_JAVA_VERSION_FOR_GRADLE }}, Kotlin ${{ env.USE_KOTLIN_VERSION }})'
+      run: ./util/run-local-gradle-android-tests.sh "${{ env.USE_AGP_VERSION }}" "${{ env.USE_JAVA_VERSION_FOR_GRADLE }}" "${{ env.USE_KOTLIN_VERSION }}" "${{ env.USE_KSP_VERSION }}"
       shell: bash
     - name: 'Upload test reports (AGP ${{ env.USE_AGP_VERSION }})'
       if: ${{ always() }}

@@ -16,13 +16,15 @@
 
 buildscript {
     ext {
-        agp_version = System.getenv('AGP_VERSION')
-        kotlin_version = "2.3.21"
-        ksp_version = "2.3.7"
+        agp_version = project.findProperty("agpVersion") ?: System.getenv('AGP_VERSION')
+        kotlin_version = project.findProperty("kotlinVersion") ?: "2.3.21"
+        ksp_version = project.findProperty("kspVersion") ?: "2.3.7"
+        java_version = project.findProperty("javaVersion") ?: "11"
     }
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
         mavenLocal()
     }
     dependencies {
@@ -42,4 +44,21 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+subprojects {
+    plugins.withType(com.android.build.gradle.BasePlugin).configureEach {
+        project.android {
+            compileOptions {
+                sourceCompatibility JavaVersion.toVersion(java_version)
+                targetCompatibility JavaVersion.toVersion(java_version)
+            }
+        }
+    }
+
+    plugins.withType(org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper).configureEach {
+        kotlin {
+            jvmToolchain(java_version.toInteger())
+        }
+    }
 }

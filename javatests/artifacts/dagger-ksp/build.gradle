@@ -17,8 +17,9 @@
 buildscript {
   ext {
     dagger_version = "LOCAL-SNAPSHOT"
-    kotlin_version = "2.3.21"
-    ksp_version = "2.3.7"
+    kotlin_version = project.findProperty("kotlinVersion") ?: "2.3.21"
+    ksp_version = project.findProperty("kspVersion") ?: "2.3.7"
+    java_version = project.findProperty("javaVersion") ?: "11"
     junit_version = "4.13"
     truth_version = "1.0.1"
   }
@@ -44,6 +45,16 @@ allprojects {
             && "$dagger_version" == 'LOCAL-SNAPSHOT') {
         details.useVersion 'LOCAL-SNAPSHOT'
         details.because 'LOCAL-SNAPSHOT should act as latest version.'
+      }
+    }
+  }
+}
+
+subprojects {
+  plugins.withType(JavaPlugin) {
+    java {
+      toolchain {
+        languageVersion = JavaLanguageVersion.of(java_version.toInteger())
       }
     }
   }

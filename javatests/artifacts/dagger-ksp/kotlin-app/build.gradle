@@ -20,12 +20,6 @@ plugins {
     id 'com.google.devtools.ksp'
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}
-
 dependencies {
   implementation project(path: ':kotlin-app:kotlin-library')
 

@@ -10,7 +10,10 @@ function install-maven-version {
     exit 2
   fi
 
-  local current_version=$(mvn --version | grep 'Apache Maven [0-9.]*' | cut -d' ' -f3)
+  local current_version=""
+  if command -v mvn &> /dev/null; then
+    current_version=$(mvn --version | grep 'Apache Maven [0-9.]*' | cut -d' ' -f3)
+  fi
   if [[ "$current_version" == "$version" ]]; then
     echo "Maven version $version is already installed."
     exit 0
@@ -29,7 +32,7 @@ function install-maven-version {
   popd
 
   # Replace old symlink with new one
-  sudo unlink /usr/bin/mvn
+  sudo rm -f /usr/bin/mvn
   sudo ln -s /usr/share/apache-maven-${version}/bin/mvn /usr/bin/mvn
 }
 

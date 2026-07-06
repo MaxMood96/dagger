@@ -16,6 +16,8 @@
 
 import java.io.File
 
+val java_version: String by project
+
 plugins {
   id("com.android.application")
   id("com.google.dagger.hilt.android")
@@ -113,10 +115,6 @@ android {
     testInstrumentationRunner = "dagger.hilt.android.simple.SimpleEmulatorTestRunner"
   }
   namespace = "dagger.hilt.android.simple"
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-  }
   testOptions { unitTests.isIncludeAndroidResources = true }
   lint { checkReleaseBuilds = false }
   sourceSets {

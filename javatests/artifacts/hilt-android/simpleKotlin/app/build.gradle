@@ -54,10 +54,6 @@ android {
             dimension "processorConfig"
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
     testOptions {
         unitTests.includeAndroidResources = true
     }
@@ -75,9 +71,6 @@ android {
     }
 }
 
-kotlin {
-    jvmToolchain(11)
-}
 
 hilt {
     enableTransformForLocalTests = true

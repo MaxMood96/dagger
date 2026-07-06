@@ -30,10 +30,6 @@ android {
         versionName "1.0"
     }
     namespace "dagger.android.ksp"
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
     testOptions {
         unitTests.includeAndroidResources = true
     }
@@ -48,9 +44,6 @@ android {
     }
 }
 
-kotlin {
-    jvmToolchain(17)
-}
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'

@@ -20,12 +20,6 @@ plugins {
   id 'org.jetbrains.kotlin.kapt'
 }
 
-java {
-  toolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
-  }
-}
-
 kapt {
   correctErrorTypes = true
 }

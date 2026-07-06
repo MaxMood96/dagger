@@ -3,9 +3,6 @@ plugins {
     id 'com.google.devtools.ksp'
 }
 
-kotlin {
-    jvmToolchain(11)
-}
 
 dependencies {
     implementation project(':deep-kotlin-lib')

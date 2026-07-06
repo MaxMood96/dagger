@@ -23,9 +23,3 @@ plugins {
 kapt {
   correctErrorTypes = true
 }
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}

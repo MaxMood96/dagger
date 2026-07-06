@@ -29,10 +29,6 @@ android {
     }
     namespace "dagger.hilt.android.simple.uitest"
     targetProjectPath ':app'
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
 }
 
 hilt {

@@ -12,14 +12,16 @@ runs:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        key: ${{ runner.os }}-gradle-java-${{ env.USE_JAVA_VERSION_FOR_GRADLE }}-kotlin-${{ env.USE_KOTLIN_VERSION }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
+          ${{ runner.os }}-gradle-java-${{ env.USE_JAVA_VERSION_FOR_GRADLE }}-kotlin-${{ env.USE_KOTLIN_VERSION }}-
+          ${{ runner.os }}-gradle-java-${{ env.USE_JAVA_VERSION_FOR_GRADLE }}-
           ${{ runner.os }}-gradle-
     - name: 'Download local snapshot for tests'
       uses: actions/download-artifact@v4
       with:
         name: local-snapshot
         path: ~/.m2/repository/com/google/dagger
-    - name: 'Gradle Java local tests'
-      run: ./util/run-local-gradle-tests.sh
+    - name: 'Gradle Java local tests (Java ${{ env.USE_JAVA_VERSION_FOR_GRADLE }}, Kotlin ${{ env.USE_KOTLIN_VERSION }})'
+      run: ./util/run-local-gradle-tests.sh "${{ env.USE_JAVA_VERSION_FOR_GRADLE }}" "${{ env.USE_KOTLIN_VERSION }}" "${{ env.USE_KSP_VERSION }}"
       shell: bash

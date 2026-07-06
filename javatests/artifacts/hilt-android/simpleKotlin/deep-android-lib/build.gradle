@@ -18,10 +18,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     namespace "dagger.hilt.android.simpleKotlin.deep"
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
     lintOptions {
         checkReleaseBuilds = false
     }
@@ -36,9 +32,6 @@ android {
     }
 }
 
-kotlin {
-    jvmToolchain(11)
-}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

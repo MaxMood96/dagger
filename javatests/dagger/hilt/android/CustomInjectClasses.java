@@ -43,7 +43,7 @@ final class CustomInjectClasses {
 
   @CustomInject
   @HiltAndroidApp(Application.class)
-  static final class TestApplication extends Hilt_CustomInjectClasses_TestApplication {
+  public static final class TestApplication extends Hilt_CustomInjectClasses_TestApplication {
 
     @Inject Integer intValue;
 

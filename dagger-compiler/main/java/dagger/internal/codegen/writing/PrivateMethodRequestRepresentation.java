@@ -37,6 +37,7 @@ import dagger.internal.codegen.binding.ContributionBinding;
 import dagger.internal.codegen.compileroption.CompilerOptions;
 import dagger.internal.codegen.model.RequestKind;
 import dagger.internal.codegen.writing.ComponentImplementation.ShardImplementation;
+import dagger.internal.codegen.xprocessing.NullableTypeNames;
 import dagger.internal.codegen.xprocessing.XExpressionType;
 
 /**
@@ -105,7 +106,11 @@ final class PrivateMethodRequestRepresentation extends MethodRequestRepresentati
                   !shardImplementation.isShardClassPrivate()
                       ? ImmutableSet.of(PRIVATE)
                       : ImmutableSet.of())
-              .returns(returnType().asTypeName())
+              .returns(
+                  NullableTypeNames.asNullableTypeName(
+                      returnType().asTypeName(),
+                      binding.nullability(),
+                      compilerOptions))
               .addStatement(
                   "return %L",
                   wrappedRequestRepresentation

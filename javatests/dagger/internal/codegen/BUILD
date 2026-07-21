@@ -119,7 +119,6 @@ DEPS = [
     "//dagger-spi",
     "//dagger-testing/main/java/dagger/model/testing",
     "//dagger-testing/main/java/dagger/spi/model/testing",
-    "//java/dagger/testing/compile",
     "//java/dagger/testing/golden",
 ]
 

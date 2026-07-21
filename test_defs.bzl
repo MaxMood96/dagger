@@ -16,6 +16,7 @@
 
 load("@rules_java//java:defs.bzl", "java_library", "java_test")
 load("//:build_defs.bzl", "JAVA_RELEASE_MIN", "TEST_MANIFEST_VALUES")
+load("//java/dagger/testing/compile:macros.bzl", "compiler_test", "kt_compiler_test")
 load("@rules_android//rules:rules.bzl", "android_library", "android_local_test")
 load(
     "@io_bazel_rules_kotlin//kotlin:jvm.bzl",
@@ -38,7 +39,7 @@ _VARIANTS = [
     struct(backend = "Javac", codegen = "JavaCodegen", flavors = ["FastInit", "Shards"]),
 ]
 
-def GenCompilerTests(name, srcs, **kwargs):
+def GenCompilerTests(name, srcs, compiler_deps = None, **kwargs):
     """Generates a java_test or kt_jvm_test for each test source in srcs.
 
     In addition, this macro will append any golden files associated with the test in the form
@@ -47,6 +48,7 @@ def GenCompilerTests(name, srcs, **kwargs):
     Args:
         name: name of the target
         srcs: list of test sources.
+        compiler_deps: dependencies needed by the compiler during compilation in tests.
         **kwargs: additional arguments to pass to each test rule.
     """
     non_test_srcs = [src for src in srcs if not _is_test(src)]
@@ -56,10 +58,11 @@ def GenCompilerTests(name, srcs, **kwargs):
         fail("':{0}' should contain at least 1 test source.".format(name))
     for src in srcs:
         test_name = src.rsplit(".", 1)[0]
-        test_rule_type = kt_jvm_test if src.endswith(".kt") else java_test
+        test_rule_type = kt_compiler_test if src.endswith(".kt") else compiler_test
         test_rule_type(
             name = test_name,
             srcs = [src],
+            compiler_deps = compiler_deps,
             resources = native.glob(["goldens/%s/**" % test_name]),
             **kwargs
         )

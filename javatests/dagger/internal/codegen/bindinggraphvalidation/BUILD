@@ -29,7 +29,6 @@ GenCompilerTests(
         "//dagger-compiler:xprocessing",
         "//dagger-compiler/main/java/dagger/internal/codegen/bindinggraphvalidation",
         "//dagger-compiler/main/java/dagger/internal/codegen/xprocessing:xprocessing-testing",
-        "//java/dagger/testing/compile",
         "//javatests/dagger/internal/codegen:compilers",
         "//third_party/java/auto:common",
         "//third_party/java/compile_testing",

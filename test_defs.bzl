@@ -23,6 +23,10 @@ load(
     "kt_jvm_library",
     "kt_jvm_test",
 )
+load(
+    "@io_bazel_rules_kotlin//kotlin:android.bzl",
+    "kt_android_local_test",
+)
 
 _JAVACOPTS = {
     "Shards": "-Adagger.keysPerComponentShard=2",
@@ -161,6 +165,28 @@ def GenRobolectricTests(
     _GenTestsWithVariants(
         library_rule_type = android_library,
         test_rule_type = android_local_test,
+        name = name,
+        srcs = srcs,
+        deps = deps,
+        gen_library_deps = None,
+        plugins = plugins,
+        javacopts = javacopts,
+        shard_count = shard_count,
+        test_kwargs = {"manifest_values": manifest_values},
+    )
+
+def GenKtRobolectricTests(
+        name,
+        srcs,
+        deps = None,
+        plugins = None,
+        javacopts = None,
+        shard_count = None,
+        manifest_values = TEST_MANIFEST_VALUES):
+    deps = (deps or []) + ["//:android_local_test_exports"]
+    _GenTestsWithVariants(
+        library_rule_type = android_library,
+        test_rule_type = kt_android_local_test,
         name = name,
         srcs = srcs,
         deps = deps,

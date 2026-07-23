@@ -14,6 +14,7 @@
 
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "define_kt_toolchain")
 load("//tools/javadoc:javadoc.bzl", "javadoc_library")
+load("@rules_android//rules:rules.bzl", "android_library")
 
 package(default_visibility = ["//visibility:public"])
 
